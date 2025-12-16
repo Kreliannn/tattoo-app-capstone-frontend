@@ -46,7 +46,7 @@ export default function Home() {
         {/* Left: Logo Image */}
         <div className="relative bg-gray-100 p-0 h-full w-full">
           <img
-            src="/web/logo.jpg"
+            src="/landingPage/img2.jpg"
             alt="Logo"
             className="absolute inset-0 w-full h-full object-cover"
           />

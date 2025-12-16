@@ -5,6 +5,9 @@ import { Card } from "@/components/ui/card"
 import { Sparkles, Pencil, TrendingUp, Eye, Brain, Box } from "lucide-react"
 
 export default function Page() {
+
+  
+
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
