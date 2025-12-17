@@ -4,8 +4,8 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import useUserStore from "@/app/store/useUserStore";
 import axiosInstance from "@/app/utils/axios";
-import { errorAlert } from "@/app/utils/alert";
-import { LoaderCircle, User, Lock, Eye, EyeOff , PhoneIncoming} from "lucide-react";
+import { errorAlert, successAlert } from "@/app/utils/alert";
+import { LoaderCircle, User, Lock, Eye, EyeOff , PhoneIncoming, Sparkles} from "lucide-react";
 import {
   Select,
   SelectTrigger,
@@ -13,52 +13,72 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+import { accountInterfaceInput } from "@/app/types/accounts.type";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [contact, setContact] = useState("");
   const [name, setName] = useState("");
-  const [role, setRole] = useState("");
+  const [type, setType] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const { setUser } = useUserStore();
-
-  const router = useRouter();
 
   const mutation = useMutation({
-    mutationFn: (data: { username: string; password: string }) =>
-      axiosInstance.post("/login", data),
+    mutationFn: (data: accountInterfaceInput) =>
+      axiosInstance.post("/auth/register", data),
     onSuccess: (res) => {
-      const { user, token } = res.data;
-      localStorage.setItem("token", token);
-      setUser(user);
-      router.push(`/pages/cashier/home`);
+      successAlert("account registered")
+      setIsLoading(false)
+      setName("")
+      setType("")
+      setUsername("")
+      setPassword("")
+      setConfirmPassword("")
+      setContact("")
     },
-    onError : () => {
-      errorAlert("user not found")
+    onError : (err : { request : { response : string }}) => {
+      console.log(err)
+      errorAlert(err.request.response)
       setIsLoading(false)
     }
   });
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    //mutation.mutate({ username, password });
-    //setIsLoading(true)
-    router.push(`/pages/admin/dashboard`);
+    
+    if(!name || !type || !username || !password || !contact) return errorAlert("empty field")
+
+    if(password != confirmPassword) return errorAlert("confirm password not match")
+
+    mutation.mutate({
+      name,
+      type,
+      username,
+      password,
+      contact
+    });
+
+    setIsLoading(true)
+
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-stone-50 px-4 sm:px-6 lg:px-8">
+    <div className="flex items-center justify-center min-h-screen bg-stone-50 px-4 sm:px-6 lg:px-8 mt-10">
+
+   
+
       <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 shadow-lg bg-white rounded-lg overflow-hidden">
         {/* Left: Logo Image */}
         <div className="relative bg-gray-100 p-0 h-full w-full">
           <img
-            src="/landingPage/img3.jpg"
+            src="/web/img3.jpg"
             alt="Logo"
             className="absolute inset-0 w-full h-full object-cover"
           />
@@ -137,10 +157,10 @@ export default function Home() {
 
               <div className="space-y-2">
                 <label className="block text-xs font-medium text-stone-800 uppercase tracking-wide">
-                  Role
+                  Account Type
                 </label>
                 <div className="relative">
-                    <Select value={role} onValueChange={setRole}>
+                    <Select value={type} onValueChange={setType}>
                       <SelectTrigger className="w-full mt-4">
                         <SelectValue placeholder="Select option" />
                       </SelectTrigger>
@@ -209,7 +229,7 @@ export default function Home() {
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     className="absolute inset-y-0 right-0 pr-3 flex items-center"
                   >
-                    {showPassword ? (
+                    {showConfirmPassword ? (
                       <EyeOff className="h-4 w-4 text-gray-400 hover:text-stone-800  transition-colors" />
                     ) : (
                       <Eye className="h-4 w-4 text-gray-400 hover:text-stone-800  transition-colors" />
@@ -231,10 +251,10 @@ export default function Home() {
                 {isLoading ? (
                   <div className="flex items-center justify-center gap-2">
                     <LoaderCircle className="h-4 w-4 animate-spin" />
-                    <span>Signing in...</span>
+                    <span>creating account...</span>
                   </div>
                 ) : (
-                  "Sign in"
+                  "Sign up"
                 )}
               </button>
             </div>
@@ -242,9 +262,9 @@ export default function Home() {
 
           <div className="text-center mt-6">
             <div className="h-px bg-gray-200 w-full mb-4"></div>
-            <p className="text-xs text-gray-400">
+            <Link className="text-xs text-gray-700 font-bold" href={"/guest/login"}>
              Sign in?
-            </p>
+            </Link>
           </div>
 
         </div>

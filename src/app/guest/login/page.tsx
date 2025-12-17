@@ -6,6 +6,7 @@ import useUserStore from "@/app/store/useUserStore";
 import axiosInstance from "@/app/utils/axios";
 import { errorAlert } from "@/app/utils/alert";
 import { LoaderCircle, User, Lock, Eye, EyeOff } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   const [username, setUsername] = useState("");
@@ -20,24 +21,38 @@ export default function Home() {
 
   const mutation = useMutation({
     mutationFn: (data: { username: string; password: string }) =>
-      axiosInstance.post("/login", data),
+      axiosInstance.post("/auth/login", data),
     onSuccess: (res) => {
-      const { user, token } = res.data;
+      const { account, token } = res.data;
       localStorage.setItem("token", token);
-      setUser(user);
-      router.push(`/pages/cashier/home`);
+      setUser(account);
+      console.log(account)
+      switch(account.type){
+        case "client":
+          router.push(`/pages/client/dashboard`);
+        break
+
+        case "artist":
+          router.push(`/pages/artist/dashboard`);
+        break
+
+        default:
+          errorAlert("yey")
+      }
+      
     },
-    onError : () => {
-      errorAlert("user not found")
+    onError : (err : { request : { response : string }}) => {
+      console.log(err)
+      errorAlert(err.request.response)
       setIsLoading(false)
     }
   });
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    //mutation.mutate({ username, password });
-    //setIsLoading(true)
-    router.push(`/pages/admin/dashboard`);
+    if(!username || !password) return errorAlert("empty field")
+    mutation.mutate({ username, password });
+    setIsLoading(true)
   };
 
   return (
@@ -46,7 +61,7 @@ export default function Home() {
         {/* Left: Logo Image */}
         <div className="relative bg-gray-100 p-0 h-full w-full">
           <img
-            src="/landingPage/img2.jpg"
+            src="/web/img2.jpg"
             alt="Logo"
             className="absolute inset-0 w-full h-full object-cover"
           />
@@ -132,7 +147,7 @@ export default function Home() {
           <div className="text-center mt-6">
             <div className="h-px bg-gray-200 w-full mb-4"></div>
             <p className="text-xs text-gray-400">
-              Secure login powered by your credentials
+             dont have account yet?  <Link href={"/guest/register"} className="text-gray-700 font-bold" > sign up here </Link>
             </p>
           </div>
         </div>

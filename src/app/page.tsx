@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Sparkles, Pencil, TrendingUp, Eye, Brain, Box } from "lucide-react"
+import Link from "next/link"
 
 export default function Page() {
 
@@ -11,11 +12,11 @@ export default function Page() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <header className="border-b border-border">
+      <header className="border-b border-border absolute w-full">
         <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
           <div className="flex items-center gap-2">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-              <Sparkles className="h-6 w-6 text-primary-foreground" />
+              <img src="/web/logo.jpg" alt="Tattoo design 1" className="h-full w-full rounded-lg" />
             </div>
             <span className="text-xl font-bold">InkStudio</span>
           </div>
@@ -26,7 +27,7 @@ export default function Page() {
             <Button variant="ghost" className="hidden md:inline-flex">
               For Clients
             </Button>
-            <Button variant="outline">Sign In</Button>
+            <Link href={"/guest/login"}>  <Button variant="outline"> Sign In</Button> </Link>
             <Button>Get Started</Button>
           </div>
         </nav>
@@ -56,16 +57,16 @@ export default function Page() {
             <div className="relative">
               <div className="grid grid-cols-2 gap-3">
                 <Card className="overflow-hidden mb-7 flex items-center justify-center">
-                  <img src="/landingPage/tattoo5.jpg" alt="Tattoo design 1" className="h-[200px] w-[200px] object-cover" />
+                  <img src="/web/tattoo5.jpg" alt="Tattoo design 1" className="h-[200px] w-[200px] object-cover" />
                 </Card>
                 <Card className="overflow-hidden translate-y-8  mb-7 flex items-center justify-center">
-                  <img src="/landingPage/tattoo2.jpg" alt="Tattoo design 2" className="h-[200px] w-[200px] object-cover" />
+                  <img src="/web/tattoo2.jpg" alt="Tattoo design 2" className="h-[200px] w-[200px] object-cover" />
                 </Card>
                 <Card className="overflow-hidden -translate-y-8 flex items-center justify-center">
-                  <img src="/landingPage/tattoo3.jpg" alt="Tattoo design 3" className="h-[200px] w-[200px] object-cover" />
+                  <img src="/web/tattoo3.jpg" alt="Tattoo design 3" className="h-[200px] w-[200px] object-cover" />
                 </Card>
                 <Card className="overflow-hidden flex items-center justify-center ">
-                  <img src="/landingPage/tattoo1.jpg" alt="Tattoo design 4" className="h-[200px] w-[200px] object-cover" />
+                  <img src="/web/tattoo1.jpg" alt="Tattoo design 4" className="h-[200px] w-[200px] object-cover" />
                 </Card>
               </div>
             </div>
@@ -219,7 +220,7 @@ export default function Page() {
                 </div>
               </div>
               <div className="relative hidden lg:block ">
-                <img src="/landingPage/img1.png" alt="Artist at work" className="rounded-lg object-cover" />
+                <img src="/web/img1.png" alt="Artist at work" className="rounded-lg object-cover" />
               </div>
             </div>
           </Card>
@@ -233,7 +234,7 @@ export default function Page() {
             <div>
               <div className="flex items-center gap-2">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-                  <Sparkles className="h-5 w-5 text-primary-foreground" />
+                  <img src="/web/logo.jpg" alt="Tattoo design 1" className="h-full w-full rounded-lg" />
                 </div>
                 <span className="font-bold">InkStudio</span>
               </div>

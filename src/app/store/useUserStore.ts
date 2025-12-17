@@ -1,13 +1,12 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { accountInterface } from '../types/accounts.type';
 
-type User = {
-  fullname: string;
-} | null;
+
 
 type UserStore = {
-  user: User;
-  setUser: (userData: NonNullable<User>) => void;
+  user: accountInterface | null;
+  setUser: (userData: NonNullable<accountInterface>) => void;
   clearUser: () => void;
 };
 
