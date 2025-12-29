@@ -99,9 +99,19 @@ const TattooEditor: React.FC = () => {
   const createMutation = useMutation({
     mutationFn : (data : { design : designInterface, screenShot : string}) => axiosInstance.post("/works", data),
     onSuccess : () => {
-      alert("design saved")
+      successAlert("design saved")
+      setIsCanvaSaving(false)
     },
-    onError : (err) => alert("error accour")
+    onError : (err) => errorAlert("error accour")
+  })
+
+  const updateMutation = useMutation({
+    mutationFn : (data : { id : string, design : designInterface, screenShot : string}) => axiosInstance.put("/works", data),
+    onSuccess : () => {
+      successAlert("design saved")
+      setIsCanvaSaving(false)
+    },
+    onError : (err) => errorAlert("error accour")
   })
 
   
@@ -155,15 +165,19 @@ const TattooEditor: React.FC = () => {
 
     const screenShoturl = await useUpload(screenShot, "image")
 
-    console.log(design)
+    if(paramsId == "new"){
+      createMutation.mutate({
+        screenShot : screenShoturl,
+        design : design
+      }) 
+    } else {
+      updateMutation.mutate({
+        id : paramsId,
+        screenShot : screenShoturl,
+        design : design
+      }) 
+    }
 
-    localStorage.setItem("design", "");
-    setIsCanvaSaving(false)
-    createMutation.mutate({
-      screenShot : screenShoturl,
-      design : design
-    }) 
-  
   };
 
 

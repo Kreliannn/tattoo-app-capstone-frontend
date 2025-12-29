@@ -29,7 +29,7 @@ export interface designInterface {
 export interface worksInterfaceInput {
     artist: string; // TattooArtist _id
     design: designInterface;  
-    screenshot : string
+    screenShot : string
 }
   
 
@@ -38,5 +38,5 @@ export interface worksInterface {
   _id: string;
   artist: string; // TattooArtist _id
   design: designInterface;  
-  screenshot : string
+  screenShot : string
 }

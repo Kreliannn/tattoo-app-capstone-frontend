@@ -5,6 +5,7 @@ export interface accountInterfaceInput {
     contact: string,
     username: string,
     password: string,
+    profile : string
 }
 
 export interface accountInterface extends accountInterfaceInput {

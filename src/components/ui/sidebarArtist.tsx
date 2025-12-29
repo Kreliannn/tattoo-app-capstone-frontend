@@ -19,6 +19,7 @@ import {
 const navigationItems = [
   { title: "Dashboard", url: "/pages/artist/dashboard", icon: Home },
   { title: "Tattoo Works", url: "/pages/artist/works", icon: UserPlus2 },
+  { title: "Posts", url: "/pages/artist/posts", icon: UserPlus2 },
 ]
 
 const accountItems = [

@@ -57,12 +57,15 @@ export default function Home() {
 
     if(password != confirmPassword) return errorAlert("confirm password not match")
 
+    const profile = "/default_profile.jpg"
+
     mutation.mutate({
       name,
       type,
       username,
       password,
-      contact
+      contact,
+      profile
     });
 
     setIsLoading(true)
