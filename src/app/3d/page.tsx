@@ -7,7 +7,8 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 // @ts-ignore
 import { DecalGeometry } from "three/examples/jsm/geometries/DecalGeometry";
-
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation"
 import {
   ArrowUp,
   ArrowDown,
@@ -66,6 +67,8 @@ export default function Home() {
     localRotation: THREE.Euler;
     localScale: number;
   } | null>(null);
+
+  const router = useRouter()
 
   useEffect(() => {
     if (!pngUrl) return;
@@ -572,8 +575,19 @@ export default function Home() {
 
   return (
     <div className="relative w-full h-screen bg-neutral-100 text-black">
+
+
   
       <div ref={mountRef} className="w-full h-full" />
+
+      <Button className="absolute left-[335px] top-5 z-100" size="lg" variant={"outline"} onClick={() => router.back()}>
+          <ArrowLeft /> Back
+      </Button>
+
+      <div className="absolute right-[335px] top-5 z-100 bg-neutral-100 shadow-lg  rounded-xl border border-neutral-300 shadow-sm w-[150px] h-[150px]">
+            <img src={jpgUrl!} alt="" className="w-full h-full rounded-xl" />
+      </div>
+  
   
       {/* Camera Controls - Left Side */}
       <div className="absolute top-0 left-0 h-full w-80 bg-white border border-neutral-300 shadow-lg p-6 flex flex-col overflow-auto">
@@ -658,10 +672,7 @@ export default function Home() {
         </div>
   
         <div className="flex flex-col gap-6 mb-6">
-          {/* IMAGE PREVIEW */}
-          <div className="bg-neutral-100 p-5 rounded-xl border border-neutral-300 shadow-sm">
-            <img src={jpgUrl!} alt="" className="w-full h-full" />
-          </div>
+      
   
           {/* POSITION Controls */}
           <div className="bg-neutral-100 p-5 rounded-xl border border-neutral-300 shadow-sm">

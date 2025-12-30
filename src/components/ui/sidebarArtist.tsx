@@ -19,7 +19,7 @@ import {
 const navigationItems = [
   { title: "Dashboard", url: "/pages/artist/dashboard", icon: Home },
   { title: "Tattoo Works", url: "/pages/artist/works", icon: UserPlus2 },
-  { title: "Posts", url: "/pages/artist/posts", icon: UserPlus2 },
+  { title: "My Posts", url: "/pages/artist/myPost", icon: UserPlus2 },
 ]
 
 const accountItems = [
@@ -109,8 +109,8 @@ export function SidebarArtist({ className }: AppSidebarProps) {
                     <img src="/web/logo.jpg" alt="Logo" className="object-cover w-full h-full rounded-lg" />
                   </div>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold text-black">Admin</span>
-                    <span className="truncate text-xs text-gray-500">xxxx</span>
+                    <span className="truncate font-semibold text-black">Artist</span>
+                    <span className="truncate text-xs text-gray-500">Page</span>
                   </div>
                 </a>
               </SidebarMenuButton>

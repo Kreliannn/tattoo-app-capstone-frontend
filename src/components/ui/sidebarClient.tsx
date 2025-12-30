@@ -44,7 +44,7 @@ export function SidebarClient({ className }: AppSidebarProps) {
             <img src="/web/logo.jpg" alt="Logo" className="object-cover w-full h-full rounded-lg" />
           </div>
           <div className="flex flex-col">
-            <span className="font-semibold text-sm">Artist</span>
+            <span className="font-semibold text-sm">Client</span>
             <span className="text-xs text-gray-500">page</span>
           </div>
         </div>
@@ -108,8 +108,8 @@ export function SidebarClient({ className }: AppSidebarProps) {
                     <img src="/web/logo.jpg" alt="Logo" className="object-cover w-full h-full rounded-lg" />
                   </div>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold text-black">Admin</span>
-                    <span className="truncate text-xs text-gray-500">xxxx</span>
+                    <span className="truncate font-semibold text-black">Client</span>
+                    <span className="truncate text-xs text-gray-500">Page</span>
                   </div>
                 </a>
               </SidebarMenuButton>

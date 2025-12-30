@@ -17,18 +17,24 @@ export default function Page() {
 
   const { data } = useQuery({
     queryKey : ['artist_post'],
-    queryFn : () => axiosInstance.get(`/post`)
+    queryFn : () => axiosInstance.get(`/post/artist/${user?._id}`)
   })
 
   useEffect(() => {
       if(data?.data) setPosts(data.data)
   },[data])
 
+  console.log(posts)
+
   return (
     <div className="w-full h-dvh space-y-6 p-4 ">
       <div className="w-full h-20 flex justify-between items-center p-5">
-          <Label className="text-2xl font-bold text-stone-900"> Posts </Label>
-       
+          <Label className="text-2xl font-bold text-stone-900">My Posts</Label>
+          <Link href={"/pages/artist/addPost"}>
+            <Button size="lg" className="flex items-center justify-center">
+              add post <Plus className="w-5 h-5" /> 
+            </Button>
+          </Link>
       </div>
 
 
@@ -69,8 +75,7 @@ export default function Page() {
                 </div>
               </div>
 
-              {/* Action */}
-              <Link href={`/pages/client/post/${post._id}`} >
+              <Link href={`/pages/artist/post/${post._id}`} >
                 <button className="w-full mt-3 bg-black text-white py-2 rounded-lg text-sm hover:bg-gray-800 transition" >
                   View Post
                 </button>
@@ -79,6 +84,7 @@ export default function Page() {
           </div>
         ))}
       </div>
+
 
     </div>
   );
