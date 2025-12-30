@@ -28,6 +28,7 @@ export default function Page() {
         <Label className="text-2xl font-bold text-stone-900">Tattoo Works</Label>
         <Link href={"/canva/new"}>
           <Button size="lg" className="flex items-center justify-center">
+            Add Work
             <Plus className="w-5 h-5" />
           </Button>
         </Link>

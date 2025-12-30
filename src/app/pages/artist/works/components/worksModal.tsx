@@ -41,6 +41,30 @@ export function WorkModal({ work , setWorks} : { work : worksInterface, setWorks
     successAlert("link copied")
   }
 
+  const handleExport = async () => {
+    try {
+      const response = await fetch(work.screenShot)
+      const blob = await response.blob()
+  
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement("a")
+  
+      link.href = url
+      link.download = "design.png"
+      document.body.appendChild(link)
+      link.click()
+  
+      document.body.removeChild(link)
+      URL.revokeObjectURL(url)
+  
+      successAlert("Design exported")
+    } catch (error) {
+      console.error(error)
+      alert("Failed to export image")
+    }
+  }
+  
+
     
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -104,7 +128,7 @@ export function WorkModal({ work , setWorks} : { work : worksInterface, setWorks
               </Link>
 
               <div className="relative group">
-                <Button className="  p-2" onClick={handleCopyLink}>
+                <Button className="  p-2" onClick={handleExport}>
                   <Download className="w-5 h-5" />
                 </Button>
                 <span className="absolute -top-6 left-1/2 transform -translate-x-1/2  text-stone-800 text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
