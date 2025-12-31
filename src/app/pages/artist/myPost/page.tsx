@@ -27,7 +27,7 @@ export default function Page() {
   console.log(posts)
 
   return (
-    <div className="w-full h-dvh space-y-6 p-4 ">
+    <div className="w-full h-dvh space-y-6 p-4 overflow-auto">
       <div className="w-full h-20 flex justify-between items-center p-5">
           <Label className="text-2xl font-bold text-stone-900">My Posts</Label>
           <Link href={"/pages/artist/addPost"}>

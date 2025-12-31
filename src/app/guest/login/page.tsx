@@ -33,7 +33,7 @@ export default function Home() {
         break
 
         case "artist":
-          router.push(`/pages/artist/dashboard`);
+          router.push(`/pages/artist/profile`);
         break
 
         default:

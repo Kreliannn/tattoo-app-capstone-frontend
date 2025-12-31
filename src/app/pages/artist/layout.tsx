@@ -17,7 +17,7 @@ export default function ManagerLayout({ children }: { children: React.ReactNode 
                 
                 <SidebarArtist />
                
-                <main className="w-full">
+                <main className="w-full overflow-hidden">
                     <div className="mb-[80px] md:mb-[0px]"> </div>
                     {children}
                 </main>

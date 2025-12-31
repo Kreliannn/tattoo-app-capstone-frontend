@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/sidebar"
 
 const navigationItems = [
-  { title: "Dashboard", url: "/pages/artist/dashboard", icon: Home },
+  { title: "Profile", url: "/pages/artist/profile", icon: User },
   { title: "Tattoo Works", url: "/pages/artist/works", icon: UserPlus2 },
   { title: "My Posts", url: "/pages/artist/myPost", icon: UserPlus2 },
 ]
