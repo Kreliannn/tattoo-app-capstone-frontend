@@ -7,6 +7,7 @@ import { artistInfoInterface } from "@/app/types/accounts.type";
 import { postInterface } from "@/app/types/post.type";
 import ImgCard from "./components/imgCard";
 import Link from "next/link";
+import { ChangeProfile } from "./components/changeProfile";
 
 export default function Page() {
   
@@ -41,11 +42,7 @@ export default function Page() {
         <div className="w-full flex gap-5 ">
           {/* Profile Image */}
           <div className="flex justify-center">
-            <img
-              src={artistInfo.artist.profile}
-              alt="artist profile"
-              className="w-42 h-42 rounded-full object-cover border"
-            />
+            <ChangeProfile profile={artistInfo.artist.profile} />
           </div>
 
           <div className="flex items-center">
