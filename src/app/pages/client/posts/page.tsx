@@ -24,6 +24,8 @@ export default function Page() {
       if(data?.data) setPosts(data.data)
   },[data])
 
+  console.log(data?.data)
+
   return (
     <div className="w-full h-dvh space-y-6 p-4 ">
       <div className="w-full h-20 flex justify-between items-center p-5">

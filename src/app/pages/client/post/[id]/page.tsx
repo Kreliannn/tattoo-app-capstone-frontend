@@ -91,9 +91,12 @@ export default function Page() {
 
         {/* Action */}
         <div className="flex gap-3">
-            <Button className=" text-lg py-6 mt-2">
-                view artist
-            </Button>
+            <Link href={`/pages/client/artistProfile/${post.artist._id}`}>
+              <Button className=" text-lg py-6 mt-2">
+                  view artist
+              </Button>
+            </Link>
+           
             <Button className=" text-lg py-6 mt-2">
                 message
             </Button>    

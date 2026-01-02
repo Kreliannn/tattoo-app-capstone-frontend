@@ -58,35 +58,12 @@ const MapLocation: React.FC<ClickableMapProps>  = ({ artistInfo, setArtistInfo }
 
   const [open, setOpen] = useState(false);
 
-  // Component to handle map clicks
-  const MapClickHandler = () => {
-    useMapEvents({
-      click(e) {
-        setMapLocation({
-            lat : e.latlng.lat,
-            long : e.latlng.lng
-        })
-      },
-    });
-    return null;
-  };
+
 
   const defaultPosition: L.LatLngExpression = [14.315885007395133, 120.94680688824083]; 
 
-  const updateMutation = useMutation({
-    mutationFn : (location : { lat : number, long : number}) => axiosInstance.put(`/account/location/${artistInfo._id}`, {location}),
-    onSuccess : (response) => {
-        setArtistInfo(response.data)
-        setOpen(false)
-        successAlert("location updated")
-    },
-    onError : () => errorAlert('error accour')
-  })
 
-  const handleUpdateLocation = () => {
-    if(!mapLocation) return errorAlert('please select location')
-    updateMutation.mutate(mapLocation)
-  }
+
 
     
   return (
@@ -94,19 +71,19 @@ const MapLocation: React.FC<ClickableMapProps>  = ({ artistInfo, setArtistInfo }
       <DialogTrigger asChild>
         {!open && (
             <div className="w-full h-full rounded" onClick={() => setOpen(true)}> 
-                <MapContainer 
-                  center={location ? [location.lat, location.long] : defaultPosition } 
-                  zoom={13} 
-                  style={{ height: '100%', width: '100%' }} 
-                  dragging={false}
-                  scrollWheelZoom={false}
-                  doubleClickZoom={false}
-                  zoomControl={false}
-                  touchZoom={false}
-                  keyboard={false}
-                >
+              <MapContainer 
+              center={location ? [location.lat, location.long] : defaultPosition } 
+              zoom={13} 
+              style={{ height: '100%', width: '100%' }} 
+              dragging={false}
+              scrollWheelZoom={false}
+              doubleClickZoom={false}
+              zoomControl={false}
+              touchZoom={false}
+              keyboard={false}
+              >
                   <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                  <MapClickHandler />
+                
                   {location && (
                       <Marker position={[location.lat, location.long]} icon={customIcon}>
               
@@ -127,9 +104,9 @@ const MapLocation: React.FC<ClickableMapProps>  = ({ artistInfo, setArtistInfo }
     
         <div className=" gap-6 w-full h-[500px] mt-10">
          
-        <MapContainer center={defaultPosition} zoom={13} style={{ height: '90%', width: '100%' }}>
+        <MapContainer center={defaultPosition} zoom={13} style={{ height: '100%', width: '100%' }}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <MapClickHandler />
+      
         {mapLocation && (
             <Marker position={[mapLocation.lat, mapLocation.long]} icon={customIcon}>
          
@@ -137,9 +114,7 @@ const MapLocation: React.FC<ClickableMapProps>  = ({ artistInfo, setArtistInfo }
         )}
         </MapContainer>
 
-        <Button className="w-full mt-5" onClick={handleUpdateLocation}>
-            Save location
-        </Button>
+   
        
         </div>
 
