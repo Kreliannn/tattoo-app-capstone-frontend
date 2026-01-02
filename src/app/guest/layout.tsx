@@ -9,7 +9,6 @@ export default function Layout({ children } : { children: React.ReactNode }) {
 
     return (
       <div className="flex min-h-screen ">
-      
      
         <main className="w-full">
 
@@ -19,17 +18,23 @@ export default function Layout({ children } : { children: React.ReactNode }) {
                 <Link href={"/"} className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
                   <img src="/web/logo.jpg" alt="Tattoo design 1" className="h-full w-full rounded-lg" />
                 </Link>
-                <span className="text-xl font-bold">InkStudio</span>
+                <span className="text-xl font-bold">Myce Nef Diaz</span>
               </div>
               <div className="flex items-center gap-4">
-                <Button variant="ghost" className="hidden md:inline-flex">
-                  For Artists
-                </Button>
-                <Button variant="ghost" className="hidden md:inline-flex">
-                  For Clients
-                </Button>
-                <Link href={"/guest/login"}>  <Button variant="outline"> Sign In</Button> </Link>
-                <Button>Get Started</Button>
+                <Link href={"/guest/aboutUs"}>
+                  <Button variant="ghost" className="hidden md:inline-flex">
+                    About Us 
+                  </Button>
+                </Link>
+                <Link href={"/guest/clientGuide"}>
+                  <Button variant="ghost" className="hidden md:inline-flex">
+                    Client Guide
+                  </Button>
+                </Link> 
+            
+              
+                <Link href={"/guest/register"}>  <Button variant="outline"> Sign Up </Button> </Link>
+                <Link href={"/guest/login"}>  <Button>Sign In</Button> </Link>
               </div>
             </nav>
           </header>
@@ -45,7 +50,7 @@ export default function Layout({ children } : { children: React.ReactNode }) {
                     <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
                       <img src="/web/logo.jpg" alt="Tattoo design 1" className="h-full w-full rounded-lg" />
                     </div>
-                    <span className="font-bold">InkStudio</span>
+                    <span className="font-bold">Myce Nef Diaz</span>
                   </div>
                   <p className="mt-4 text-sm text-muted-foreground">
                     The complete platform for tattoo artistry and discovery.
@@ -113,7 +118,7 @@ export default function Layout({ children } : { children: React.ReactNode }) {
                 </div>
               </div>
               <div className="mt-8 border-t border-border pt-8 text-center text-sm text-muted-foreground">
-                © 2025 InkStudio. All rights reserved.
+                © 2025 Myce Nef Diaz. All rights reserved.
               </div>
             </div>
           </footer>

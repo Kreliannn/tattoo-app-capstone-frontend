@@ -12,25 +12,31 @@ export default function Page() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <header className="border-b border-border absolute w-full">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
-          <div className="flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-              <img src="/web/logo.jpg" alt="Tattoo design 1" className="h-full w-full rounded-lg" />
-            </div>
-            <span className="text-xl font-bold">InkStudio</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" className="hidden md:inline-flex">
-              For Artists
-            </Button>
-            <Button variant="ghost" className="hidden md:inline-flex">
-              For Clients
-            </Button>
-            <Link href={"/guest/login"}>  <Button variant="outline"> Sign In</Button> </Link>
-            <Button>Get Started</Button>
-          </div>
-        </nav>
+      <header className="border-b border-border absolute w-full bg-stone-50">
+            <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
+              <div className="flex items-center gap-2">
+                <Link href={"/"} className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
+                  <img src="/web/logo.jpg" alt="Tattoo design 1" className="h-full w-full rounded-lg" />
+                </Link>
+                <span className="text-xl font-bold">Myce Nef Diaz</span>
+              </div>
+              <div className="flex items-center gap-4">
+                <Link href={"/guest/aboutUs"}>
+                  <Button variant="ghost" className="hidden md:inline-flex">
+                    About Us 
+                  </Button>
+                </Link>
+                <Link href={"/guest/clientGuide"}>
+                  <Button variant="ghost" className="hidden md:inline-flex">
+                    Client Guide
+                  </Button>
+                </Link> 
+            
+              
+                <Link href={"/guest/register"}>  <Button variant="outline"> Sign Up </Button> </Link>
+                <Link href={"/guest/login"}>  <Button>Sign In</Button> </Link>
+              </div>
+            </nav>
       </header>
 
       <main>
@@ -46,12 +52,19 @@ export default function Page() {
                 visualization, and AI-powered decision support.
               </p>
               <div className="mt-10 flex flex-wrap gap-4">
-                <Button size="lg" className="text-base">
-                  Start Creating
-                </Button>
-                <Button size="lg" variant="outline" className="text-base bg-transparent">
-                  Browse Artists
-                </Button>
+                
+                <Link href={"/guest/register"}> 
+                  <Button size="lg" className="text-base">
+                    Sign In
+                  </Button>
+                </Link>
+                <Link href={"/guest/login"}> 
+                  <Button size="lg" variant="outline" className="text-base bg-transparent">
+                   Sign Up
+                  </Button>
+               </Link>
+             
+            
               </div>
             </div>
             <div className="relative">
@@ -200,7 +213,7 @@ export default function Page() {
                   Ready to transform your tattoo journey?
                 </h2>
                 <p className="mt-6 text-pretty text-lg leading-relaxed text-primary-foreground/80">
-                  Join thousands of artists and clients who trust InkStudio to bring their visions to life.
+                  Join thousands of artists and clients who trust Myce Nef Diaz to bring their visions to life.
                 </p>
                 <div className="mt-10 flex flex-wrap gap-4">
                   <Button
@@ -236,7 +249,7 @@ export default function Page() {
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
                   <img src="/web/logo.jpg" alt="Tattoo design 1" className="h-full w-full rounded-lg" />
                 </div>
-                <span className="font-bold">InkStudio</span>
+                <span className="font-bold">Myce Nef Diaz</span>
               </div>
               <p className="mt-4 text-sm text-muted-foreground">
                 The complete platform for tattoo artistry and discovery.
@@ -304,7 +317,7 @@ export default function Page() {
             </div>
           </div>
           <div className="mt-8 border-t border-border pt-8 text-center text-sm text-muted-foreground">
-            © 2025 InkStudio. All rights reserved.
+            © 2025 Myce Nef Diaz. All rights reserved.
           </div>
         </div>
       </footer>

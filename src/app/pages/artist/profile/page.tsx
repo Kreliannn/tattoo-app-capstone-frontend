@@ -8,6 +8,8 @@ import { postInterface } from "@/app/types/post.type";
 import ImgCard from "./components/imgCard";
 import Link from "next/link";
 import { ChangeProfile } from "./components/changeProfile";
+import MapLocation from "./components/location";
+
 
 export default function Page() {
   
@@ -87,6 +89,16 @@ export default function Page() {
             {imgType == "studio" && <ImgCard type="studio" addImg={true} images={artistInfo.profileImages.filter(item => item.type === "studio").map(item => item.img)} />}
             {imgType == "achievement" && <ImgCard type="achievement" addImg={true} images={artistInfo.profileImages.filter(item => item.type === "achievement").map(item => item.img)} />}
 
+        </div>
+
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 mt-8">
+          <div className="h-[300px] shadow-lg border rounded p-4">
+
+          </div>
+
+          <div className="h-[300px] shadow-lg border rounded p-4">
+            <MapLocation artistInfo={artistInfo} setArtistInfo={setArtistInfo} />
+          </div>
         </div>
     
        
