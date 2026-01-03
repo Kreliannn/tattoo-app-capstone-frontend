@@ -60,7 +60,7 @@ export default function Page() {
 
   return (
 <div className="w-5/6 mx-auto py-12">
-  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+  <div className="grid grid-cols-1 lg:grid-cols-2 gap-7">
 
     {/* LEFT — IMAGE */}
     <div className="w-full">
@@ -111,29 +111,43 @@ export default function Page() {
      
       </div>
 
-      {/* Post Details */}
+          {/* Post Details */}
       <div className="border rounded-2xl p-6 shadow-sm bg-white space-y-6">
 
+        {/* Category */}
         <div>
           <Label className="text-lg text-gray-600">Category</Label>
-          <p className="text-2xl font-semibold text-gray-900">
-            {post.category}
-          </p>
+          <p className="text-2xl font-semibold text-gray-900">{post.category}</p>
         </div>
 
-        <div>
-          <Label className="text-lg text-gray-600">Estimated Time</Label>
-          <p className="text-2xl font-semibold text-gray-900">
-            {post.estimatedTime}
-          </p>
-        </div>
+        {/* Sessions */}
+        {post.sessions.length > 0 && (
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <Label className="text-lg text-gray-600">Sessions</Label>
+              <Badge variant="secondary" className="text-sm px-2 py-1">
+                {post.sessions.length} {post.sessions.length > 1 ? "sessions" : "session"}
+              </Badge>
+            </div>
 
-        <div>
-          <Label className="text-lg text-gray-600">Number of Sessions</Label>
-          <p className="text-2xl font-semibold text-gray-900">
-            {post.sessions}
-          </p>
-        </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {post.sessions.map((session, index) => (
+                <div
+                  key={index}
+                  className="p-4 border rounded-lg flex flex-col gap-1 hover:shadow-md transition-shadow"
+                >
+                  <div className="flex items-center justify-between">
+                    <Label className="text-base text-gray-500">
+                      Session {index + 1}
+                    </Label>
+                    <span className="text-gray-400 text-sm">Estimated Time</span>
+                  </div>
+                  <p className="text-xl font-semibold text-gray-900">{session} {session != 1 ? "hrs" : "hr"}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Tags */}
         {post.tags.length > 0 && (
@@ -151,8 +165,9 @@ export default function Page() {
               ))}
             </div>
           </div>
-        )}
+      )}
       </div>
+
 
       {/* Reviews */}
       <div className="border rounded-2xl p-6 shadow-sm bg-white space-y-4">

@@ -45,7 +45,7 @@ export default function Page() {
               <img
                 src={post.postImg}
                 alt="post"
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 border"
+                className="w-full h-full object-cover  transition-transform duration-300 border"
               />
 
               {/* Category Badge */}
@@ -58,11 +58,14 @@ export default function Page() {
             <div className="p-4 space-y-3">
               {/* Artist */}
               <div className="flex items-center gap-3">
-                <img
-                  src={post.artist.profile}
-                  alt="artist"
-                  className="w-10 h-10 rounded-full object-cover border"
-                />
+                <Link href={`/pages/client/artistProfile/${post.artist._id}`} >
+                  <img
+                    src={post.artist.profile}
+                    alt="artist"
+                    className="w-10 h-10 rounded-full object-cover border hover:scale-105"
+                  />
+                </Link>
+            
                 <div>
                   <p className="text-sm text-gray-500">Artist</p>
                   <h1 className="font-semibold text-gray-900">

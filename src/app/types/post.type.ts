@@ -5,8 +5,7 @@ export interface postInterfaceInput {
     postImg : string,
     tags : string[],
     category : string,
-    estimatedTime : string,
-    sessions :number,
+    sessions :number[],
     reviews : {
         client : string,
         comment : string,
@@ -21,8 +20,7 @@ export interface postInterface  {
     postImg : string,
     tags : string[],
     category : string,
-    estimatedTime : string,
-    sessions :number,
+    sessions :number[],
     reviews : {
         client : string,
         comment : string,

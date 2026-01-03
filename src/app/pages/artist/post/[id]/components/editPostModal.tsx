@@ -37,8 +37,7 @@ import { errorAlert, successAlert } from "@/app/utils/alert"
 interface dataInterface {
     tags : string[], 
     category : string,
-    estimatedTime : string,
-    sessions : string
+    sessions : number[]
 }
 
 export function EditPostmodal({ post , setPost} : { post : postInterface, setPost : (data : postInterface) => void}) {
@@ -48,8 +47,10 @@ export function EditPostmodal({ post , setPost} : { post : postInterface, setPos
   const [tagInput, setTagInput] = useState("")
   const [tags, setTags] = useState<string[]>(post.tags)
   const [category, setCategory] = useState(post.category)
-  const [estimatedTime, setEstimatedTime] = useState(post.estimatedTime)
-  const [sessions, setSessions] = useState(post.sessions.toString())
+  
+  const [sessionInput, setSessionInput] = useState(0)
+  const [sessions, setSessions] = useState<number[]>(post.sessions)
+
 
   const addTag = () => {
     if(tags.length >= 5) return errorAlert("the maximum tags is 5")
@@ -62,6 +63,18 @@ export function EditPostmodal({ post , setPost} : { post : postInterface, setPos
     setTags(tags.filter(t => t !== tag))
   }
 
+  const addSession = () => {
+    if (!sessionInput) return errorAlert("Session cannot be empty")
+    setSessions([...sessions, sessionInput])
+    setSessionInput(0)
+  }
+
+  // Remove a session
+  const removeSession = (index: number) => {
+    setSessions(sessions.filter((_, i) => i !== index))
+  }
+
+
   const updateMutation = useMutation({
     mutationFn : (data : dataInterface) => axiosInstance.put(`/post/${post._id}`, data),
     onSuccess : (response) => {
@@ -73,11 +86,10 @@ export function EditPostmodal({ post , setPost} : { post : postInterface, setPos
   })
 
   const handleSave = () => {
-    if(!category || !estimatedTime || !sessions ) return errorAlert("empty field")
+    if(!category || !sessions ) return errorAlert("empty field")
     updateMutation.mutate({
         tags,
         sessions,
-        estimatedTime,
         category
     })
   }
@@ -116,31 +128,35 @@ export function EditPostmodal({ post , setPost} : { post : postInterface, setPos
                 </Select>
               </div>
               
-              {/* Estimated Time & Sessions */}
-              <div className="grid grid-cols-2 gap-4 mt-5">
-                <div className="space-y-2">
-                  <Label className="flex items-center gap-2">
-                    <Clock className="w-4 h-4" />
-                    Estimated Time
-                  </Label>
+              <div className="space-y-2 mt-3">
+                <Label className="flex items-center gap-2">
+                  <Layers className="w-4 h-4" />
+                  Sessions (Input Time per Secssion)
+                </Label>
+
+                <div className="flex gap-2">
                   <Input
-                    placeholder="2–3 hours"
-                    value={estimatedTime}
-                    onChange={(e) => setEstimatedTime(e.target.value)}
+                    placeholder="Estimated time per Session (e.g., 2hrs)"
+                    value={sessionInput}
+                    type="number"
+                    onChange={(e) => setSessionInput(Number(e.target.value))}
                   />
+                  <Button type="button" onClick={addSession}>
+                    <Plus />
+                  </Button>
                 </div>
 
-                <div className="space-y-2">
-                  <Label className="flex items-center gap-2">
-                    <Layers className="w-4 h-4" />
-                    Sessions
-                  </Label>
-                  <Input
-                    type="number"
-                    placeholder="1"
-                    value={sessions}
-                    onChange={(e) => setSessions(e.target.value)}
-                  />
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {sessions.map((session, index) => (
+                    <Badge
+                      key={index}
+                      variant="secondary"
+                      className="shadow flex items-center gap-1 hover:text-red-500 cursor-pointer"
+                      onClick={() => removeSession(index)}
+                    >
+                      Session {index + 1} ({session} {session != 1 ? "hrs" : "hr"}) 
+                    </Badge>
+                  ))}
                 </div>
               </div>
               

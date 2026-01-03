@@ -34,8 +34,9 @@ export default function Page() {
   const [tags, setTags] = useState<string[]>([])
 
   const [category, setCategory] = useState("")
-  const [estimatedTime, setEstimatedTime] = useState("")
-  const [sessions, setSessions] = useState("")
+
+  const [sessionInput, setSessionInput] = useState(0)
+  const [sessions, setSessions] = useState<number[]>([])
 
   const postMutation = useMutation({
     mutationFn : (data : FormData) => axiosInstance.post("/post", data),
@@ -56,6 +57,18 @@ export default function Page() {
     setTags(tags.filter(t => t !== tag))
   }
 
+    // Add a session
+  const addSession = () => {
+    if (!sessionInput) return errorAlert("Session cannot be empty")
+    setSessions([...sessions, sessionInput])
+    setSessionInput(0)
+  }
+
+  // Remove a session
+  const removeSession = (index: number) => {
+    setSessions(sessions.filter((_, i) => i !== index))
+  }
+
   const handleImageChange = (file: File | null) => {
     setPostImg(file)
     if (file) {
@@ -66,15 +79,14 @@ export default function Page() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
-    if(!postImg || !tags || !category || !estimatedTime || !sessions) return errorAlert("empty field")
+    if(!postImg || !tags || !category || !sessions) return errorAlert("empty field")
 
     const formData = new FormData()
 
     formData.append("file", postImg)
     formData.append("tags", JSON.stringify(tags))
     formData.append("category", category)
-    formData.append("estimatedTime", estimatedTime)
-    formData.append("sessions", sessions)
+    formData.append("sessions", JSON.stringify(sessions))
 
     postMutation.mutate(formData)
   }
@@ -138,32 +150,38 @@ export default function Page() {
               </div>
               
               {/* Estimated Time & Sessions */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="flex items-center gap-2">
-                    <Clock className="w-4 h-4" />
-                    Estimated Time
-                  </Label>
+              <div className="space-y-2 mt-3">
+                <Label className="flex items-center gap-2">
+                  <Layers className="w-4 h-4" />
+                  Sessions (Input Time per Secssion)
+                </Label>
+
+                <div className="flex gap-2">
                   <Input
-                    placeholder="2–3 hours"
-                    value={estimatedTime}
-                    onChange={(e) => setEstimatedTime(e.target.value)}
+                    placeholder="Estimated time per Session (e.g., 2hrs)"
+                    value={sessionInput}
+                    type="number"
+                    onChange={(e) => setSessionInput(Number(e.target.value))}
                   />
+                  <Button type="button" onClick={addSession}>
+                    <Plus />
+                  </Button>
                 </div>
 
-                <div className="space-y-2">
-                  <Label className="flex items-center gap-2">
-                    <Layers className="w-4 h-4" />
-                    Sessions
-                  </Label>
-                  <Input
-                    type="number"
-                    placeholder="1"
-                    value={sessions}
-                    onChange={(e) => setSessions(e.target.value)}
-                  />
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {sessions.map((session, index) => (
+                    <Badge
+                      key={index}
+                      variant="secondary"
+                      className="shadow flex items-center gap-1 hover:text-red-500 cursor-pointer"
+                      onClick={() => removeSession(index)}
+                    >
+                      Session {index + 1} ({session} {session != 1 ? "hrs" : "hr"}) 
+                    </Badge>
+                  ))}
                 </div>
               </div>
+
               
               {/* Tags */}
               <div className="space-y-2 mt-3">

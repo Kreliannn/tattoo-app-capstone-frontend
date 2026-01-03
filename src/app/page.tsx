@@ -53,12 +53,12 @@ export default function Page() {
               </p>
               <div className="mt-10 flex flex-wrap gap-4">
                 
-                <Link href={"/guest/register"}> 
+                <Link href={"/guest/login"}> 
                   <Button size="lg" className="text-base">
                     Sign In
                   </Button>
                 </Link>
-                <Link href={"/guest/login"}> 
+                <Link href={"/guest/register"}> 
                   <Button size="lg" variant="outline" className="text-base bg-transparent">
                    Sign Up
                   </Button>

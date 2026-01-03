@@ -21,7 +21,7 @@ export default function Page() {
   const [artistInfo, setArtistInfo] = useState<artistInfoInterface | null>(null)
   const [posts, setPosts] = useState<postInterface[]>([])
 
-  const [imgType, setImgType] = useState("client")
+  const [imgType, setImgType] = useState("studio")
 
   const { data : artistInfoData } = useQuery({
     queryKey : ['artist_profile_client'],
@@ -79,9 +79,7 @@ export default function Page() {
         <div className="w-full   mt-8">
             <div className="w-auto flex gap-3 mb-5">
 
-                <div className={`p-3 border shadow ${imgType == "client" && "text-white bg-stone-900"}`} onClick={() => setImgType("client")}>
-                  Past Client
-                </div>
+              
 
 
                 <div className={`p-3 border shadow ${imgType == "studio" && "text-white bg-stone-900"}`} onClick={() => setImgType("studio")}>
@@ -91,13 +89,17 @@ export default function Page() {
                 <div className={`p-3 border shadow ${imgType == "achievement" && "text-white bg-stone-900"}`} onClick={() => setImgType("achievement")}>
                   Artist Achievement
                 </div>
+
+                <div className={`p-3 border shadow ${imgType == "client" && "text-white bg-stone-900"}`} onClick={() => setImgType("client")}>
+                   Client Works
+                </div>
         
             </div>
 
-            {imgType == "client" && <ImgCard type="none" addImg={false} images={posts.map((post) => post.postImg)} />}
+
             {imgType == "studio" && <ImgCard type="studio" addImg={true} images={artistInfo.profileImages.filter(item => item.type === "studio").map(item => item.img)} />}
             {imgType == "achievement" && <ImgCard type="achievement" addImg={true} images={artistInfo.profileImages.filter(item => item.type === "achievement").map(item => item.img)} />}
-
+            {imgType == "client" && <ImgCard type="client" addImg={true} images={artistInfo.profileImages.filter(item => item.type === "client").map(item => item.img)} />}
         </div>
 
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 mt-8">
