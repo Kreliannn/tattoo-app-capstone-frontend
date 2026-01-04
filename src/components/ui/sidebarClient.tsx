@@ -20,6 +20,7 @@ const navigationItems = [
   { title: "Dashboard", url: "/pages/client/dashboard", icon: Home },
   { title: "Posts", url: "/pages/client/posts", icon: UserPlus2 },
   { title: "Map", url: "/pages/client/map", icon: UserPlus2 },
+  { title: "Booking", url: "/pages/client/bookings", icon: UserPlus2 },
 ]
 
 const accountItems = [

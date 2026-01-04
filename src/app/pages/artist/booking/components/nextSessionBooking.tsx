@@ -18,8 +18,9 @@ import axiosInstance from "@/app/utils/axios"
 import { errorAlert, successAlert } from "@/app/utils/alert"
 import { bookingInterfaceInput } from "@/app/types/booking.type"
 import useUserStore from "@/app/store/useUserStore"
+import { bookingInterface } from "@/app/types/booking.type"
 
-export function BookModal({ post } : {post : postInterface}) {
+export function BookNextSession({ booking, setBookings } : {booking : bookingInterface,  setBookings : (data : bookingInterface[]) => void}) {
 
    const [times, setTimes] = useState([
     { time: "07:00", isAvailable: true },
@@ -42,7 +43,7 @@ export function BookModal({ post } : {post : postInterface}) {
 
   const {user} = useUserStore()
 
-  const sessionTime = (post.sessions[0])
+  const sessionTime = (booking.sessions[booking.session])
 
   const [open, setOpen] = useState(false);
 
@@ -55,8 +56,9 @@ export function BookModal({ post } : {post : postInterface}) {
   const [selectedtime, setSelectedTime] = useState<string[]>([])
 
   const bookMutation = useMutation({
-    mutationFn : (booking : bookingInterfaceInput) => axiosInstance.post("/booking", {booking}),
-    onSuccess : () => {
+    mutationFn : (data : {newTime  :string[], newDate : string, id : string}) => axiosInstance.post("/booking/bookNextSession",data),
+    onSuccess : (response) => {
+      setBookings(response.data)
       successAlert("booking submited")
     }, 
     onError : () => errorAlert("error accour")
@@ -67,16 +69,11 @@ export function BookModal({ post } : {post : postInterface}) {
     setOpen(false)
 
     bookMutation.mutate({
-      artist : post.artist._id,
-      client : user?._id,
-      tattooImg : post.postImg,
-      sessions : post.sessions,
-      session : 1,
-      date : date.toLocaleDateString("en-US").toString(),
-      time : selectedtime,
-      duration : selectedtime.length - 1,
-      status : "pending"
-    }) 
+        id : booking._id,
+        newDate : date.toLocaleDateString("en-US").toString(),
+        newTime : selectedtime
+      }) 
+
   }
 
   
@@ -104,8 +101,8 @@ export function BookModal({ post } : {post : postInterface}) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-            <Button className="flex items-center gap-2 "  onClick={() => setOpen(true)}>
-                Book Now
+            <Button className="flex items-center gap-2  bg-green-500 text-white hover:bg-green-600"  onClick={() => setOpen(true)}>
+                Book next Session
             </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[725px]">

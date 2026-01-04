@@ -4,8 +4,9 @@ import { postInterface } from "./post.type";
 export interface bookingInterfaceInput {
     artist : string,
     client : string,  
-    post : string,  
-    RemainingSessions : number,
+    tattooImg : string,
+    sessions : number[],  
+    session : number,
     date : string,
     time : string[]
     duration : number,
@@ -16,8 +17,9 @@ export interface bookingInterface{
     _id : string,
     artist : accountInterface,
     client : accountInterface,  
-    post : postInterface,  
-    RemainingSessions : number,
+    tattooImg : string,
+    sessions : number[],  
+    session : number,
     date : string,
     time : string[]
     duration : number,

@@ -20,6 +20,7 @@ const navigationItems = [
   { title: "Profile", url: "/pages/artist/profile", icon: User },
   { title: "Tattoo Works", url: "/pages/artist/works", icon: UserPlus2 },
   { title: "My Posts", url: "/pages/artist/myPost", icon: UserPlus2 },
+  { title: "Bookings", url: "/pages/artist/booking", icon: UserPlus2 },
 ]
 
 const accountItems = [
