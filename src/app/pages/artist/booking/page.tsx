@@ -24,7 +24,7 @@ export default function Page() {
   
 
   const { data } = useQuery({
-    queryKey: ["client_booking"],
+    queryKey: ["artist_booking"],
     queryFn: () => axiosInstance.get(`/booking/artist/${user?._id}`),
   });
 

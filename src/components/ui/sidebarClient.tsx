@@ -15,6 +15,8 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { useRouter } from "next/navigation"
+import { useQueryClient } from "@tanstack/react-query"
 
 const navigationItems = [
   { title: "Dashboard", url: "/pages/client/dashboard", icon: Home },
@@ -23,9 +25,7 @@ const navigationItems = [
   { title: "Booking", url: "/pages/client/bookings", icon: UserPlus2 },
 ]
 
-const accountItems = [
-  { title: "Logout", url: "/", icon: LogOut }
-]
+
 
 interface AppSidebarProps {
   className?: string
@@ -36,6 +36,18 @@ export function SidebarClient({ className }: AppSidebarProps) {
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen)
   const closeMobileMenu = () => setIsMobileMenuOpen(false)
+
+  const queryClient = useQueryClient();
+
+  const router = useRouter()
+
+  const logoutHandler = async () => {
+    queryClient.clear();
+    localStorage.clear(); 
+    sessionStorage.clear();
+    router.push("/")
+  };
+
 
   return (
     <>
@@ -81,17 +93,16 @@ export function SidebarClient({ className }: AppSidebarProps) {
               </div>
 
               <div className="absolute bottom-6 left-4 right-4">
-                {accountItems.map((item) => (
-                  <Link
-                    key={item.title}
-                    href={item.url}
-                    onClick={closeMobileMenu}
+                <div
+                    onClick={() => {
+                      closeMobileMenu()
+                      logoutHandler()
+                    }}
                     className="flex items-center gap-3 px-3 py-2 text-black hover:bg-gray-100 rounded-lg transition-colors"
                   >
-                    <item.icon size={20} />
-                    <span>{item.title}</span>
-                  </Link>
-                ))}
+                    <LogOut size={20} />
+                    <span>Logout</span>
+                  </div>
               </div>
             </div>
           </div>
@@ -143,16 +154,14 @@ export function SidebarClient({ className }: AppSidebarProps) {
         {/* Footer */}
         <SidebarFooter className="bg-white border-t">
           <SidebarMenu>
-            {accountItems.map((item) => (
-              <SidebarMenuItem key={item.title} className="text-black">
+            <SidebarMenuItem  className="text-black">
                 <SidebarMenuButton asChild className="hover:bg-gray-100">
-                  <Link href={item.url}>
-                    <item.icon />
-                    <span>{item.title}</span>
-                  </Link>
+                  <div onClick={logoutHandler}>
+                    <LogOut />
+                    <span>{"Logout"} </span>
+                  </div>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-            ))}
           </SidebarMenu>
         </SidebarFooter>
 

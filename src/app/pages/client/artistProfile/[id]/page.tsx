@@ -9,7 +9,7 @@ import ImgCard from "./components/imgCard";
 import Link from "next/link";
 import MapLocation from "./components/location";
 import { useParams } from "next/navigation";
-
+import { ArtistCalendar } from "./components/artistCalendar";
 
 export default function Page() {
   
@@ -101,6 +101,8 @@ export default function Page() {
             {imgType == "achievement" && <ImgCard type="achievement" addImg={true} images={artistInfo.profileImages.filter(item => item.type === "achievement").map(item => item.img)} />}
             {imgType == "client" && <ImgCard type="client" addImg={true} images={artistInfo.profileImages.filter(item => item.type === "client").map(item => item.img)} />}
         </div>
+
+        <ArtistCalendar artistId={artistInfo.artist._id} />
 
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 mt-8">
           <div className="h-[300px] shadow-lg border rounded p-4">

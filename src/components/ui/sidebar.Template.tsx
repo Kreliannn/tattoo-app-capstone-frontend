@@ -16,6 +16,13 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 
+import { useQueryClient } from "@tanstack/react-query";
+
+
+
+
+
+
 const navigationItems = [
   { title: "Dashboard", url: "/pages/admin/home", icon: Home },
   { title: "Employee", url: "/pages/admin/addEmployee", icon: UserPlus2 },
@@ -40,6 +47,15 @@ export function TestSideBar({ className }: AppSidebarProps) {
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen)
   const closeMobileMenu = () => setIsMobileMenuOpen(false)
+
+  const queryClient = useQueryClient();
+
+  const logoutHandler = async () => {
+    queryClient.clear();
+    localStorage.clear(); 
+    sessionStorage.clear();
+
+  };
 
   return (
     <>

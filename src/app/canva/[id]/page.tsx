@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useRef, useEffect } from 'react';
 import { Stage, Layer, Image as KonvaImage, Transformer } from 'react-konva';
-import { Upload, Eraser, Image, Copy, FlipHorizontal, FlipVertical, Palette, ZoomIn, ZoomOut, Undo, ChevronUp, ChevronDown, Loader2, Search, X } from 'lucide-react';
+import { ArrowLeft,Upload, Eraser, Image, Copy, FlipHorizontal, FlipVertical, Palette, ZoomIn, ZoomOut, Undo, ChevronUp, ChevronDown, Loader2, Search, X } from 'lucide-react';
 import Konva from 'konva';
 import { removeBackground } from '@imgly/background-removal';
 import useUpload from '../../utils/upload';
@@ -10,7 +10,11 @@ import { useParams } from "next/navigation"
 import axiosInstance from '@/app/utils/axios';
 import useUserStore from '@/app/store/useUserStore';
 import { designInterface } from '@/app/types/works.type';
-import { successAlert, errorAlert } from '@/app/utils/alert';
+import { successAlert, errorAlert, confirmAlert } from '@/app/utils/alert';
+import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+
+
 
 interface ImageLayer {
   id: string;
@@ -41,6 +45,8 @@ interface LayerHistoryEntry {
 type HistoryEntry = ImageEditHistoryEntry | LayerHistoryEntry;
 
 const TattooEditor: React.FC = () => {
+
+  const router = useRouter()
 
   const [layers, setLayers] = useState<ImageLayer[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -264,11 +270,11 @@ const TattooEditor: React.FC = () => {
   };
 
   const clickSearchImage = (url: string, description: string) => {
-    if (window.confirm("Are you sure you want to add this image?")) {
+    confirmAlert("you want to add this image?", "add", () => {
       setIsAddingImage(true)
       setShowSearchModal(false);
       loadSearchedImage(url, description)
-    } 
+    })
   }
 
   const loadSearchedImage = (url: string, description: string) => {
@@ -992,15 +998,19 @@ const TattooEditor: React.FC = () => {
  
   return (
     <div className="flex h-screen bg-gray-900">
+
+      <Button className="absolute left-[335px] top-5 z-100" size="lg" variant={"outline"} onClick={() => router.back()}>
+          <ArrowLeft /> Back
+      </Button>
+
+
       <button onClick={saveCanva} className='absolute top-2 right-2 bg-white outline  p-3 text-stone-900 hover:bg-stone-200 rounded-lg z-10'>
         save
       </button>
 
  
 
-      <button onClick={exportCanvasImage}  className='absolute top-2 right-40 bg-white outline  p-3 text-stone-900 hover:bg-stone-200 rounded-lg z-10'>
-        Export 
-      </button>
+    
 
 
       {/* Search Modal */}

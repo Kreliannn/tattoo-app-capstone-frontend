@@ -23,7 +23,7 @@ export default function Page() {
   });
 
   useEffect(() => {
-    if (data?.data) setBookings(data.data);
+    if (data?.data) setBookings(data.data.reverse());
   }, [data]);
 
   return (

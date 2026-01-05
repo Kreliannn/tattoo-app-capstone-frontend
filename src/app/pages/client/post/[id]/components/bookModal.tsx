@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Calendar } from "@/components/ui/calendar"
 import { convertToAmPm } from "@/app/utils/customFunction"
 import { postInterface } from "@/app/types/post.type"
@@ -18,27 +18,31 @@ import axiosInstance from "@/app/utils/axios"
 import { errorAlert, successAlert } from "@/app/utils/alert"
 import { bookingInterfaceInput } from "@/app/types/booking.type"
 import useUserStore from "@/app/store/useUserStore"
+import { bookingInterface } from "@/app/types/booking.type"
+import { LockIcon } from "lucide-react"
 
 export function BookModal({ post } : {post : postInterface}) {
 
-   const [times, setTimes] = useState([
-    { time: "07:00", isAvailable: true },
-    { time: "08:00", isAvailable: true },
-    { time: "09:00", isAvailable: true },
-    { time: "10:00", isAvailable: true },
-    { time: "11:00", isAvailable: true },
-    { time: "12:00", isAvailable: true },
-    { time: "13:00", isAvailable: true },
-    { time: "14:00", isAvailable: true },
-    { time: "15:00", isAvailable: true },
-    { time: "16:00", isAvailable: true },
-    { time: "17:00", isAvailable: true },
-    { time: "18:00", isAvailable: true },
-    { time: "19:00", isAvailable: true },
-    { time: "20:00", isAvailable: true },
-    { time: "21:00", isAvailable: true },
-    { time: "22:00", isAvailable: true },
-  ])
+   const times = [
+    "07:00",
+    "08:00",
+    "09:00",
+    "10:00",
+    "11:00",
+    "12:00",
+    "13:00",
+    "14:00",
+    "15:00",
+    "16:00",
+    "17:00",
+    "18:00",
+    "19:00",
+    "20:00",
+    "21:00",
+    "22:00"
+  ]
+  
+  
 
   const {user} = useUserStore()
 
@@ -54,17 +58,39 @@ export function BookModal({ post } : {post : postInterface}) {
   
   const [selectedtime, setSelectedTime] = useState<string[]>([])
 
+  const [artistBookings, setArtistBookings] = useState<bookingInterface[]>([]);
+ 
+  const { data } = useQuery({
+    queryKey: ["artist_booking"],
+    queryFn: () => axiosInstance.get(`/booking/artist/${post.artist._id}`),
+  });
+
+  useEffect(() => {
+    if (data?.data && date) setArtistBookings(data.data.filter((e : bookingInterface) => e.status == "active" && e.date == date.toLocaleDateString("en-US").toString() ));
+  }, [data, date]);
+
   const bookMutation = useMutation({
     mutationFn : (booking : bookingInterfaceInput) => axiosInstance.post("/booking", {booking}),
     onSuccess : () => {
+      setOpen(false)
+      setSelectedTime([])
       successAlert("booking submited")
     }, 
     onError : () => errorAlert("error accour")
   })
 
+  const validateBookings = () => {
+    let isError = false
+    selectedtime.forEach((item) => {
+      if(checkIfTimeBooked(item))  isError = true
+    })
+    return isError
+  }
+
   const bookHandler = () => {
     if(!date || !selectStartTime || !user) return errorAlert("empty date or time")
-    setOpen(false)
+    if(validateBookings()) return errorAlert('invalid time')
+    
 
     bookMutation.mutate({
       artist : post.artist._id,
@@ -86,7 +112,7 @@ export function BookModal({ post } : {post : postInterface}) {
     
     for(let i = index; i <= (sessionTime + index); i++){
         try{
-          selectedItem.push(times[i].time)
+          selectedItem.push(times[i])
         } catch(e){
           errorAlert("invalid")
           return
@@ -94,9 +120,20 @@ export function BookModal({ post } : {post : postInterface}) {
        
     }
 
-    setStartTime(times[index].time)
-    setEndTime(times[index + sessionTime].time)
+    setStartTime(times[index])
+    setEndTime(times[index + sessionTime])
     setSelectedTime(selectedItem)
+  }
+
+
+  const checkIfTimeBooked = (time : string) => {
+    if(!date) return 
+    let isBooked = false
+    if(artistBookings.length == 0) return isBooked
+    artistBookings.forEach((item) => {
+      if(item.time.includes(time)) isBooked = true
+    })
+    return isBooked
   }
   
 
@@ -130,18 +167,19 @@ export function BookModal({ post } : {post : postInterface}) {
                 <div className="w-full rounded shadow-lg border p-5">
                      <div className="space-y-3">
                         <p className="text-sm font-bold  text-stone-600 ">
-                            {startTime && endTime ?`Session Duration : ${sessionTime } ${sessionTime != 0 ? "hrs" : "hr"} | Start : ${convertToAmPm(startTime)} End : ${convertToAmPm(endTime)}` : "Select Start Time"}
+                            {startTime && endTime ?`Date : ${date.toLocaleDateString("en-US").toString()} | Duration : ${sessionTime } ${sessionTime != 1 ? "hrs" : "hr"} |  ${convertToAmPm(startTime)} - ${convertToAmPm(endTime)}` : `Date : ${date.toLocaleDateString("en-US").toString()}`}
                         </p>
 
                         <div className="grid grid-cols-4 gap-2">
                             {times.map((item, index) => (
                                 <Button
-                                    key={item.time}
-                                    variant={(selectedtime.includes(item.time)) ? "default" : "outline"}
-                                    disabled={!item.isAvailable}
+                                    key={item}
+                                    variant={(selectedtime.includes(item)) ? "default" : "outline"}
+                                    disabled={checkIfTimeBooked(item)}
                                     onClick={() => selectStartTime(index)}
+                                    className={`${selectedtime.includes(item) && checkIfTimeBooked(item) && "text-red-500 border-2"}`}
                                 >
-                                    {convertToAmPm(item.time)}
+                                  {checkIfTimeBooked(item) && <LockIcon />}  {convertToAmPm(item)}
                                 </Button>
                             ))}
                         </div>
