@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { useState } from "react"
- import { Plus, ImageIcon } from "lucide-react"
+ import { Plus, ImageIcon, LoaderCircle } from "lucide-react"
  import { Input } from "@/components/ui/input"
  import { Label } from "@/components/ui/label"
  import { useMutation } from "@tanstack/react-query"
@@ -40,6 +40,7 @@ export function ChangeProfile({ profile } : { profile : string}) {
     onError : () => errorAlert("error accour")
   })
 
+ 
   const handleImageChange = (file: File | null) => {
     setImg(file)
     if (file) {
@@ -102,7 +103,7 @@ export function ChangeProfile({ profile } : { profile : string}) {
         </div>
   
         <DialogFooter className="flex justify-center">
-          <Button className="w-full " onClick={handleUploadImg}> Change Profile </Button>
+          <Button disabled={uploadMutation.isPending} className="w-full " onClick={handleUploadImg}> {uploadMutation.isPending &&   <LoaderCircle className="h-4 w-4 animate-spin" />} Change Profile </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

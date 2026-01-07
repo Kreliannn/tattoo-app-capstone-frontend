@@ -19,6 +19,7 @@ import {
   Clock,
   Layers,
   Tag,
+  LoaderCircle
 } from "lucide-react"
 import { errorAlert , successAlert} from "@/app/utils/alert"
 import { useMutation } from "@tanstack/react-query"
@@ -220,8 +221,8 @@ export default function Page() {
 
     
       
-        <Button type="submit" className="w-full">
-          Submit Post
+        <Button type="submit" className="w-full" disabled={postMutation.isPending}>
+         {postMutation.isPending &&   <LoaderCircle className="h-4 w-4 animate-spin" />} Submit Post
         </Button>
       </form>
     </div>

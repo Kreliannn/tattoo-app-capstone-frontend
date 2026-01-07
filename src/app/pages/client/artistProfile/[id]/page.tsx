@@ -97,9 +97,9 @@ export default function Page() {
             </div>
 
 
-            {imgType == "studio" && <ImgCard type="studio" addImg={true} images={artistInfo.profileImages.filter(item => item.type === "studio").map(item => item.img)} />}
-            {imgType == "achievement" && <ImgCard type="achievement" addImg={true} images={artistInfo.profileImages.filter(item => item.type === "achievement").map(item => item.img)} />}
-            {imgType == "client" && <ImgCard type="client" addImg={true} images={artistInfo.profileImages.filter(item => item.type === "client").map(item => item.img)} />}
+            {imgType == "studio" && <ImgCard type="studio" addImg={true} images={artistInfo.profileImages.filter(item => item.type === "studio").map(item => item.fileUrl)} />}
+            {imgType == "achievement" && <ImgCard type="achievement" addImg={true} images={artistInfo.profileImages.filter(item => item.type === "achievement").map(item => item.fileUrl)} />}
+            {imgType == "client" && <ImgCard type="client" addImg={true} images={artistInfo.profileImages.filter(item => item.type === "client").map(item => item.fileUrl)} />}
         </div>
 
         <ArtistCalendar artistId={artistInfo.artist._id} />

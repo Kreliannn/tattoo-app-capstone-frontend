@@ -19,7 +19,8 @@ export interface artistInfoInterfaceInput {
     bio : string,
     profileImages : {
         type : string,
-        img : string,
+        fileUrl : string,
+        fileType : string
     }[], 
     location : {
         long : number,
@@ -33,7 +34,8 @@ export interface artistInfoInterface {
     bio : string,
     profileImages : {
         type : string,
-        img : string,
+        fileUrl : string,
+        fileType : string
     }[], 
     location : {
         long : number,

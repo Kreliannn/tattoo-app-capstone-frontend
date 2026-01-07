@@ -2,9 +2,9 @@
 import { Plus } from "lucide-react"
 import { UploadImageModal } from "./uploadImageModal"
 
-export default function ImgCard({ images , type, addImg} :  { images : string[], type : string, addImg : boolean }) {
+export default function ImgCard({ files , type, addImg} :  { files : { fileUrl : string, fileType  :string, type  :string}[], type : string, addImg : boolean }) {
 
-  if(images.length == 0){
+  if(files.length == 0){
     return(
         <div className="w-full flex gap-3 ">
              <div   className="w-[200px] h-[250px] rounded shadow border flex justify-center items-center">
@@ -18,13 +18,26 @@ export default function ImgCard({ images , type, addImg} :  { images : string[],
 
   return (
     <div className="w-full overflow-x-auto overflow-y-hidden flex gap-3">
-    {images.map((img, index) => (
+    {files.map((file, index) => (
       <div key={index} className="min-w-[200px] h-[250px] rounded shadow border">
-        <img
-          src={img}
-          alt=""
-          className="w-full h-full rounded object-cover"
-        />
+        {file.fileType == "image"
+          ?(    <img
+            src={file.fileUrl}
+            alt=""
+            className="w-full h-full rounded object-cover"
+          />
+          ):(
+            <video
+              src={file.fileUrl}
+              className="w-full h-full rounded object-cover"
+              autoPlay
+              loop
+              muted
+            />
+          
+        )
+        }
+    
       </div>
     ))}
     {addImg && <UploadImageModal type={type} />}
