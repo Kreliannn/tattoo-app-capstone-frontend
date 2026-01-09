@@ -5,7 +5,11 @@ export interface accountInterfaceInput {
     contact: string,
     username: string,
     password: string,
-    profile : string
+    profile : string,
+    location : {
+        long : number,
+        lat : number,
+    } | null,
 }
 
 export interface accountInterface extends accountInterfaceInput {
@@ -22,10 +26,6 @@ export interface artistInfoInterfaceInput {
         fileUrl : string,
         fileType : string
     }[], 
-    location : {
-        long : number,
-        lat : number,
-    } | null,
 }
 
 export interface artistInfoInterface {
@@ -37,8 +37,4 @@ export interface artistInfoInterface {
         fileUrl : string,
         fileType : string
     }[], 
-    location : {
-        long : number,
-        lat : number,
-    } | null,
 }

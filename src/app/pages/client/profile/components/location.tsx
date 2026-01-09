@@ -18,12 +18,9 @@ import { useMutation } from "@tanstack/react-query";
 import axiosInstance from "@/app/utils/axios";
 import { successAlert, errorAlert } from "@/app/utils/alert";
 import { mapIcon } from "@/app/utils/customFunction";
+import useUserStore from "@/app/store/useUserStore";
 
 
-interface ClickableMapProps {
-    artistInfo : artistInfoInterface,
-    setArtistInfo : (data : artistInfoInterface) => void
-}
 
 
 
@@ -31,9 +28,13 @@ interface ClickableMapProps {
 
 
   
-const MapLocation: React.FC<ClickableMapProps>  = ({ artistInfo, setArtistInfo }) => {
+const MapLocation = () => {
 
-  const location = artistInfo.artist.location
+  const {user, setUser} = useUserStore()
+
+  if(!user) return null
+
+  const location = user?.location
 
 
   const [mapLocation, setMapLocation] = useState<{ lat: number, long: number } | null>(location)
@@ -56,9 +57,9 @@ const MapLocation: React.FC<ClickableMapProps>  = ({ artistInfo, setArtistInfo }
   const defaultPosition: L.LatLngExpression = [14.315885007395133, 120.94680688824083]; 
 
   const updateMutation = useMutation({
-    mutationFn : (location : { lat : number, long : number}) => axiosInstance.put(`/account/location/${artistInfo.artist._id}`, {location}),
+    mutationFn : (location : { lat : number, long : number}) => axiosInstance.put(`/account/location/${user?._id}`, {location}),
     onSuccess : (response) => {
-        setArtistInfo(response.data.artistInfo)
+        setUser(response.data.account)
         setOpen(false)
         successAlert("location updated")
     },
@@ -77,7 +78,7 @@ const MapLocation: React.FC<ClickableMapProps>  = ({ artistInfo, setArtistInfo }
         {!open && (
             <div className="w-full h-full rounded" onClick={() => setOpen(true)}> 
                 <MapContainer 
-                  key={artistInfo._id} 
+                  key={user._id} 
                   center={location ? [location.lat, location.long] : defaultPosition } 
                   zoom={13} 
                   style={{ height: '100%', width: '100%' }} 
@@ -91,7 +92,7 @@ const MapLocation: React.FC<ClickableMapProps>  = ({ artistInfo, setArtistInfo }
                   <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                   <MapClickHandler />
                   {location && (
-                      <Marker position={[location.lat, location.long]} icon={mapIcon(artistInfo.artist.profile)}>
+                      <Marker position={[location.lat, location.long]} icon={mapIcon(user.profile)}>
               
                       </Marker>
                   )}
@@ -110,11 +111,11 @@ const MapLocation: React.FC<ClickableMapProps>  = ({ artistInfo, setArtistInfo }
     
         <div className=" gap-6 w-full h-[500px] mt-10">
          
-        <MapContainer center={defaultPosition} zoom={13} style={{ height: '90%', width: '100%' }}  key={artistInfo._id} >
+        <MapContainer center={defaultPosition} zoom={13} style={{ height: '90%', width: '100%' }}  key={user._id} >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <MapClickHandler />
         {mapLocation && (
-            <Marker position={[mapLocation.lat, mapLocation.long]} icon={mapIcon(artistInfo.artist.profile)}>
+            <Marker position={[mapLocation.lat, mapLocation.long]} icon={mapIcon(user.profile)}>
          
             </Marker>
         )}

@@ -21,8 +21,7 @@ export default function Home() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [contact, setContact] = useState("");
-  const [name, setName] = useState("");
-  const [type, setType] = useState("");
+  const [name, setName] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -37,7 +36,6 @@ export default function Home() {
       successAlert("account registered")
       setIsLoading(false)
       setName("")
-      setType("")
       setUsername("")
       setPassword("")
       setConfirmPassword("")
@@ -53,7 +51,7 @@ export default function Home() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if(!name || !type || !username || !password || !contact) return errorAlert("empty field")
+    if(!name ||  !username || !password || !contact) return errorAlert("empty field")
 
     if(password != confirmPassword) return errorAlert("confirm password not match")
 
@@ -61,11 +59,12 @@ export default function Home() {
 
     mutation.mutate({
       name,
-      type,
+      type : "client",
       username,
       password,
       contact,
-      profile
+      profile,
+      location : null
     });
 
     setIsLoading(true)
@@ -137,7 +136,7 @@ export default function Home() {
             </div>
 
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
               {/* Username Field */}
               <div className="space-y-2">
                 <label className="block text-xs font-medium text-stone-800 uppercase tracking-wide">
@@ -158,23 +157,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <label className="block text-xs font-medium text-stone-800 uppercase tracking-wide">
-                  Account Type
-                </label>
-                <div className="relative">
-                    <Select value={type} onValueChange={setType}>
-                      <SelectTrigger className="w-full mt-4">
-                        <SelectValue placeholder="Select option" />
-                      </SelectTrigger>
-
-                      <SelectContent>
-                        <SelectItem value="client">Client</SelectItem>
-                        <SelectItem value="artist">Artist</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-              </div>
+         
             </div>
 
 

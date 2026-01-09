@@ -19,10 +19,8 @@ import { useRouter } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
 
 const navigationItems = [
-  { title: "profile", url: "/pages/client/profile", icon: Home },
-  { title: "Posts", url: "/pages/client/posts", icon: UserPlus2 },
-  { title: "Map", url: "/pages/client/map", icon: UserPlus2 },
-  { title: "Booking", url: "/pages/client/bookings", icon: UserPlus2 },
+  { title: "Dashboard", url: "/pages/client/dashboard", icon: Home },
+  { title: "Verify Artist", url: "/pages/admin/verifyArtist", icon: UserPlus2 },
 ]
 
 
@@ -31,7 +29,7 @@ interface AppSidebarProps {
   className?: string
 }
 
-export function SidebarClient({ className }: AppSidebarProps) {
+export function SideBarAdmin({ className }: AppSidebarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen)
@@ -58,7 +56,7 @@ export function SidebarClient({ className }: AppSidebarProps) {
             <img src="/web/logo.jpg" alt="Logo" className="object-cover w-full h-full rounded-lg" />
           </div>
           <div className="flex flex-col">
-            <span className="font-semibold text-sm">Client</span>
+            <span className="font-semibold text-sm">Admin</span>
             <span className="text-xs text-gray-500">page</span>
           </div>
         </div>
@@ -121,7 +119,7 @@ export function SidebarClient({ className }: AppSidebarProps) {
                     <img src="/web/logo.jpg" alt="Logo" className="object-cover w-full h-full rounded-lg" />
                   </div>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold text-black">Client</span>
+                    <span className="truncate font-semibold text-black">Admin</span>
                     <span className="truncate text-xs text-gray-500">Page</span>
                   </div>
                 </a>

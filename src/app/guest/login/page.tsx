@@ -29,15 +29,16 @@ export default function Home() {
       console.log(account)
       switch(account.type){
         case "client":
-          router.push(`/pages/client/dashboard`);
+          router.push(`/pages/client/profile`);
         break
 
         case "artist":
           router.push(`/pages/artist/profile`);
         break
 
-        default:
-          errorAlert("yey")
+        case "admin":
+          router.push(`/pages/admin/dashboard`);
+        break
       }
       
     },

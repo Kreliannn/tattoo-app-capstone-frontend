@@ -47,7 +47,7 @@ const MapLocation: React.FC<ClickableMapProps>  = ({ artistInfo, setArtistInfo }
             <div className="w-full h-full rounded" onClick={() => setOpen(true)}> 
               <MapContainer 
                key={artistInfo._id} 
-              center={artistInfo.location ? [artistInfo.location.lat, artistInfo.location.long] : defaultPosition } 
+              center={artistInfo.artist.location ? [artistInfo.artist.location.lat, artistInfo.artist.location.long] : defaultPosition } 
               zoom={13} 
               style={{ height: '100%', width: '100%' }} 
               dragging={false}
@@ -59,8 +59,8 @@ const MapLocation: React.FC<ClickableMapProps>  = ({ artistInfo, setArtistInfo }
               >
                   <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 
-                  {artistInfo.location && (
-                      <Marker position={[artistInfo.location.lat, artistInfo.location.long]} icon={mapIcon(artistInfo.artist.profile)}>
+                  {artistInfo.artist.location && (
+                      <Marker position={[artistInfo.artist.location.lat, artistInfo.artist.location.long]} icon={mapIcon(artistInfo.artist.profile)}>
               
                       </Marker>
                   )}
@@ -82,8 +82,8 @@ const MapLocation: React.FC<ClickableMapProps>  = ({ artistInfo, setArtistInfo }
         <MapContainer center={defaultPosition} zoom={13} style={{ height: '100%', width: '100%' }}  key={artistInfo._id} >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       
-        {artistInfo.location && (
-            <Marker position={[artistInfo.location.lat, artistInfo.location.long]} icon={mapIcon(artistInfo.artist.profile)}>
+        {artistInfo.artist.location && (
+            <Marker position={[artistInfo.artist.location.lat, artistInfo.artist.location.long]} icon={mapIcon(artistInfo.artist.profile)}>
          
             </Marker>
         )}

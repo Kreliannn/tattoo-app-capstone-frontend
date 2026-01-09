@@ -35,10 +35,10 @@ const App: React.FC = () => {
         {
             artistInfo?.map((artist) => {
 
-                if(!artist.location) return null
+                if(!artist.artist.location) return null
                 
                 return(
-                    <Marker key={artist._id} position={[artist.location.lat, artist.location.long]}  icon={mapIcon(artist.artist.profile)}>
+                    <Marker key={artist._id} position={[artist.artist.location.lat, artist.artist.location.long]}  icon={mapIcon(artist.artist.profile)}>
                         <Popup>
                             <div className=" p-3 flex flex-col items-center text-center gap-2">
                                 
