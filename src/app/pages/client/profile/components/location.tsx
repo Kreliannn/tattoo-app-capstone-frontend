@@ -75,30 +75,7 @@ const MapLocation = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        {!open && (
-            <div className="w-full h-full rounded" onClick={() => setOpen(true)}> 
-                <MapContainer 
-                  key={user._id} 
-                  center={location ? [location.lat, location.long] : defaultPosition } 
-                  zoom={13} 
-                  style={{ height: '100%', width: '100%' }} 
-                  dragging={false}
-                  scrollWheelZoom={false}
-                  doubleClickZoom={false}
-                  zoomControl={false}
-                  touchZoom={false}
-                  keyboard={false}
-                >
-                  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                  <MapClickHandler />
-                  {location && (
-                      <Marker position={[location.lat, location.long]} icon={mapIcon(user.profile)}>
-              
-                      </Marker>
-                  )}
-              </MapContainer>
-            </div>
-        )}
+        <Button onClick={() => setOpen(true)}> Set Location  </Button>
       </DialogTrigger>
       <DialogHeader>
           <DialogTitle>     </DialogTitle>

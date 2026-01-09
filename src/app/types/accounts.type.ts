@@ -38,3 +38,9 @@ export interface artistInfoInterface {
         fileType : string
     }[], 
 }
+
+export interface artistVerificationInterface {
+    _id : string,
+    client : accountInterface,
+    validId : string
+}

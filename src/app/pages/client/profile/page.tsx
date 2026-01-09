@@ -7,6 +7,7 @@ import { artistInfoInterface } from "@/app/types/accounts.type";
 import { postInterface } from "@/app/types/post.type";
 import { ChangeProfile } from "./components/changeProfile";
 import MapLocation from "./components/location";
+import { ArtistVerifiactionModal } from "./components/artistVerificationModal";
 
 import Link from "next/link";
 
@@ -37,6 +38,10 @@ export default function Page() {
                   {user.name}
                 </h1>
               </div>
+
+              <div className="text-lg text-gray-700 ">
+                {user.contact || "No contact available"}
+              </div>
         
         
             </div>
@@ -47,13 +52,13 @@ export default function Page() {
 
 
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 mt-8">
-          <div className="h-[300px] shadow-lg border rounded p-4">
 
-          </div>
-
-          <div className="h-[300px] shadow-lg border rounded p-4">
+          <div className=" shadow-lg border rounded p-4 flex gap-2">
+            <ArtistVerifiactionModal />
             <MapLocation   />
           </div>
+
+
         </div>
 
 
