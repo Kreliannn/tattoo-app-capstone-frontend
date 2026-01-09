@@ -9,7 +9,7 @@ export default function ManagerLayout({ children } : { children: React.ReactNode
 
     const {user} = useUserStore()
 
-    if(!user || user.type != "client") return <UnauthorizedPage />
+    if(!user) return <UnauthorizedPage />
 
     return (
       <div className="flex min-h-screen ">

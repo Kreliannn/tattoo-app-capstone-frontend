@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, use } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -13,8 +13,11 @@ import { postInterface } from "@/app/types/post.type"
 import Link from "next/link"
 import { Box } from "lucide-react"
 import { BookModal } from "./components/bookModal"
+import useUserStore from "@/app/store/useUserStore"
 
 export default function Page() {
+
+  const { user } = useUserStore()
 
   const params = useParams()
   const postId = params.id as string
@@ -49,8 +52,8 @@ export default function Page() {
 
       <div className="border relative rounded-2xl p-6 shadow-sm bg-white flex gap-5">
 
-        <BookModal post={post} />
-            
+        {user?._id != post.artist._id && <BookModal post={post} />}
+       
         <Link   href={{
             pathname: "/3d",
             query: { img: post.postImg },
@@ -168,47 +171,7 @@ export default function Page() {
       </div>
 
 
-      {/* Reviews */}
-      <div className="border rounded-2xl p-6 shadow-sm bg-white space-y-4">
-        <Label className="text-lg font-semibold text-gray-700">
-          Client Reviews
-        </Label>
-
-        {post.reviews.length === 0 && (
-          <p className="text-lg text-gray-500">No reviews yet.</p>
-        )}
-
-        <div className="space-y-4">
-          {post.reviews.map((review, index) => (
-            <div
-              key={index}
-              className="border rounded-xl p-4 space-y-2"
-            >
-              <div className="flex justify-between items-center">
-                <p className="text-lg font-semibold">
-                  {review.client}
-                </p>
-                <p className="text-lg text-yellow-500">
-                  ⭐ {review.rating}/5
-                </p>
-              </div>
-
-              <p className="text-base text-gray-700">
-                {review.comment}
-              </p>
-
-              {review.img && (
-                <img
-                  src={review.img}
-                  alt="review"
-                  className="w-full h-48 object-cover rounded-lg"
-                />
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-
+ 
  
 
     </div>

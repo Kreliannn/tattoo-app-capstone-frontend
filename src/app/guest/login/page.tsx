@@ -26,7 +26,6 @@ export default function Home() {
       const { account, token } = res.data;
       localStorage.setItem("token", token);
       setUser(account);
-      console.log(account)
       switch(account.type){
         case "client":
           router.push(`/pages/client/profile`);

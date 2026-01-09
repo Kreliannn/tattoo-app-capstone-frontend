@@ -10,6 +10,7 @@ import Link from "next/link";
 import { ChangeProfile } from "./components/changeProfile";
 import MapLocation from "./components/location";
 import { ArtistCalendar } from "./components/artistCalendar";
+import { Button } from "@/components/ui/button";
 
 export default function Page() {
   
@@ -64,11 +65,17 @@ export default function Page() {
             </div>
            
           </div>
-  
+
         </div>
 
-        <div className="w-full   mt-8">
-            <div className="w-auto flex gap-3 mb-5">
+        <div className=" mt-8  flex gap-2">
+          <Link href={"/pages/client/profile"}> <Button> Switch to Client </Button> </Link>    
+          <Button> Edit Profile </Button>
+          <Button> Edit Schedule </Button>
+        </div>
+
+        <div className="w-full   mt-5">
+            <div className="w-auto flex  gap-3 mb-5">
 
                 <div className={`p-3 border shadow ${imgType == "studio" && "text-white bg-stone-900"}`} onClick={() => setImgType("studio")}>
                     Tattoo Studio

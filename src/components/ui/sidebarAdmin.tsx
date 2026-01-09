@@ -19,7 +19,7 @@ import { useRouter } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
 
 const navigationItems = [
-  { title: "Dashboard", url: "/pages/client/dashboard", icon: Home },
+  { title: "Dashboard", url: "/pages/admin/dashboard", icon: Home },
   { title: "Verify Artist", url: "/pages/admin/verifyArtist", icon: UserPlus2 },
 ]
 

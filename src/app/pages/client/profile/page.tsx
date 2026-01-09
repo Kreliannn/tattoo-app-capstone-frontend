@@ -8,13 +8,27 @@ import { postInterface } from "@/app/types/post.type";
 import { ChangeProfile } from "./components/changeProfile";
 import MapLocation from "./components/location";
 import { ArtistVerifiactionModal } from "./components/artistVerificationModal";
-
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 
 export default function Page() {
   
-  const { user } = useUserStore()
+  const { user, setUser } = useUserStore()
+
+  const { data } = useQuery({
+    queryKey : ['account'],
+    queryFn : () => axiosInstance.get(`/account/${user?._id}`),
+    refetchInterval : 5000
+  })
+
+  useEffect(() => {
+      if(data?.data){
+        console.log(data.data)
+        setUser(data.data)
+      } 
+  },[data])
+
 
   if(!user) return <div> laoding </div>
 
@@ -53,18 +67,13 @@ export default function Page() {
 
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 mt-8">
 
-          <div className=" shadow-lg border rounded p-4 flex gap-2">
-            <ArtistVerifiactionModal />
+          <div className="  flex gap-2">
+            {user.type == "client" ?   <ArtistVerifiactionModal /> : <Link href={"/pages/artist/profile"}> <Button className="bg-green-500 hover:bg-green-600"> Switch to Artist </Button> </Link> }
             <MapLocation   />
           </div>
 
 
         </div>
-
-
-
-       
-   
   
       </div>
     </div>

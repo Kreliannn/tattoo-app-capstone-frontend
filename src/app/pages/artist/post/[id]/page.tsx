@@ -169,46 +169,7 @@ export default function Page() {
       </div>
 
 
-      {/* Reviews */}
-      <div className="border rounded-2xl p-6 shadow-sm bg-white space-y-4">
-        <Label className="text-lg font-semibold text-gray-700">
-          Client Reviews
-        </Label>
-
-        {post.reviews.length === 0 && (
-          <p className="text-lg text-gray-500">No reviews yet.</p>
-        )}
-
-        <div className="space-y-4">
-          {post.reviews.map((review, index) => (
-            <div
-              key={index}
-              className="border rounded-xl p-4 space-y-2"
-            >
-              <div className="flex justify-between items-center">
-                <p className="text-lg font-semibold">
-                  {review.client}
-                </p>
-                <p className="text-lg text-yellow-500">
-                  ⭐ {review.rating}/5
-                </p>
-              </div>
-
-              <p className="text-base text-gray-700">
-                {review.comment}
-              </p>
-
-              {review.img && (
-                <img
-                  src={review.img}
-                  alt="review"
-                  className="w-full h-48 object-cover rounded-lg"
-                />
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
+     
 
  
 
