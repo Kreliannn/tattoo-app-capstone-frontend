@@ -22,12 +22,36 @@ import {
   LoaderCircle
 } from "lucide-react"
 import { errorAlert , successAlert} from "@/app/utils/alert"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import axiosInstance from "@/app/utils/axios"
-
-
+import { useParams } from "next/navigation"
+import { useRouter } from "next/navigation"
+import Swal from "sweetalert2"
 
 export default function Page() {
+
+  const [type, setType] = useState("newPost")
+
+  const params = useParams()
+  const paramsId = params.id as string
+
+
+  const { data } = useQuery({
+    queryKey : ['work_post'],
+    queryFn : () =>  axiosInstance.get(`/works/${paramsId}`),
+    enabled: paramsId !== 'new'
+  })
+
+  useEffect(() => {
+    if(paramsId != "new" && data?.data){
+        setType("workPost")
+        setPreview(data.data.screenShot)
+    }
+  }, [data])
+
+  
+  const router = useRouter()
+
   const [postImg, setPostImg] = useState<File | null>(null)
   const [preview, setPreview] = useState<string | null>(null)
 
@@ -42,7 +66,15 @@ export default function Page() {
   const postMutation = useMutation({
     mutationFn : (data : FormData) => axiosInstance.post("/post", data),
     onSuccess : () => {
-      successAlert("post created")
+      
+      Swal.fire({
+        icon: "success",
+        title: "Post created",
+        text: "Your post was added successfully"
+      }).then(() => {
+        router.push("/pages/artist/myPost")
+      });
+
     },
     onError : () => errorAlert("error accour")
   })
@@ -80,14 +112,18 @@ export default function Page() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
-    if(!postImg || !tags || !category || !sessions) return errorAlert("empty field")
+    if(!tags || !category || !sessions) return errorAlert("empty field")
+    if(!postImg && type == "newPost" ) return errorAlert("empty field")
 
     const formData = new FormData()
 
-    formData.append("file", postImg)
+    formData.append("file", postImg || "none")
     formData.append("tags", JSON.stringify(tags))
     formData.append("category", category)
     formData.append("sessions", JSON.stringify(sessions))
+
+    formData.append("type", type)
+    formData.append("link", preview || "none")
 
     postMutation.mutate(formData)
   }
@@ -123,14 +159,17 @@ export default function Page() {
                   </div>
                 )}
 
-                <Input
-                  type="file"
-                  className="mt-2 w-full bg-stone-900 text-white"
-                  accept="image/*"
-                  onChange={(e) =>
-                    handleImageChange(e.target.files?.[0] || null)
-                  }
-                />
+                {type == "newPost" && (
+                  <Input
+                   type="file"
+                   className="mt-2 w-full bg-stone-900 text-white"
+                   accept="image/*"
+                   onChange={(e) =>
+                     handleImageChange(e.target.files?.[0] || null)
+                   }
+                 />
+                )}  
+               
             </div>
 
             <div className="w-4/6 h-full ">

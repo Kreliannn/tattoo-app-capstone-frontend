@@ -91,14 +91,16 @@ export function WorkModal({ work , setWorks} : { work : worksInterface, setWorks
             
            <div className="flex justify-around  p-2 mt-10">
               {/* Post */}
-              <div className="relative group">
-                <Button className="  p-2">
-                  <Send className="w-5 h-5" />
-                </Button>
-                <span className="absolute -top-6 left-1/2 transform -translate-x-1/2  text-stone-800 text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                  Post
-                </span>
-              </div>
+              <Link href={`/pages/artist/addPost/${work._id}`}>
+                <div className="relative group">
+                  <Button className="  p-2">
+                    <Send className="w-5 h-5" />
+                  </Button>
+                  <span className="absolute -top-6 left-1/2 transform -translate-x-1/2  text-stone-800 text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                    Post
+                  </span>
+                </div>
+              </Link>
 
               {/* Edit */}
               <Link href={`/canva/${work._id}`}>
