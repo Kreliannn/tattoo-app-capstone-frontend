@@ -138,7 +138,7 @@ export function BookNextSession({ booking, setBookings } : {booking : bookingInt
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-            <Button className="flex items-center gap-2  bg-green-500 text-white hover:bg-green-600"  onClick={() => setOpen(true)}>
+            <Button className="flex items-center gap-2  bg-yellow-500 text-white hover:bg-yellow-600"  onClick={() => setOpen(true)}>
                 Book next Session
             </Button>
       </DialogTrigger>

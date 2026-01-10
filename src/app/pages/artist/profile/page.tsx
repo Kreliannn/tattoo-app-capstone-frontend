@@ -11,6 +11,7 @@ import { ChangeProfile } from "./components/changeProfile";
 import MapLocation from "./components/location";
 import { ArtistCalendar } from "./components/artistCalendar";
 import { Button } from "@/components/ui/button";
+import ReviewsComponent from "./components/reviews";
 
 export default function Page() {
   
@@ -38,6 +39,13 @@ export default function Page() {
 
   if(!artistInfo) return <div> laoding </div>
 
+  const reviews = artistInfo.reviews
+
+  const averageRating =
+    reviews.length === 0
+      ? 0
+      : reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
+
   return (
     <div className="w-full h-full min-h-dvh ">
       <div className="w-4/6 h-full  m-auto p-5">
@@ -56,6 +64,21 @@ export default function Page() {
                 <h1 className="text-4xl font-bold">
                   {artistInfo.artist.name}
                 </h1>
+              </div>
+
+              <div className="flex gap-1 text-2xl">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                    <span
+                        key={star}
+                        className={
+                        star <= averageRating
+                            ? "text-yellow-400"
+                            : "text-gray-300"
+                        }
+                    >
+                        ★
+                    </span>
+                    ))}
               </div>
         
               {/* Bio */}
@@ -102,8 +125,9 @@ export default function Page() {
         <ArtistCalendar artistId={artistInfo.artist?._id} />
 
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 mt-8">
-          <div className="h-[300px] shadow-lg border rounded p-4">
 
+          <div className="h-[300px] shadow-lg border rounded p-4 flex flex-col gap-4">
+            <ReviewsComponent artistInfo={artistInfo} />
           </div>
 
           <div className="h-[300px] shadow-lg border rounded p-4">

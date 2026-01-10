@@ -12,6 +12,7 @@ import {
   Image as ImageIcon,
   Layers,
 } from "lucide-react";
+import { ReviewModal } from "./components/reviews";
 
 export default function Page() {
   const { user } = useUserStore();
@@ -113,9 +114,13 @@ export default function Page() {
                 </div>
 
             </div>
-
-
-
+            
+            {booking.status == "completed" && !booking.isReviewed && (
+                <div className="w-full">
+                  <ReviewModal booking={booking} setBookings={setBookings}  />
+               </div>
+            )}
+          
         </div>
         ))}
 

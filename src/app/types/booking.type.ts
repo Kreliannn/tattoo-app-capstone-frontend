@@ -10,7 +10,8 @@ export interface bookingInterfaceInput {
     date : string,
     time : string[]
     duration : number,
-    status : string
+    status : string,
+    isReviewed : boolean
 }
  
 export interface bookingInterface{
@@ -23,6 +24,7 @@ export interface bookingInterface{
     date : string,
     time : string[]
     duration : number,
-    status : string
+    status : string,
+    isReviewed : boolean
 }
  

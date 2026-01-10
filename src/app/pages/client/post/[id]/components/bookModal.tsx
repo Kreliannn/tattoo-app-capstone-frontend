@@ -101,7 +101,8 @@ export function BookModal({ post } : {post : postInterface}) {
       date : date.toLocaleDateString("en-US").toString(),
       time : selectedtime,
       duration : selectedtime.length - 1,
-      status : "pending"
+      status : "pending",
+      isReviewed : false
     }) 
   }
 

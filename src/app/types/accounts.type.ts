@@ -26,6 +26,12 @@ export interface artistInfoInterfaceInput {
         fileUrl : string,
         fileType : string
     }[], 
+    reviews : {
+        client : string,
+        comment : string,
+        img : string,
+        rating :number,
+    }[], 
 }
 
 export interface artistInfoInterface {
@@ -36,6 +42,12 @@ export interface artistInfoInterface {
         type : string,
         fileUrl : string,
         fileType : string
+    }[], 
+    reviews : {
+        client : accountInterface,
+        comment : string,
+        img : string,
+        rating :number,
     }[], 
 }
 
