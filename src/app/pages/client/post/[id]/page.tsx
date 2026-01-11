@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { errorAlert , successAlert} from "@/app/utils/alert"
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useMutation } from "@tanstack/react-query"
 import axiosInstance from "@/app/utils/axios"
 import { useParams } from "next/navigation"
 import { postInterface } from "@/app/types/post.type"
@@ -14,10 +14,17 @@ import Link from "next/link"
 import { Box } from "lucide-react"
 import { BookModal } from "./components/bookModal"
 import useUserStore from "@/app/store/useUserStore"
+import { useRouter } from "next/navigation"
+
+
+
+
 
 export default function Page() {
 
   const { user } = useUserStore()
+
+  const router = useRouter()
 
   const params = useParams()
   const postId = params.id as string
@@ -32,6 +39,17 @@ export default function Page() {
   useEffect(() => {
     if(data?.data) setPost(data?.data)
   }, [data])
+
+  const messageMutation = useMutation({
+    mutationFn : () => axiosInstance.post(`/convo/convoId/${post?.artist._id}`),
+    onSuccess : (response) => {
+        router.push(`/pages/client/convo/${response.data}`)
+    },
+    onError : () => errorAlert("error accour")
+  })
+
+
+
 
   if(!post) return <div> loading </div>
 
@@ -106,10 +124,14 @@ export default function Page() {
                   view artist
               </Button>
             </Link>
-           
-            <Button className=" text-lg py-6 mt-2">
-                message
-            </Button>    
+
+            {user?._id != post.artist._id &&(
+               <Button className=" text-lg py-6 mt-2" onClick={() => messageMutation.mutate()}>
+                  message
+              </Button> 
+            )}
+            
+              
         </div>
      
       </div>

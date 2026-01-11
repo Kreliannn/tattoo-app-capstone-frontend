@@ -1,7 +1,7 @@
 "use client";
 import useUserStore from "@/app/store/useUserStore";
 import { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import axiosInstance from "@/app/utils/axios";
 import { artistInfoInterface } from "@/app/types/accounts.type";
 import { postInterface } from "@/app/types/post.type";
@@ -11,13 +11,20 @@ import MapLocation from "./components/location";
 import { useParams } from "next/navigation";
 import { ArtistCalendar } from "./components/artistCalendar";
 import ReviewsComponent from "./components/reviews";
+import { Button } from "@/components/ui/button";
+import { MessageCircle , Skull} from "lucide-react";
+import { useRouter } from "next/navigation";
+import { errorAlert } from "@/app/utils/alert";
 
 export default function Page() {
   
   const params = useParams()
   const artistId = params.id as string
 
-  console.log(artistId)
+  const {user} = useUserStore()
+
+  const router = useRouter()
+
 
   const [artistInfo, setArtistInfo] = useState<artistInfoInterface | null>(null)
   const [posts, setPosts] = useState<postInterface[]>([])
@@ -38,6 +45,15 @@ export default function Page() {
     if(artistInfoData?.data) setArtistInfo(artistInfoData?.data)
     if(postsData?.data) setPosts(postsData.data)
   }, [artistInfoData, postsData])
+
+  const messageMutation = useMutation({
+    mutationFn : () => axiosInstance.post(`/convo/convoId/${artistInfo?.artist._id}`),
+    onSuccess : (response) => {
+        router.push(`/pages/client/convo/${response.data}`)
+    },
+    onError : () => errorAlert("error accour")
+  })
+
 
   if(!artistInfo) return <div> laoding </div>
 
@@ -68,10 +84,12 @@ export default function Page() {
 
             <div>
               {/* Name */}
-              <div>
+              <div className="flex justify-between w-full ">
                 <h1 className="text-4xl font-bold">
                   {artistInfo.artist.name}
                 </h1>
+                
+                
               </div>
 
               <div className="flex gap-1 text-2xl">
@@ -96,8 +114,18 @@ export default function Page() {
             </div>
            
           </div>
+
+        
   
         </div>
+
+        {user?._id != artistInfo.artist._id && (
+          <div className=" mt-8  flex gap-2 ">
+              <Button onClick={() => messageMutation.mutate()}> <MessageCircle /> Message </Button>
+              <Button> <Skull /> Report </Button>
+          </div>
+        )}
+          
 
         <div className="w-full   mt-8">
             <div className="w-auto flex gap-3 mb-5">

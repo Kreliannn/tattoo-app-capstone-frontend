@@ -23,6 +23,8 @@ const navigationItems = [
   { title: "Tattoo Works", url: "/pages/artist/works", icon: UserPlus2 },
   { title: "My Posts", url: "/pages/artist/myPost", icon: UserPlus2 },
   { title: "Bookings", url: "/pages/artist/booking", icon: UserPlus2 },
+  { title: "chat", url: "/pages/artist/convos", icon: UserPlus2 },
+  { title: "inventory", url: "/pages/artist/inventory", icon: UserPlus2 },
 ]
 
 
