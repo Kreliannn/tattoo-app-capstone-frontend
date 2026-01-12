@@ -30,3 +30,51 @@ export const errorAlert = (text : string) => {
       });
 }
 
+
+
+export function showHealthChecklist(callback : () => void) {
+  Swal.fire({
+    title: "Health Declaration",
+    html: `
+      <div style="text-align:left">
+        <label>
+          <input type="checkbox" id="pregnant" />
+          Pregnant or breastfeeding
+        </label><br/><br/>
+        <label>
+          <input type="checkbox" id="bloodThinner" />
+          Taking blood-thinning medication
+        </label><br/><br/>
+        <label>
+          <input type="checkbox" id="skinCondition" />
+          Serious skin condition
+        </label>
+      </div>
+    `,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Continue Booking",
+    preConfirm: () => {
+      const pregnant =  (document.getElementById("pregnant") as HTMLInputElement)?.checked ?? false;
+      const bloodThinner = (document.getElementById("bloodThinner") as HTMLInputElement)?.checked ?? false;
+      const skinCondition = (document.getElementById("skinCondition") as HTMLInputElement)?.checked ?? false;
+
+      if (pregnant || bloodThinner || skinCondition) {
+        Swal.showValidationMessage(
+          "Booking cannot proceed due to health restrictions. Please Consult To Artist first"
+        );
+        return false;
+      }
+
+      return {
+        pregnant,
+        bloodThinner,
+        skinCondition,
+      };
+    },
+  }).then((result) => {
+    if (result.isConfirmed) {
+      callback(); // ✅ CALLBACK
+    }
+  });
+}

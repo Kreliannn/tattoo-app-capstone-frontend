@@ -20,6 +20,8 @@ import { bookingInterfaceInput } from "@/app/types/booking.type"
 import useUserStore from "@/app/store/useUserStore"
 import { bookingInterface } from "@/app/types/booking.type"
 import { LockIcon } from "lucide-react"
+import { showHealthChecklist } from "@/app/utils/alert"
+import { ClientAgreementModal } from "./clientAgreement"
 
 export function BookModal({ post } : {post : postInterface}) {
 
@@ -88,22 +90,19 @@ export function BookModal({ post } : {post : postInterface}) {
   }
 
   const bookHandler = () => {
-    if(!date || !selectStartTime || !user) return errorAlert("empty date or time")
-    if(validateBookings()) return errorAlert('invalid time')
-    
-
-    bookMutation.mutate({
-      artist : post.artist._id,
-      client : user?._id,
-      tattooImg : post.postImg,
-      sessions : post.sessions,
-      session : 1,
-      date : date.toLocaleDateString("en-US").toString(),
-      time : selectedtime,
-      duration : selectedtime.length - 1,
-      status : "pending",
-      isReviewed : false
-    }) 
+      setOpen(false)
+      bookMutation.mutate({
+        artist : post.artist._id,
+        client : user!._id,
+        tattooImg : post.postImg,
+        sessions : post.sessions,
+        session : 1,
+        date : date!.toLocaleDateString("en-US").toString(),
+        time : selectedtime,
+        duration : selectedtime.length - 1,
+        status : "pending",
+        isReviewed : false
+      }) 
   }
 
   
@@ -136,6 +135,8 @@ export function BookModal({ post } : {post : postInterface}) {
     })
     return isBooked
   }
+
+  const isDisabled = () => (!date || !selectStartTime || !user) || validateBookings() || selectedtime.length == 0
   
 
     
@@ -199,7 +200,7 @@ export function BookModal({ post } : {post : postInterface}) {
         </div>
 
         <DialogFooter>
-          <Button className="w-full" onClick={bookHandler}>  Confirm Booking  </Button>
+          <ClientAgreementModal isDisabled={isDisabled()} callBack={bookHandler} />
         </DialogFooter>
       </DialogContent>
     </Dialog>
