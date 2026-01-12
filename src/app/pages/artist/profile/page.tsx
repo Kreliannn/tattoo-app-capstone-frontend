@@ -152,7 +152,7 @@ export default function Page() {
 
               {/* Category Badge */}
               <span className="absolute top-3 right-3 bg-black/70 text-white text-xs px-3 py-1 rounded-full">
-                {post.category}
+                ₱{post.price.toLocaleString()}
               </span>
             </div>
 

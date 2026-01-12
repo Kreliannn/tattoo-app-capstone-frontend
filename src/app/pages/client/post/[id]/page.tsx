@@ -138,11 +138,18 @@ export default function Page() {
 
       <div className="border rounded-2xl p-6 shadow-sm bg-white space-y-6">
 
-      {/* Category */}
-      <div>
-        <Label className="text-lg text-gray-600">Category</Label>
-        <p className="text-2xl font-semibold text-gray-900">{post.category}</p>
+      <div className="flex justify-between">
+          <div>
+            <Label className="text-lg text-gray-600">Price</Label>
+            <p className="text-2xl font-semibold text-green-500">₱{post.price.toLocaleString()}</p>
+          </div>
+
+          <div>
+            <Label className="text-lg text-gray-600">Category</Label>
+            <p className="text-2xl font-semibold text-gray-900">{post.category}</p>
+          </div>
       </div>
+     
 
       {/* Sessions */}
       {post.sessions.length > 0 && (

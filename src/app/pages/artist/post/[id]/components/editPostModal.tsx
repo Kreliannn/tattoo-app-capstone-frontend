@@ -37,7 +37,8 @@ import { errorAlert, successAlert } from "@/app/utils/alert"
 interface dataInterface {
     tags : string[], 
     category : string,
-    sessions : number[]
+    sessions : number[],
+    price : number
 }
 
 export function EditPostmodal({ post , setPost} : { post : postInterface, setPost : (data : postInterface) => void}) {
@@ -47,7 +48,7 @@ export function EditPostmodal({ post , setPost} : { post : postInterface, setPos
   const [tagInput, setTagInput] = useState("")
   const [tags, setTags] = useState<string[]>(post.tags)
   const [category, setCategory] = useState(post.category)
-  
+  const [price, setPrice] = useState(post.price)
   const [sessionInput, setSessionInput] = useState(0)
   const [sessions, setSessions] = useState<number[]>(post.sessions)
 
@@ -86,11 +87,12 @@ export function EditPostmodal({ post , setPost} : { post : postInterface, setPos
   })
 
   const handleSave = () => {
-    if(!category || !sessions ) return errorAlert("empty field")
+    if(!category || !sessions || !price ) return errorAlert("empty field")
     updateMutation.mutate({
         tags,
         sessions,
-        category
+        category,
+        price
     })
   }
 
@@ -126,6 +128,22 @@ export function EditPostmodal({ post , setPost} : { post : postInterface, setPos
                     <SelectItem value="traditional">Traditional</SelectItem>
                   </SelectContent>
                 </Select>
+              </div>
+
+              <div className="space-y-2 mt-3">
+                <Label className="flex items-center gap-2">
+                  <Layers className="w-4 h-4" />
+                  Price 
+                </Label>
+
+                <div className="flex gap-2">
+                  <Input
+                    placeholder="Estimated time per Session (e.g., 2hrs)"
+                    value={price}
+                    type="number"
+                    onChange={(e) => setPrice(Number(e.target.value))}
+                  />
+                </div>
               </div>
               
               <div className="space-y-2 mt-3">

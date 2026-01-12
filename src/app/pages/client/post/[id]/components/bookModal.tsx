@@ -101,7 +101,9 @@ export function BookModal({ post } : {post : postInterface}) {
         time : selectedtime,
         duration : selectedtime.length - 1,
         status : "pending",
-        isReviewed : false
+        isReviewed : false,
+        balance : post.price,
+        itemUsed : post.itemUsed
       }) 
   }
 

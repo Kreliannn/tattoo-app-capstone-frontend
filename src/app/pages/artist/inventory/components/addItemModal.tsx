@@ -11,12 +11,20 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { inventoryInterfaceInput, inventoryInterface } from "@/app/types/inventory.type"
 import { useMutation } from "@tanstack/react-query"
 import axiosInstance from "@/app/utils/axios"
 import { successAlert, errorAlert, confirmAlert } from "@/app/utils/alert"
 import useUserStore from "@/app/store/useUserStore"
 import { Plus } from "lucide-react"
+import { Label } from "@/components/ui/label"
 
 export function AddItemModal({ setInventory } : { setInventory : (data : inventoryInterface[]) => void }) {
 
@@ -75,14 +83,22 @@ export function AddItemModal({ setInventory } : { setInventory : (data : invento
                     />
                 </div>
 
-                <div className="mt-3 w-full">
-                    <h1 className="font-bold text-stone-600"> Category </h1>
-                    <Input 
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}
-                        placeholder="item category"
-                        className="w-full"
-                    />
+          
+
+                <div className="space-y-2">
+                    <Label>Category</Label>
+                    <Select onValueChange={setCategory}>
+                      <SelectTrigger className=" w-full">
+                        <SelectValue placeholder="Select category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Tattoo Equipment">Tattoo Equipment</SelectItem>
+                        <SelectItem value="Needles & Cartridges">Needles & Cartridges</SelectItem>
+                        <SelectItem value="Inks & Pigments">Inks & Pigments</SelectItem>
+                        <SelectItem value="kin Prep & Aftercare">kin Prep & Aftercare</SelectItem>
+                        <SelectItem value="Hygiene & Safety">Hygiene & Safety</SelectItem>
+                      </SelectContent>
+                    </Select>
                 </div>
 
 

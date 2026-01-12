@@ -11,6 +11,7 @@ import {
   Clock,
   Image as ImageIcon,
   Layers,
+  DollarSign
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { successAlert, errorAlert, confirmAlert } from "@/app/utils/alert";
@@ -78,12 +79,21 @@ export default function PendingBookings({ bookings, setBookings } : {bookings : 
 
             <div className="flex gap-2 mt-5">
                 <img
-                src={booking.tattooImg}
-                className="w-52 h-52 rounded-md object-cover border"
+                    src={booking.tattooImg}
+                    className="w-52 h-62 rounded-md object-cover border"
                 />
 
                 <div className="text-sm p-2">
+
                         <div className="space-y-1">
+                            <p className="flex items-center gap-2 font-medium text-xs ">
+                                <DollarSign size={16} />
+                                Balance
+                            </p>
+                            <p className=" text-xs text-green-500 font-bold">₱ {booking.balance.toLocaleString()}</p>
+                        </div>
+                        
+                        <div className="space-y-1 mt-4">
                             <p className="flex items-center gap-2 font-medium text-xs">
                                 <Calendar size={16} />
                                 Booking Date

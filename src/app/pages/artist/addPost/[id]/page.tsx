@@ -19,7 +19,8 @@ import {
   Clock,
   Layers,
   Tag,
-  LoaderCircle
+  LoaderCircle,
+  DollarSign
 } from "lucide-react"
 import { errorAlert , successAlert} from "@/app/utils/alert"
 import { useMutation, useQuery } from "@tanstack/react-query"
@@ -57,6 +58,8 @@ export default function Page() {
 
   const [tagInput, setTagInput] = useState("")
   const [tags, setTags] = useState<string[]>([])
+
+  const [price, setPrice] = useState(0)
 
   const [category, setCategory] = useState("")
 
@@ -120,6 +123,7 @@ export default function Page() {
     formData.append("file", postImg || "none")
     formData.append("tags", JSON.stringify(tags))
     formData.append("category", category)
+    formData.append("price", price.toString())
     formData.append("sessions", JSON.stringify(sessions))
 
     formData.append("type", type)
@@ -188,6 +192,28 @@ export default function Page() {
                   </SelectContent>
                 </Select>
               </div>
+
+
+               {/* Estimated Time & Sessions */}
+               <div className="space-y-2 mt-3">
+                <Label className="flex items-center gap-2">
+                  <DollarSign className="w-4 h-4" />
+                  Price
+                </Label>
+
+                <div className="flex gap-2">
+                  <Input
+                    placeholder="Price"
+                    value={price}
+                    type="number"
+                    onChange={(e) => setPrice(Number(e.target.value))}
+                  />
+                </div>
+
+               
+              </div>
+
+              
               
               {/* Estimated Time & Sessions */}
               <div className="space-y-2 mt-3">

@@ -6,12 +6,12 @@ export interface postInterfaceInput {
     tags : string[],
     category : string,
     sessions :number[],
-    reviews : {
-        client : string,
-        comment : string,
-        img : string,
-        rating :number,
-    }[], 
+    price : number,
+    itemUsed : {
+        itemId : string,
+        item : string,
+        qty : number,
+    }[]
 }
 
 export interface postInterface  {
@@ -21,10 +21,10 @@ export interface postInterface  {
     tags : string[],
     category : string,
     sessions :number[],
-    reviews : {
-        client : string,
-        comment : string,
-        img : string,
-        rating :number,
-    }[], 
+    price : number,
+    itemUsed : {
+        itemId : string,
+        item : string,
+        qty : number,
+    }[]
 }
