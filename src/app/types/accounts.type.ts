@@ -51,8 +51,17 @@ export interface artistInfoInterface {
     }[], 
 }
 
+export interface artistVerificationInterfaceInput {
+    client : string,
+    validId : string,
+    bussinessPermit : string | null,
+    type : string
+}
+
 export interface artistVerificationInterface {
     _id : string,
     client : accountInterface,
-    validId : string
+    validId : string,
+    bussinessPermit : string | null,
+    type : string
 }

@@ -6,7 +6,7 @@ import { SideBarAdmin } from "@/components/ui/sidebarAdmin";
 import { SidebarProvider } from "@/components/ui/sidebar";
 
 
-export default function ManagerLayout({ children }: { children: React.ReactNode }) {
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
 
     //const {user} = useUserStore()
 

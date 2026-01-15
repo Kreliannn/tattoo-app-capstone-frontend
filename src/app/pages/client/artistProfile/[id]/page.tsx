@@ -153,7 +153,7 @@ export default function Page() {
             {imgType == "client" && <ImgCard type="client" addImg={true} images={artistInfo.profileImages.filter(item => item.type === "client").map(item => item.fileUrl)} />}
         </div>
 
-        <ArtistCalendar artistId={artistInfo.artist._id} />
+        <ArtistCalendar key={artistInfo.artist._id}  artistId={artistInfo.artist._id} />
 
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 mt-8">
 

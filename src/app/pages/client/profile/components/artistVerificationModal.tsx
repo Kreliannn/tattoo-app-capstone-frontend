@@ -50,6 +50,7 @@ export function ArtistVerifiactionModal() {
     if(!img) return errorAlert("no selected file")
     const formData = new FormData()
     formData.append("file", img)
+    formData.append("type", "artist")
     submitMutation.mutate(formData)
   }
 

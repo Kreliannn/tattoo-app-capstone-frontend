@@ -5,7 +5,7 @@ import useUserStore from "@/app/store/useUserStore";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { SidebarArtist } from "@/components/ui/sidebarArtist";
 
-export default function ManagerLayout({ children }: { children: React.ReactNode }) {
+export default function ArtistLayout({ children }: { children: React.ReactNode }) {
 
     const {user} = useUserStore()
 

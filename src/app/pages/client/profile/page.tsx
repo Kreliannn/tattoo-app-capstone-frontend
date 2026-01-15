@@ -10,7 +10,7 @@ import MapLocation from "./components/location";
 import { ArtistVerifiactionModal } from "./components/artistVerificationModal";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-
+import { BussinessVerifiactionModal } from "./components/bussinessVerificationModal";
 
 export default function Page() {
   
@@ -68,7 +68,8 @@ export default function Page() {
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 mt-8">
 
           <div className="  flex gap-2">
-            {user.type == "client" ?   <ArtistVerifiactionModal /> : <Link href={"/pages/artist/profile"}> <Button className="bg-green-500 hover:bg-green-600"> Switch to Artist </Button> </Link> }
+            {user.type != "artist" ?   <ArtistVerifiactionModal /> : <Link href={"/pages/artist/profile"}> <Button className="bg-green-500 hover:bg-green-600"> Switch to Artist </Button> </Link> }
+            {user.type != "bussiness" ?   <BussinessVerifiactionModal /> : <Link href={"/pages/bussiness/dashboard"}> <Button className="bg-green-500 hover:bg-green-600"> Switch to Bussiness </Button> </Link> }
             <MapLocation   />
           </div>
 

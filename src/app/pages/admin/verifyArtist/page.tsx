@@ -6,7 +6,8 @@ import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "@/app/utils/axios";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { VerificationModal } from "./components/verificationModal";
+import { ArtistVerificationModal } from "./components/artistVerificationModal";
+import { BussinessVerificationModal } from "./components/bussinessVerificationModal";
 
 export default function Page() {
   const [artistVerifications, setArtistVerifications] = useState<artistVerificationInterface[]>([]);
@@ -49,14 +50,18 @@ export default function Page() {
                   {verification.client.name}
                 </h2>
                 <Badge variant="secondary" className="mt-1">
-                  Pending Verification
+                 {verification.type}
                 </Badge>
               </div>
             </div>
 
             {/* Actions */}
             <div className="flex items-center">
-                <VerificationModal artistVerification={verification} setArtistVerification={setArtistVerifications} />  
+                {verification.type == "artist" 
+                  ?  <ArtistVerificationModal artistVerification={verification} setArtistVerification={setArtistVerifications} />   
+                  :  <BussinessVerificationModal artistVerification={verification} setArtistVerification={setArtistVerifications} /> 
+                }
+               
             </div>
           
           

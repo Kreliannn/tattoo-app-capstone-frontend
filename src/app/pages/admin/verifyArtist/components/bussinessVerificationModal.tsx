@@ -14,13 +14,14 @@ import { useState } from "react"
  import { useMutation } from "@tanstack/react-query"
  import axiosInstance from "@/app/utils/axios"
  import { successAlert, confirmAlert, errorAlert } from "@/app/utils/alert"
+ import { Label } from "@/components/ui/label"
 
-export function VerificationModal({ artistVerification , setArtistVerification} : { artistVerification : artistVerificationInterface, setArtistVerification : (data : artistVerificationInterface[]) => void}) {
+export function BussinessVerificationModal({ artistVerification , setArtistVerification} : { artistVerification : artistVerificationInterface, setArtistVerification : (data : artistVerificationInterface[]) => void}) {
 
   const [open, setOpen] = useState(false);
 
   const mutation = useMutation({
-    mutationFn : (data : { verificationId  :string, accountId : string, status : string }) => axiosInstance.post("/account/artistVerification/admin", data),
+    mutationFn : (data : { verificationId  :string, accountId : string, status : string }) => axiosInstance.post("/account/bussinessVerification/admin", data),
     onSuccess : (response) => {
         successAlert(response.data.alert)
         setArtistVerification(response.data.artistVerifications)
@@ -60,24 +61,39 @@ export function VerificationModal({ artistVerification , setArtistVerification} 
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>User Valid Id</DialogTitle>
+          <DialogTitle>Bussiness Request</DialogTitle>
           <DialogDescription>   
-           artist request
+          info
           </DialogDescription>
         </DialogHeader>
 
     
         <div className="flex justify-center">
-          <div className="w-full max-w-[350px] space-y-4">
-  
-            <img
+          <div className="w-full max-w-[450px] grid grid-cols-2 gap-4">
+
+            {/* VALID ID */}
+            <div className="flex flex-col items-center space-y-2">
+              <Label>Valid ID</Label>
+              <img
                 src={artistVerification.validId}
-                alt="preview"
-                className="w-[300px]  h-[300px] object-cover rounded m-auto"
-            />
-  
+                alt="Valid ID"
+                className="w-[150px] h-[150px] object-cover rounded border"
+              />
+            </div>
+
+            {/* BUSINESS PERMIT */}
+            <div className="flex flex-col items-center space-y-2">
+              <Label>Business Permit</Label>
+              <img
+                src={artistVerification.bussinessPermit!}
+                alt="Business Permit"
+                className="w-[150px] h-[150px] object-cover rounded border"
+              />
+            </div>
+
           </div>
         </div>
+
 
         <DialogFooter>
 

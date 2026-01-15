@@ -56,8 +56,9 @@ const MapLocation: React.FC<ClickableMapProps>  = ({ artistInfo, setArtistInfo }
   const defaultPosition: L.LatLngExpression = [14.315885007395133, 120.94680688824083]; 
 
   const updateMutation = useMutation({
-    mutationFn : (location : { lat : number, long : number}) => axiosInstance.put(`/account/location/${artistInfo.artist._id}`, {location}),
+    mutationFn : (location : { lat : number, long : number}) => axiosInstance.put(`/account/location/${artistInfo.artist._id}`, {location, artistId : artistInfo._id}),
     onSuccess : (response) => {
+        console.log("sssss", response.data.artistInfo)
         setArtistInfo(response.data.artistInfo)
         setOpen(false)
         successAlert("location updated")

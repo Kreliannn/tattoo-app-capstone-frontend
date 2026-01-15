@@ -21,9 +21,9 @@ import useUserStore from "@/app/store/useUserStore"
 import { bookingInterface } from "@/app/types/booking.type"
 import { LockIcon } from "lucide-react"
 import { showHealthChecklist } from "@/app/utils/alert"
-import { ClientAgreementModal } from "./clientAgreement"
 
-export function BookModal({ post } : {post : postInterface}) {
+
+export function BookModal({ callBack, sessionTime } : {callBack : (data : {date : string, time : string[]}) => void, sessionTime : number}) {
 
    const times = [
     "07:00",
@@ -48,8 +48,6 @@ export function BookModal({ post } : {post : postInterface}) {
 
   const {user} = useUserStore()
 
-  const sessionTime = (post.sessions[0])
-
   const [open, setOpen] = useState(false);
 
   const [date, setDate] = useState<Date | undefined>(undefined)
@@ -64,22 +62,13 @@ export function BookModal({ post } : {post : postInterface}) {
  
   const { data } = useQuery({
     queryKey: ["artist_booking"],
-    queryFn: () => axiosInstance.get(`/booking/artist/${post.artist._id}`),
+    queryFn: () => axiosInstance.get(`/booking/artist/${user!._id}`),
   });
 
   useEffect(() => {
     if (data?.data && date) setArtistBookings(data.data.filter((e : bookingInterface) => e.status == "active" && e.date == date.toLocaleDateString("en-US").toString() ));
   }, [data, date]);
 
-  const bookMutation = useMutation({
-    mutationFn : (booking : bookingInterfaceInput) => axiosInstance.post("/booking", {booking}),
-    onSuccess : () => {
-      setOpen(false)
-      setSelectedTime([])
-      successAlert("booking submited")
-    }, 
-    onError : () => errorAlert("error accour")
-  })
 
   const validateBookings = () => {
     let isError = false
@@ -91,26 +80,16 @@ export function BookModal({ post } : {post : postInterface}) {
 
   const bookHandler = () => {
       setOpen(false)
-      bookMutation.mutate({
-        artist : post.artist._id,
-        client : user!._id,
-        tattooImg : post.postImg,
-        sessions : post.sessions,
-        session : 1,
+      
+      callBack({
         date : date!.toLocaleDateString("en-US").toString(),
         time : selectedtime,
-        duration : selectedtime.length - 1,
-        status : "pending",
-        isReviewed : false,
-        balance : post.price,
-        itemUsed : post.itemUsed
-      }) 
+      })
+
   }
 
   
   const selectStartTime = (index : number) => {
-
-    
 
     const selectedItem = []
     
@@ -204,7 +183,9 @@ export function BookModal({ post } : {post : postInterface}) {
         </div>
 
         <DialogFooter>
-          <ClientAgreementModal isDisabled={isDisabled()} callBack={bookHandler} />
+          <Button className="w-full" disabled={isDisabled()} onClick={bookHandler}>
+            Confirm Booking
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

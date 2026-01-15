@@ -35,6 +35,10 @@ export default function Home() {
           router.push(`/pages/artist/profile`);
         break
 
+        case "bussiness":
+          router.push(`/pages/bussiness/dashboard`);
+        break
+
         case "admin":
           router.push(`/pages/admin/dashboard`);
         break

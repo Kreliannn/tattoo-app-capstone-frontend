@@ -28,6 +28,7 @@ import axiosInstance from "@/app/utils/axios"
 import { useParams } from "next/navigation"
 import { useRouter } from "next/navigation"
 import Swal from "sweetalert2"
+import { BookModal } from "./components/bookModal"
 
 export default function Page() {
 
@@ -67,15 +68,15 @@ export default function Page() {
   const [sessions, setSessions] = useState<number[]>([])
 
   const postMutation = useMutation({
-    mutationFn : (data : FormData) => axiosInstance.post("/post", data),
+    mutationFn : (data : FormData) => axiosInstance.post("/booking/custom", data),
     onSuccess : () => {
       
       Swal.fire({
         icon: "success",
-        title: "Post created",
-        text: "Your post was added successfully"
+        title: "Booking created",
+        text: "Your Custom Book was added successfully"
       }).then(() => {
-        router.push("/pages/artist/myPost")
+        router.push("/pages/artist/booking")
       });
 
     },
@@ -112,8 +113,7 @@ export default function Page() {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+  const bookHandler = (data : {date : string, time : string[]}) => {
 
     if(!tags || !category || !sessions) return errorAlert("empty field")
     if(!postImg && type == "newPost" ) return errorAlert("empty field")
@@ -122,12 +122,21 @@ export default function Page() {
 
     formData.append("file", postImg || "none")
     formData.append("tags", JSON.stringify(tags))
-    formData.append("category", category)
     formData.append("price", price.toString())
     formData.append("sessions", JSON.stringify(sessions))
 
+    formData.append("selectedTime", JSON.stringify(data.time))
+    formData.append("date", data.date)
+
+    formData.append("itemUsed", JSON.stringify([]))
+
+    /// incompekte
+    formData.append("clientId", "123123123123123123123123123")
+
     formData.append("type", type)
     formData.append("link", preview || "none")
+
+    
 
     postMutation.mutate(formData)
   }
@@ -136,7 +145,7 @@ export default function Page() {
     <div className="w-4/6 mx-auto py-10 space-y-6">
       <h1 className="text-xl font-semibold">Add Post</h1>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="space-y-6">
 
         {/* Image Upload */}
         <div className="space-y-2">
@@ -284,12 +293,11 @@ export default function Page() {
           </div>
         </div>
 
-    
+          
+        <BookModal sessionTime={sessions[0]}  callBack={bookHandler}/>
       
-        <Button type="submit" className="w-full mt-5" disabled={postMutation.isPending}>
-         {postMutation.isPending &&   <LoaderCircle className="h-4 w-4 animate-spin" />} Submit Post
-        </Button>
-      </form>
+        
+      </div>
     </div>
   )
 }

@@ -70,7 +70,7 @@ export default function Page() {
 
       <div className="border relative rounded-2xl p-6 shadow-sm bg-white flex gap-5">
 
-        {user?._id != post.artist._id && <BookModal post={post} />}
+        {user?._id != post.artist._id && <BookModal key={post._id} post={post} />}
        
         <Link   href={{
             pathname: "/3d",
