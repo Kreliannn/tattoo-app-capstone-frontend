@@ -41,7 +41,7 @@ export default function Page() {
   }, [data])
 
   const messageMutation = useMutation({
-    mutationFn : () => axiosInstance.post(`/convo/convoId/${post?.artist._id}`),
+    mutationFn : () => axiosInstance.post(`/convo/convoId/${post?.account._id}`),
     onSuccess : (response) => {
         router.push(`/pages/client/convo/${response.data}`)
     },
@@ -70,7 +70,7 @@ export default function Page() {
 
       <div className="border relative rounded-2xl p-6 shadow-sm bg-white flex gap-5">
 
-        {user?._id != post.artist._id && <BookModal key={post._id} post={post} />}
+        {user?._id != post.account._id && <BookModal key={post._id} post={post} />}
        
         <Link   href={{
             pathname: "/3d",
@@ -103,29 +103,29 @@ export default function Page() {
 
         <div className="flex items-center gap-5 mt-4">
           <img
-            src={post.artist.profile}
+            src={post.account.profile}
             alt="artist"
             className="w-20 h-20 rounded-full object-cover border"
           />
           <div className="space-y-1">
             <p className="text-xl font-bold text-gray-900">
-              {post.artist.name}
+              {post.account.name}
             </p>
             <p className="text-base text-gray-600">
-              {post.artist.contact}
+              {post.account.contact}
             </p>
           </div>
         </div>
 
         {/* Action */}
         <div className="flex gap-3 mt-3">
-            <Link href={`/pages/client/artistProfile/${post.artist._id}`}>
+            <Link href={`/pages/client/artistProfile/${post.account._id}`}>
               <Button className=" text-lg py-6 mt-2">
                   view artist
               </Button>
             </Link>
 
-            {user?._id != post.artist._id &&(
+            {user?._id != post.account._id &&(
                <Button className=" text-lg py-6 mt-2" onClick={() => messageMutation.mutate()}>
                   message
               </Button> 

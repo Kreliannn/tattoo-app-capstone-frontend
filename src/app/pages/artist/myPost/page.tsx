@@ -17,14 +17,14 @@ export default function Page() {
 
   const { data } = useQuery({
     queryKey : ['artist_post'],
-    queryFn : () => axiosInstance.get(`/post/artist/${user?._id}`)
+    queryFn : () => axiosInstance.get(`/post/account/${user?._id}`)
   })
 
   useEffect(() => {
       if(data?.data) setPosts(data.data)
   },[data])
 
-  console.log(posts)
+
 
   return (
     <div className="w-full h-dvh space-y-6 p-4 overflow-auto">
@@ -65,14 +65,14 @@ export default function Page() {
               {/* Artist */}
               <div className="flex items-center gap-3">
                 <img
-                  src={post.artist.profile}
+                  src={post.account.profile}
                   alt="artist"
                   className="w-10 h-10 rounded-full object-cover border"
                 />
                 <div>
                   <p className="text-sm text-gray-500">Artist</p>
                   <h1 className="font-semibold text-gray-900">
-                    {post.artist.name}
+                    {post.account.name}
                   </h1>
                 </div>
               </div>

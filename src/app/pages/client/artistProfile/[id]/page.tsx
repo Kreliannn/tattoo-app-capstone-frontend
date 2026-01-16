@@ -192,14 +192,14 @@ export default function Page() {
               {/* Artist */}
               <div className="flex items-center gap-3">
                 <img
-                  src={post.artist.profile}
+                  src={post.account.profile}
                   alt="artist"
                   className="w-10 h-10 rounded-full object-cover border"
                 />
                 <div>
                   <p className="text-sm text-gray-500">Artist</p>
                   <h1 className="font-semibold text-gray-900">
-                    {post.artist.name}
+                    {post.account.name}
                   </h1>
                 </div>
               </div>

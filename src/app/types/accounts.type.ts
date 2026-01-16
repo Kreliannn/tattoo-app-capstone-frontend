@@ -7,9 +7,9 @@ export interface accountInterfaceInput {
     email: string,
     password: string,
     profile  :string,
-    location : {
-        lat?: number 
-        long?: number 
+    location?: {
+        lat?: number | null
+        long?: number | null
     } | null
 
 }
@@ -45,7 +45,7 @@ export interface artistInfoInterface {
         fileType : string,
     }[], 
     reviews : {
-        client : accountInterface,
+        client : string,
         comment : string,
         img : string,
         rating :number,

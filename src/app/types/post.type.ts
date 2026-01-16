@@ -1,7 +1,7 @@
 import { accountInterface } from "./accounts.type"
 
 export interface postInterfaceInput {
-    artist : string,
+    account : string,
     postImg : string,
     tags : string[],
     category : string,
@@ -16,7 +16,7 @@ export interface postInterfaceInput {
 
 export interface postInterface  {
     _id : string,
-    artist : accountInterface
+    account : accountInterface
     postImg : string,
     tags : string[],
     category : string,

@@ -28,6 +28,7 @@ import axiosInstance from "@/app/utils/axios"
 import { useParams } from "next/navigation"
 import { useRouter } from "next/navigation"
 import Swal from "sweetalert2"
+import useUserStore from "@/app/store/useUserStore"
 
 export default function Page() {
 
@@ -49,6 +50,9 @@ export default function Page() {
         setPreview(data.data.screenShot)
     }
   }, [data])
+
+
+  const { user } = useUserStore()
 
   
   const router = useRouter()
