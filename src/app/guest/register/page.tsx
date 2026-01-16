@@ -18,7 +18,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [contact, setContact] = useState("");
   const [name, setName] = useState("")
@@ -36,7 +36,7 @@ export default function Home() {
       successAlert("account registered")
       setIsLoading(false)
       setName("")
-      setUsername("")
+      setEmail("")
       setPassword("")
       setConfirmPassword("")
       setContact("")
@@ -51,7 +51,7 @@ export default function Home() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if(!name ||  !username || !password || !contact) return errorAlert("empty field")
+    if(!name ||  !email || !password || !contact) return errorAlert("empty field")
 
     if(password != confirmPassword) return errorAlert("confirm password not match")
 
@@ -60,7 +60,7 @@ export default function Home() {
     mutation.mutate({
       name,
       type : "client",
-      username,
+      email,
       password,
       contact,
       profile,
@@ -140,7 +140,7 @@ export default function Home() {
               {/* Username Field */}
               <div className="space-y-2">
                 <label className="block text-xs font-medium text-stone-800 uppercase tracking-wide">
-                  Username
+                  Email
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -148,9 +148,9 @@ export default function Home() {
                   </div>
                   <input
                     type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Enter username"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter Email"
                     required
                     className="block w-full pl-10 pr-3 py-3 border-0 border-b-2 border-gray-200 bg-transparent placeholder-gray-400 focus:outline-none focus:border-stone-600 focus:ring-0 transition-colors duration-200 text-sm"
                   />

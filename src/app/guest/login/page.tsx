@@ -9,7 +9,7 @@ import { LoaderCircle, User, Lock, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -20,7 +20,7 @@ export default function Home() {
   const router = useRouter();
 
   const mutation = useMutation({
-    mutationFn: (data: { username: string; password: string }) =>
+    mutationFn: (data: { email: string; password: string }) =>
       axiosInstance.post("/auth/login", data),
     onSuccess: (res) => {
       const { account, token } = res.data;
@@ -54,8 +54,8 @@ export default function Home() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if(!username || !password) return errorAlert("empty field")
-    mutation.mutate({ username, password });
+    if(!email || !password) return errorAlert("empty field")
+    mutation.mutate({ email, password });
     setIsLoading(true)
   };
 
@@ -88,8 +88,8 @@ export default function Home() {
                 </div>
                 <input
                   type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter username"
                   required
                   className="block w-full pl-10 pr-3 py-3 border-0 border-b-2 border-gray-200 bg-transparent placeholder-gray-400 focus:outline-none focus:border-stone-600 focus:ring-0 transition-colors duration-200 text-sm"

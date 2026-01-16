@@ -4,7 +4,7 @@ export interface accountInterfaceInput {
     name: string,
     type: string,
     contact: string,
-    username: string,
+    email: string,
     password: string,
     profile  :string,
     location : {
