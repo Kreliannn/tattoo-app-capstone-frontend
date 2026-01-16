@@ -3,26 +3,24 @@ import useUserStore from "@/app/store/useUserStore";
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "@/app/utils/axios";
-import { artistInfoInterface } from "@/app/types/accounts.type";
 import { postInterface } from "@/app/types/post.type";
 import ImgCard from "./components/imgCard";
 import Link from "next/link";
 import { ChangeProfile } from "./components/changeProfile";
 import MapLocation from "./components/location";
-import { ArtistCalendar } from "./components/artistCalendar";
 import { Button } from "@/components/ui/button";
-import ReviewsComponent from "./components/reviews";
+import { bussinessInfoInterface } from "@/app/types/accounts.type";
 
 export default function Page() {
   
   const { user } = useUserStore()
 
-  const [artistInfo, setArtistInfo] = useState<artistInfoInterface | null>(null)
+  const [bussinessInfo, setBussinessInfo] = useState<bussinessInfoInterface | null>(null)
   const [posts, setPosts] = useState<postInterface[]>([])
 
   const [imgType, setImgType] = useState("studio")
 
-  const { data : artistInfoData } = useQuery({
+  const { data : bussinessInfoData } = useQuery({
     queryKey : ['bussiness_profile'],
     queryFn : () => axiosInstance.get(`/account/bussinessInfo/${user?._id}`),
   })
@@ -33,11 +31,11 @@ export default function Page() {
   })
 
   useEffect(() => {
-    if(artistInfoData?.data) setArtistInfo(artistInfoData?.data)
+    if(bussinessInfoData?.data) setBussinessInfo(bussinessInfoData?.data)
     if(postsData?.data) setPosts(postsData.data)
-  }, [artistInfoData, postsData])
+  }, [bussinessInfoData, postsData])
 
-  if(!artistInfo) return <div> laoding </div>
+  if(!bussinessInfo) return <div> laoding </div>
 
 
   return (
@@ -47,7 +45,7 @@ export default function Page() {
         <div className="w-full flex gap-5 ">
           {/* Profile Image */}
           <div className="flex justify-center">
-            <ChangeProfile profile={artistInfo.artist.profile} />
+            <ChangeProfile profile={bussinessInfo.bussiness.profile} />
           </div>
 
           <div className="flex items-center">
@@ -56,7 +54,7 @@ export default function Page() {
               {/* Name */}
               <div>
                 <h1 className="text-4xl font-bold">
-                  {artistInfo.artist.name}
+                  {bussinessInfo.bussiness.name}
                 </h1>
               </div>
 
@@ -64,7 +62,7 @@ export default function Page() {
         
               {/* Bio */}
               <div className="text-lg text-gray-700 ">
-                {artistInfo.bio || "No bio available"}
+                {bussinessInfo.bio || "No bio available"}
               </div>
             </div>
            
@@ -97,13 +95,13 @@ export default function Page() {
             </div>
 
      
-            {imgType == "studio" && <ImgCard type="studio" addImg={true} files={artistInfo.profileImages.filter(item => item.type === "studio")} />}
-            {imgType == "achievement" && <ImgCard type="achievement" addImg={true} files={artistInfo.profileImages.filter(item => item.type === "achievement")} />}
-            {imgType == "client" && <ImgCard type="client" addImg={true} files={artistInfo.profileImages.filter(item => item.type === "client")} />}
+            {imgType == "studio" && <ImgCard type="studio" addImg={true} files={bussinessInfo.profileImages.filter(item => item.type === "studio")} />}
+            {imgType == "achievement" && <ImgCard type="achievement" addImg={true} files={bussinessInfo.profileImages.filter(item => item.type === "achievement")} />}
+            {imgType == "client" && <ImgCard type="client" addImg={true} files={bussinessInfo.profileImages.filter(item => item.type === "client")} />}
 
         </div>
 
-        <ArtistCalendar artistId={artistInfo.artist?._id} />
+       
 
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 mt-8">
 
@@ -112,7 +110,7 @@ export default function Page() {
           </div>
 
           <div className="h-[300px] shadow-lg border rounded p-4">
-            <MapLocation artistInfo={artistInfo} setArtistInfo={setArtistInfo} />
+            <MapLocation bussinessInfo={bussinessInfo} setBussinessInfo={setBussinessInfo} />
           </div>
         </div>
     
@@ -142,14 +140,14 @@ export default function Page() {
               {/* Artist */}
               <div className="flex items-center gap-3">
                 <img
-                  src={post.artist.profile}
+                  src={post.account.profile}
                   alt="artist"
                   className="w-10 h-10 rounded-full object-cover border"
                 />
                 <div>
                   <p className="text-sm text-gray-500">Artist</p>
                   <h1 className="font-semibold text-gray-900">
-                    {post.artist.name}
+                    {post.account.name}
                   </h1>
                 </div>
               </div>

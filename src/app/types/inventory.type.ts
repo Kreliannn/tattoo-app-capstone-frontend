@@ -1,7 +1,7 @@
 import { accountInterface } from "./accounts.type";
 
 export interface inventoryInterfaceInput {
-    artist : string,
+    account : string,
     item : string,
     category : string,
     stocks : number,
@@ -10,7 +10,7 @@ export interface inventoryInterfaceInput {
 
 export interface inventoryInterface {
     _id : string,
-    artist : accountInterface,
+    account : accountInterface,
     item : string,
     category : string,
     stocks : number,

@@ -12,7 +12,7 @@ import { useParams } from "next/navigation"
 import { postInterface } from "@/app/types/post.type"
 import Link from "next/link"
 import { Box } from "lucide-react"
-import { BookModal } from "./components/bookModal"
+import { ArtistBookModal } from "./components/bookModalArtist"
 import useUserStore from "@/app/store/useUserStore"
 import { useRouter } from "next/navigation"
 
@@ -70,7 +70,7 @@ export default function Page() {
 
       <div className="border relative rounded-2xl p-6 shadow-sm bg-white flex gap-5">
 
-        {user?._id != post.account._id && <BookModal key={post._id} post={post} />}
+        {user?._id != post.account._id && <ArtistBookModal key={post._id} post={post} />}
        
         <Link   href={{
             pathname: "/3d",

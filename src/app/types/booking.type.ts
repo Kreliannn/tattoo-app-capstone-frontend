@@ -2,6 +2,7 @@ import { accountInterface } from "./accounts.type";
 
 
 export interface bookingInterfaceInput {
+    bussiness : string | null,
     artist : string,
     client : string,  
     tattooImg : string,
@@ -12,7 +13,7 @@ export interface bookingInterfaceInput {
     duration : number,
     status : string,
     isReviewed : boolean,
-    balance : number,
+    balance : Number,
     itemUsed : {
         item : string,
         qty : number,
@@ -21,6 +22,7 @@ export interface bookingInterfaceInput {
  
 export interface bookingInterface{
     _id : string,
+    bussiness : accountInterface | null,
     artist : accountInterface,
     client : accountInterface,  
     tattooImg : string,
@@ -31,7 +33,7 @@ export interface bookingInterface{
     duration : number,
     status : string,
     isReviewed : boolean,
-    balance : number,
+    balance : Number,
     itemUsed : {
         item : string,
         qty : number,

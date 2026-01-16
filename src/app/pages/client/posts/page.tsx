@@ -58,9 +58,9 @@ export default function Page() {
             <div className="p-4 space-y-3">
               {/* Artist */}
               <div className="flex items-center gap-3">
-                <Link href={`/pages/client/artistProfile/${post.artist._id}`} >
+                <Link href={`/pages/client/artistProfile/${post.account._id}`} >
                   <img
-                    src={post.artist.profile}
+                    src={post.account.profile}
                     alt="artist"
                     className="w-10 h-10 rounded-full object-cover border hover:scale-105"
                   />
@@ -69,7 +69,7 @@ export default function Page() {
                 <div>
                   <p className="text-sm text-gray-500">Artist</p>
                   <h1 className="font-semibold text-gray-900">
-                    {post.artist.name}
+                    {post.account.name}
                   </h1>
                 </div>
               </div>

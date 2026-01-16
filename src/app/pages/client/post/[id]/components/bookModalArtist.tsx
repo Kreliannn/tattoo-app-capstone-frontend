@@ -23,7 +23,7 @@ import { LockIcon } from "lucide-react"
 import { showHealthChecklist } from "@/app/utils/alert"
 import { ClientAgreementModal } from "./clientAgreement"
 
-export function BookModal({ post } : {post : postInterface}) {
+export function ArtistBookModal({ post } : {post : postInterface}) {
 
    const times = [
     "07:00",
@@ -64,7 +64,7 @@ export function BookModal({ post } : {post : postInterface}) {
  
   const { data } = useQuery({
     queryKey: ["artist_booking"],
-    queryFn: () => axiosInstance.get(`/booking/artist/${post.artist._id}`),
+    queryFn: () => axiosInstance.get(`/booking/artist/${post.account._id}`),
   });
 
   useEffect(() => {
@@ -92,7 +92,8 @@ export function BookModal({ post } : {post : postInterface}) {
   const bookHandler = () => {
       setOpen(false)
       bookMutation.mutate({
-        artist : post.artist._id,
+        bussiness : null,
+        artist : post.account._id,
         client : user!._id,
         tattooImg : post.postImg,
         sessions : post.sessions,

@@ -51,7 +51,7 @@ export function AddItemModal({ setInventory } : { setInventory : (data : invento
     const addItemHandler = () => {
         if(!user || !item.trim() || !category.trim()) return errorAlert("empty field")
         mutation.mutate({
-            artist : user._id,
+            account : user._id,
             item,
             stocks,
             category

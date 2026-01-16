@@ -56,7 +56,7 @@ export function UpdateItemModal({ setInventory , inventory} : { inventory : inve
         if(!user || !item.trim() || !category.trim()) return errorAlert("empty field")
         updateMutation.mutate({
             _id : inventory._id,
-            artist : inventory.artist,
+            account : inventory.account,
             item,
             stocks,
             category
