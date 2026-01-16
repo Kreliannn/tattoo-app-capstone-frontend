@@ -32,7 +32,7 @@ export function UploadImageModal({ type }: { type: string }) {
       setFile(null)
       setPreview(null)
       setFileType(null)
-      queryClient.invalidateQueries({ queryKey: ["artist_profile"] })
+      queryClient.invalidateQueries({ queryKey: ["bussiness_profile"] })
     },
     onError: () => errorAlert("Upload error"),
   })

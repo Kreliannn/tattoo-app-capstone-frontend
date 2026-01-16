@@ -1,21 +1,22 @@
 
+
 export interface accountInterfaceInput {
     name: string,
     type: string,
     contact: string,
     username: string,
     password: string,
-    profile : string,
+    profile  :string,
     location : {
-        long : number,
-        lat : number,
-    } | null,
+        lat?: number 
+        long?: number 
+    } | null
+
 }
 
 export interface accountInterface extends accountInterfaceInput {
     _id : string,
 }
-
 
 
 export interface artistInfoInterfaceInput {
@@ -24,7 +25,7 @@ export interface artistInfoInterfaceInput {
     profileImages : {
         type : string,
         fileUrl : string,
-        fileType : string
+        fileType : string,
     }[], 
     reviews : {
         client : string,
@@ -41,7 +42,7 @@ export interface artistInfoInterface {
     profileImages : {
         type : string,
         fileUrl : string,
-        fileType : string
+        fileType : string,
     }[], 
     reviews : {
         client : accountInterface,
@@ -51,6 +52,31 @@ export interface artistInfoInterface {
     }[], 
 }
 
+export interface bussinessInfoInterfaceInput {
+    bio : string,
+    artist : string,
+    employees : string[],
+    profileImages : {
+        type : string,
+        fileUrl : string,
+        fileType : string
+    }[],
+}
+
+export interface bussinessInfoInterface {
+    bio : string,
+    artist : accountInterface,
+    employees : accountInterface[],
+    profileImages : {
+        type : string,
+        fileUrl : string,
+        fileType : string
+    }[],
+}
+
+
+
+    
 export interface artistVerificationInterfaceInput {
     client : string,
     validId : string,

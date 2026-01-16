@@ -33,7 +33,7 @@ interface ClickableMapProps {
   
 const MapLocation: React.FC<ClickableMapProps>  = ({ artistInfo, setArtistInfo }) => {
 
-  const location = artistInfo.artist.location
+  const location = artistInfo.artist.location 
 
 
   const [mapLocation, setMapLocation] = useState<any>(location)

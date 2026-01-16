@@ -20,7 +20,7 @@ import { useRouter } from "next/navigation"
 
 const navigationItems = [
   { title: "Dashboard", url: "/pages/bussiness/dashboard", icon: User },
-
+  { title: "Profile", url: "/pages/bussiness/profile", icon: User },
 ]
 
 
