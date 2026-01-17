@@ -67,8 +67,8 @@ export default function Page() {
 
   const [category, setCategory] = useState("")
 
-  const [sessionInput, setSessionInput] = useState(0)
-  const [sessions, setSessions] = useState<number[]>([])
+
+  const [sessions, setSessions] = useState<number[]>([1])
 
   const postMutation = useMutation({
     mutationFn : (data : FormData) => axiosInstance.post("/post", data),
@@ -97,17 +97,24 @@ export default function Page() {
     setTags(tags.filter(t => t !== tag))
   }
 
-    // Add a session
+  const updateSession = (index: number, value: number) => {
+    const updated = [...sessions];
+    updated[index] = value;
+    setSessions(updated);
+  };
+  
+
   const addSession = () => {
-    if (!sessionInput) return errorAlert("Session cannot be empty")
-    setSessions([...sessions, sessionInput])
-    setSessionInput(0)
-  }
+    setSessions([...sessions, 1]);
+  };
+  
 
   // Remove a session
   const removeSession = (index: number) => {
-    setSessions(sessions.filter((_, i) => i !== index))
-  }
+    if (sessions.length === 1) return;
+    setSessions(sessions.filter((_, i) => i !== index));
+  };
+  
 
   const handleImageChange = (file: File | null) => {
     setPostImg(file)
@@ -143,10 +150,10 @@ export default function Page() {
       <form onSubmit={handleSubmit} className="space-y-6">
 
         {/* Image Upload */}
-        <div className="space-y-2">
+        <div className="space-y-2 ">
        
 
-          <div className=" h-[320px] rounded-md p-4 flex gap-4 items-center">
+          <div className=" h-[400px] rounded-md p-4 flex gap-4 items-center ">
 
             <div className="w-2/6 h-full ">
 
@@ -219,42 +226,78 @@ export default function Page() {
 
               
               
-              {/* Estimated Time & Sessions */}
-              <div className="space-y-2 mt-3">
-                <Label className="flex items-center gap-2">
-                  <Layers className="w-4 h-4" />
-                  Sessions (Input Time per Secssion)
-                </Label>
+              <div className="space-y-4 mt-5">
+                <div className="flex justify-between items-center">
+                  <Label className="flex items-center gap-2">
+                    <Layers className="w-4 h-4" />
+                    Sessions
+                  </Label>
 
-                <div className="flex gap-2">
-                  <Input
-                    placeholder="Estimated time per Session (e.g., 2hrs)"
-                    value={sessionInput}
-                    type="number"
-                    onChange={(e) => setSessionInput(Number(e.target.value))}
-                  />
-                  <Button type="button" onClick={addSession}>
-                    <Plus />
+                  <Button
+                    type="button"
+                    onClick={addSession}
+                    size="sm"
+                    className="flex items-center gap-1"
+                  >
+                    <Plus className="w-4 h-4" />
+                    Add Session
                   </Button>
                 </div>
 
-                <div className="flex flex-wrap gap-2 mt-3">
-                  {sessions.map((session, index) => (
-                    <Badge
-                      key={index}
-                      variant="secondary"
-                      className="shadow flex items-center gap-1 hover:text-red-500 cursor-pointer"
+                <div className="w-full grid grid-cols-2 gap-2">
+                {sessions.map((session, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center gap-3 rounded-lg border p-3"
+                  >
+                    {/* Session Label */}
+                    <div className="flex items-center gap-2 min-w-[90px]">
+                      <Clock className="w-4 h-4 text-muted-foreground" />
+                      <span className="text-sm font-medium">
+                        Session {index + 1}
+                      </span>
+                    </div>
+
+                    {/* Input with suffix */}
+                    <div className="relative w-full">
+                      <Input
+                        type="number"
+                        min={1}
+                        value={session}
+                        onChange={(e) =>
+                          updateSession(index, Number(e.target.value))
+                        }
+                        className="pr-12"
+                        placeholder="Hours"
+                      />
+
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
+                        {session === 1 ? "hr" : "hrs"}
+                      </span>
+                    </div>
+
+                    {/* Remove */}
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
                       onClick={() => removeSession(index)}
+                      disabled={sessions.length === 1}
+                      className="text-red-500 hover:text-red-600"
                     >
-                      Session {index + 1} ({session} {session != 1 ? "hrs" : "hr"}) 
-                    </Badge>
-                  ))}
+                      ✕
+                    </Button>
+                  </div>
+                ))}
                 </div>
+
+                
               </div>
+
 
               
               {/* Tags */}
-              <div className="space-y-2 mt-3">
+              <div className="space-y-2 mt-5">
                 <Label className="flex items-center gap-2">
                   <Tag className="w-4 h-4" />
                   Tags

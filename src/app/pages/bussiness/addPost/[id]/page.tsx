@@ -28,17 +28,11 @@ import axiosInstance from "@/app/utils/axios"
 import { useParams } from "next/navigation"
 import { useRouter } from "next/navigation"
 import Swal from "sweetalert2"
-import { BookModal } from "./components/bookModal"
-import { convoInterface } from "@/app/types/convo.type"
 import useUserStore from "@/app/store/useUserStore"
-import { getChatIndex } from "@/app/utils/customFunction"
 
 export default function Page() {
 
   const [type, setType] = useState("newPost")
-
-  
-  const {user} = useUserStore()
 
   const params = useParams()
   const paramsId = params.id as string
@@ -58,17 +52,7 @@ export default function Page() {
   }, [data])
 
 
-  const [convos, setConvos] = useState<convoInterface[]>([])
-
-  const { data : convoData } = useQuery({
-    queryKey : ['convos'],
-    queryFn : () => axiosInstance.get(`/convo`)
-  })
-
-  useEffect(() => {
-    if(convoData?.data) setConvos(convoData?.data)
-  }, [convoData])
-
+  const { user } = useUserStore()
 
   
   const router = useRouter()
@@ -76,33 +60,42 @@ export default function Page() {
   const [postImg, setPostImg] = useState<File | null>(null)
   const [preview, setPreview] = useState<string | null>(null)
 
-
+  const [tagInput, setTagInput] = useState("")
+  const [tags, setTags] = useState<string[]>([])
 
   const [price, setPrice] = useState(0)
 
   const [category, setCategory] = useState("")
 
-  const [client, setClient] = useState("")
 
   const [sessions, setSessions] = useState<number[]>([1])
 
   const postMutation = useMutation({
-    mutationFn : (data : FormData) => axiosInstance.post("/booking/custom", data),
+    mutationFn : (data : FormData) => axiosInstance.post("/post", data),
     onSuccess : () => {
       
       Swal.fire({
         icon: "success",
-        title: "Booking created",
-        text: "Your Custom Booking was added successfully"
+        title: "Post created",
+        text: "Your post was added successfully"
       }).then(() => {
-        router.push("/pages/artist/booking")
+        router.push("/pages/bussiness/myPost")
       });
 
     },
     onError : () => errorAlert("error accour")
   })
 
-  
+  const addTag = () => {
+    if(tags.length >= 5) return errorAlert("the maximum tags is 5")
+    if (!tagInput.trim() || tags.includes(tagInput.trim())) return errorAlert("invalid")
+    setTags([...tags, tagInput.trim()])
+    setTagInput("")
+  }
+
+  const removeTag = (tag: string) => {
+    setTags(tags.filter(t => t !== tag))
+  }
 
   const updateSession = (index: number, value: number) => {
     const updated = [...sessions];
@@ -130,24 +123,19 @@ export default function Page() {
     }
   }
 
-  const bookHandler = (data : {date : string, time : string[]}) => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
 
-    if( !category || !sessions || !client || !user) return errorAlert("empty field")
+    if(!tags || !category || !sessions) return errorAlert("empty field")
     if(!postImg && type == "newPost" ) return errorAlert("empty field")
 
     const formData = new FormData()
 
     formData.append("file", postImg || "none")
+    formData.append("tags", JSON.stringify(tags))
+    formData.append("category", category)
     formData.append("price", price.toString())
     formData.append("sessions", JSON.stringify(sessions))
-
-    formData.append("selectedTime", JSON.stringify(data.time))
-    formData.append("date", data.date)
-
-    formData.append("itemUsed", JSON.stringify([]))
-
-    formData.append("clientId", client)
-    formData.append("artistId", user?._id)
 
     formData.append("type", type)
     formData.append("link", preview || "none")
@@ -157,21 +145,21 @@ export default function Page() {
 
   return (
     <div className="w-4/6 mx-auto py-10 space-y-6">
-      <h1 className="text-xl font-semibold">Add Booking</h1>
+      <h1 className="text-xl font-semibold">Add Post</h1>
 
-      <div className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6">
 
         {/* Image Upload */}
-        <div className="space-y-2">
+        <div className="space-y-2 ">
        
 
-          <div className=" h-[420px] rounded-md p-4 flex gap-4 items-center">
+          <div className=" h-[400px] rounded-md p-4 flex gap-4 items-center ">
 
             <div className="w-2/6 h-full ">
 
               <Label className="flex items-center gap-2 mb-2">
                 <ImageIcon className="w-4 h-4" />
-                Tattoo Image
+                Post Image
               </Label>
 
                 {preview ? (
@@ -200,24 +188,8 @@ export default function Page() {
             </div>
 
             <div className="w-4/6 h-full ">
-
-
-              <div className="space-y-2">
-                <Label>Client</Label>
-                <Select onValueChange={setClient}>
-                  <SelectTrigger className=" w-full">
-                    <SelectValue placeholder="Select Client" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {convos.map((convo) => (
-                      <SelectItem  key={convo._id} value={convo.accounts[getChatIndex(user?._id!, convo)]._id}> <img src={convo.accounts[getChatIndex(user?._id!, convo)].profile} className="w-5 h-5 object-cover rounded-full" />  {convo.accounts[getChatIndex(user?._id!, convo)].name} </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
                     
-              <div className="space-y-2 mt-3">
+              <div className="space-y-2">
                 <Label>Category</Label>
                 <Select onValueChange={setCategory}>
                   <SelectTrigger className=" w-full">
@@ -324,7 +296,33 @@ export default function Page() {
 
 
               
-             
+              {/* Tags */}
+              <div className="space-y-2 mt-5">
+                <Label className="flex items-center gap-2">
+                  <Tag className="w-4 h-4" />
+                  Tags
+                </Label>
+
+                <div className="flex gap-2">
+                  <Input
+                    placeholder="Add tag"
+                    value={tagInput}
+                    onChange={(e) => setTagInput(e.target.value)}
+                  />
+                  <Button type="button" onClick={addTag}>
+                    <Plus />
+                  </Button>
+                </div>
+
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {tags.map((tag, index) => (
+                    <Badge key={index} variant="secondary" className="shadow  flex items-center gap-1  hover:text-red-500" onClick={() => removeTag(tag)}>
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+
 
               
 
@@ -333,11 +331,12 @@ export default function Page() {
           </div>
         </div>
 
-          
-        <BookModal artistId={user?._id!} artistName={user?.name!}  sessionTime={sessions[0]}  callBack={bookHandler}/>
+    
       
-        
-      </div>
+        <Button type="submit" className="w-full mt-5" disabled={postMutation.isPending}>
+         {postMutation.isPending &&   <LoaderCircle className="h-4 w-4 animate-spin" />} Submit Post
+        </Button>
+      </form>
     </div>
   )
 }

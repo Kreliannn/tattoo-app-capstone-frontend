@@ -56,6 +56,7 @@ export function ReviewModal({ booking, setBookings } : { booking : bookingInterf
     formData.append("comment", text)
     formData.append("bookingId", booking._id)
     formData.append("artistId", booking.artist._id)
+    formData.append("bussinessId",  booking?.bussiness?._id ?? "none")
     submitMutation.mutate(formData)
   }
 

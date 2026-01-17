@@ -80,7 +80,7 @@ export default function Home() {
             {/* Username Field */}
             <div className="space-y-2">
               <label className="block text-xs font-medium text-stone-800 uppercase tracking-wide">
-                Username
+                Email
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -90,7 +90,7 @@ export default function Home() {
                   type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter username"
+                  placeholder="Enter Email"
                   required
                   className="block w-full pl-10 pr-3 py-3 border-0 border-b-2 border-gray-200 bg-transparent placeholder-gray-400 focus:outline-none focus:border-stone-600 focus:ring-0 transition-colors duration-200 text-sm"
                 />

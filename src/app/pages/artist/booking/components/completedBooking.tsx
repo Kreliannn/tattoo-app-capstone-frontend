@@ -60,13 +60,7 @@ export default function CompletedBookings({ bookings, setBookings } : {bookings 
 
                 <div className="text-sm p-2">
 
-                        <div className="space-y-1">
-                            <p className="flex items-center gap-2 font-medium text-xs ">
-                                <DollarSign size={16} />
-                                Balance
-                            </p>
-                            <p className=" text-xs text-green-500 font-bold">₱ {booking.balance.toLocaleString()}</p>
-                        </div>
+                  
                         
                         <div className="space-y-1 mt-4">
                             <p className="flex items-center gap-2 font-medium text-xs">

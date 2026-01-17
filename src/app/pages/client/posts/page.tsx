@@ -67,7 +67,7 @@ export default function Page() {
                 </Link>
             
                 <div>
-                  <p className="text-sm text-gray-500">Artist</p>
+                  <p className="text-sm text-gray-500">{post.account.type} </p>
                   <h1 className="font-semibold text-gray-900">
                     {post.account.name}
                   </h1>

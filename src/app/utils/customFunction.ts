@@ -1,4 +1,5 @@
 import L from "leaflet";
+import { convoInterface } from "../types/convo.type";
 
 export const mapIcon = (url : string) => {
     return L.divIcon({
@@ -27,6 +28,9 @@ export const convertToAmPm = (time: string) => {
     const displayHour = hour % 12 || 12
   
     return `${displayHour}${minute ? `:${minute}` : ""} ${isPM ? "PM" : "AM"}`
-  }
+}
   
 
+export const getChatIndex = ( userId : string ,convo : convoInterface) => {
+  return (userId == convo.accounts[0]._id) ? 1 : 0
+}

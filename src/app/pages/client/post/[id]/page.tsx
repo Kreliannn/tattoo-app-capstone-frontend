@@ -98,7 +98,7 @@ export default function Page() {
       {/* Artist Info */}
       <div className="border rounded-2xl p-6 shadow-sm bg-white">
         <Label className="text-lg font-semibold text-gray-700">
-          Artist Information
+          {post.account.type} Information
         </Label>
 
         <div className="flex items-center gap-5 mt-4">
@@ -119,11 +119,23 @@ export default function Page() {
 
         {/* Action */}
         <div className="flex gap-3 mt-3">
-            <Link href={`/pages/client/artistProfile/${post.account._id}`}>
-              <Button className=" text-lg py-6 mt-2">
-                  view artist
-              </Button>
-            </Link>
+
+            {
+              post.account.type == "artist" ? (
+                <Link href={`/pages/client/artistProfile/${post.account._id}`}>
+                  <Button className=" text-lg py-6 mt-2">
+                      view artist
+                  </Button>
+                </Link>
+              ) : (
+              <Link href={`/pages/client/bussinessProfile/${post.account._id}`}>
+                  <Button className=" text-lg py-6 mt-2">
+                      view Bussiness
+                  </Button>
+                </Link>
+              )
+            }
+      
 
             {user?._id != post.account._id &&(
                <Button className=" text-lg py-6 mt-2" onClick={() => messageMutation.mutate()}>

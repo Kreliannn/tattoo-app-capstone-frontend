@@ -27,7 +27,7 @@ export default function Page() {
 
   const { data : postsData } = useQuery({
     queryKey : ['artist_post'],
-    queryFn : () => axiosInstance.get(`/post/artist/${user?._id}`)
+    queryFn : () => axiosInstance.get(`/post/account/${user?._id}`)
   })
 
   useEffect(() => {
@@ -145,7 +145,7 @@ export default function Page() {
                   className="w-10 h-10 rounded-full object-cover border"
                 />
                 <div>
-                  <p className="text-sm text-gray-500">Artist</p>
+                  <p className="text-sm text-gray-500">{post.account.type} </p>
                   <h1 className="font-semibold text-gray-900">
                     {post.account.name}
                   </h1>

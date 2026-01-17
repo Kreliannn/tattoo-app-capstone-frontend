@@ -31,7 +31,7 @@ export default function Page() {
         return (
           <Link
             key={convo._id}
-            href={`/pages/artist/convo/${convo._id}`}
+            href={`/pages/bussiness/convo/${convo._id}`}
             className="block"
           >
             <div className="border rounded-lg p-4 hover:bg-muted transition">

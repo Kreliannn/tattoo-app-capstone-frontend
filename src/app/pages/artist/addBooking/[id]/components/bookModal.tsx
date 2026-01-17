@@ -12,18 +12,15 @@ import {
 import { useState, useEffect } from "react"
 import { Calendar } from "@/components/ui/calendar"
 import { convertToAmPm } from "@/app/utils/customFunction"
-import { postInterface } from "@/app/types/post.type"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import axiosInstance from "@/app/utils/axios"
 import { errorAlert, successAlert } from "@/app/utils/alert"
-import { bookingInterfaceInput } from "@/app/types/booking.type"
-import useUserStore from "@/app/store/useUserStore"
 import { bookingInterface } from "@/app/types/booking.type"
 import { LockIcon } from "lucide-react"
-import { showHealthChecklist } from "@/app/utils/alert"
 
 
-export function BookModal({ callBack, sessionTime } : {callBack : (data : {date : string, time : string[]}) => void, sessionTime : number}) {
+
+export function BookModal({ callBack, sessionTime, artistId, artistName } : {artistId : string, artistName : string  ,callBack : (data : {date : string, time : string[]}) => void, sessionTime : number}) {
 
    const times = [
     "07:00",
@@ -46,7 +43,6 @@ export function BookModal({ callBack, sessionTime } : {callBack : (data : {date 
   
   
 
-  const {user} = useUserStore()
 
   const [open, setOpen] = useState(false);
 
@@ -62,7 +58,7 @@ export function BookModal({ callBack, sessionTime } : {callBack : (data : {date 
  
   const { data } = useQuery({
     queryKey: ["artist_booking"],
-    queryFn: () => axiosInstance.get(`/booking/artist/${user!._id}`),
+    queryFn: () => axiosInstance.get(`/booking/artist/${artistId}`),
   });
 
   useEffect(() => {
@@ -79,8 +75,6 @@ export function BookModal({ callBack, sessionTime } : {callBack : (data : {date 
   }
 
   const bookHandler = () => {
-      setOpen(false)
-      
       callBack({
         date : date!.toLocaleDateString("en-US").toString(),
         time : selectedtime,
@@ -119,20 +113,20 @@ export function BookModal({ callBack, sessionTime } : {callBack : (data : {date 
     return isBooked
   }
 
-  const isDisabled = () => (!date || !selectStartTime || !user) || validateBookings() || selectedtime.length == 0
+  const isDisabled = () => (!date || !selectStartTime || !artistId) || validateBookings() || selectedtime.length == 0
   
 
     
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-            <Button className="flex items-center gap-2 "  onClick={() => setOpen(true)}>
+            <Button className="flex items-center gap-2 w-full "  onClick={() => setOpen(true)}>
                 Book Now
             </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[725px]">
         <DialogHeader>
-          <DialogTitle>Book a Tattoo Session</DialogTitle>
+          <DialogTitle> {artistName} Booking Schedule </DialogTitle>
           <DialogDescription>   
             Fill in the details below to request an appointment with your chosen artist.
           </DialogDescription>

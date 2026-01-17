@@ -30,7 +30,7 @@ export default function Page() {
     <div className="w-full h-dvh space-y-6 p-4 overflow-auto">
       <div className="w-full h-20 flex justify-between items-center p-5">
           <Label className="text-2xl font-bold text-stone-900">My Posts</Label>
-          <Link href={"/pages/artist/addPost/new"}>
+          <Link href={"/pages/bussiness/addPost/new"}>
             <Button size="lg" className="flex items-center justify-center">
               add post <Plus className="w-5 h-5" /> 
             </Button>
@@ -77,7 +77,7 @@ export default function Page() {
                 </div>
               </div>
 
-              <Link href={`/pages/artist/post/${post._id}`} >
+              <Link href={`/pages/bussiness/post/${post._id}`} >
                 <button className="w-full mt-3 bg-black text-white py-2 rounded-lg text-sm hover:bg-gray-800 transition" >
                   View Post
                 </button>
