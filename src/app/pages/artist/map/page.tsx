@@ -21,14 +21,6 @@ const App: React.FC = () => {
  
 
 
-  const { data: artistInfo } = useQuery({
-    queryKey: ['map_info_artist'],
-    queryFn: async (): Promise<artistInfoInterface[]> => {
-      const response = await axiosInstance.get(`/account/artistInfo`);
-      return response.data;
-    }
-  });
-
 
   const { data: bussinessInfo } = useQuery({
     queryKey: ['map_info_bussiness'],
@@ -46,48 +38,7 @@ const App: React.FC = () => {
     <div style={{ height: "100vh", width: "100%" }}>
       <MapContainer center={defaultPosition} zoom={13} style={{ height: "100%", width: "100%" }}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        {
-            artistInfo?.map((artist) => {
-
-                if(!artist.artist.location) return null
-                
-                return(
-                    <Marker key={artist._id} position={[artist.artist.location.lat!, artist.artist.location.long!]}  icon={mapIcon("/artist-icon.jpg")}>
-                        <Popup>
-                            <div className=" p-3 flex flex-col items-center text-center gap-2">
-                                
-                                       {/* Action */}
-                                <Link href={`/pages/client/artistProfile/${artist.artist._id}`}  className="w-16 h-16">
-                                    <img
-                                    src={artist.artist.profile}
-                                    alt={artist.artist.name}
-                                    className="w-16 h-16 rounded-full object-cover border hover:scale-105"
-                                    />
-                                </Link>
-                            
-
-                                {/* Artist Info */}
-                                <div className="space-y-1">
-                                <h1 className="text-base font-semibold">
-                                    {artist.artist.name}
-                                </h1>
-
-                           
-                                </div>
-
-                         
-
-                            </div>
-                        </Popup>
-
-                    </Marker>
-                )
-            
-            })
-                
-        }
-
-
+      
         {
             bussinessInfo?.map((bussiness) => {
 
@@ -99,7 +50,7 @@ const App: React.FC = () => {
                             <div className=" p-3 flex flex-col items-center text-center gap-2">
                                 
                                        {/* Action */}
-                                <Link href={`/pages/client/bussinessProfile/${bussiness.bussiness._id}`} className="w-16 h-16">
+                                <Link href={`/pages/artist/bussinessProfile/${bussiness.bussiness._id}`} className="w-16 h-16">
                                     <img
                                     src={bussiness.bussiness.profile}
                                     alt={bussiness.bussiness.name}

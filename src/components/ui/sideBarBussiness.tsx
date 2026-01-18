@@ -1,6 +1,5 @@
 "use client"
 import Link from "next/link"
-import { Calendar, Home, Building, Search, UserPlus2, User, FileText, BarChart3, Building2, LogOut, Menu, X, MenuIcon, Receipt, Recycle, Activity } from "lucide-react"
 import { useState } from "react"
 import {
   Sidebar,
@@ -17,17 +16,26 @@ import {
 } from "@/components/ui/sidebar"
 import { useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
+import {
+  LayoutDashboard,
+  Building2,
+  Users,
+  FileText,
+  MessageCircle,
+  Package,
+  LogOut, 
+  Menu, 
+  X,
+} from "lucide-react"
 
 const navigationItems = [
-  { title: "Dashboard", url: "/pages/bussiness/dashboard", icon: User },
-  { title: "Profile", url: "/pages/bussiness/profile", icon: User },
-  { title: "Artists", url: "/pages/bussiness/artists", icon: User },
-  { title: "Post", url: "/pages/bussiness/myPost", icon: User },
-  { title: "Chat", url: "/pages/bussiness/convos", icon: User },
-  { title: "Inventory", url: "/pages/bussiness/inventory", icon: User },
+  { title: "Dashboard", url: "/pages/bussiness/dashboard", icon: LayoutDashboard },
+  { title: "Bussiness Profile", url: "/pages/bussiness/profile", icon: Building2 },
+  { title: "Artists", url: "/pages/bussiness/artists", icon: Users },
+  { title: "Post", url: "/pages/bussiness/myPost", icon: FileText },
+  { title: "Chat", url: "/pages/bussiness/convos", icon: MessageCircle },
+  { title: "Inventory", url: "/pages/bussiness/inventory", icon: Package },
 ]
-
-
 
 interface AppSidebarProps {
   className?: string

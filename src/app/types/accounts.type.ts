@@ -110,3 +110,18 @@ export interface artistVerificationInterface {
     bussinessPermit : string | null,
     type : string
 }
+
+export interface artistApplicationInterfaceInput {
+    artist : string,
+    bussiness : string,
+    date :  string,
+    time : string
+}
+
+export interface artistApplicationInterface {
+    _id : string,
+    artist : accountInterface,
+    bussiness : accountInterface,
+    date :  string,
+    time : string
+}

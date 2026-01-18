@@ -1,6 +1,5 @@
 "use client"
 import Link from "next/link"
-import { Calendar, Home, Building, Search, UserPlus2, User, FileText, BarChart3, Building2, LogOut, Menu, X, MenuIcon, Receipt, Recycle, Activity } from "lucide-react"
 import { useState } from "react"
 import {
   Sidebar,
@@ -17,13 +16,21 @@ import {
 } from "@/components/ui/sidebar"
 import { useRouter } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
+import {
+  User,
+  Image,
+  MapPin,
+  CalendarCheck,
+  MessageCircle,
+  LogOut, Menu, X
+} from "lucide-react"
 
 const navigationItems = [
-  { title: "profile", url: "/pages/client/profile", icon: Home },
-  { title: "Posts", url: "/pages/client/posts", icon: UserPlus2 },
-  { title: "Map", url: "/pages/client/map", icon: UserPlus2 },
-  { title: "Booking", url: "/pages/client/bookings", icon: UserPlus2 },
-  { title: "chat", url: "/pages/client/convos", icon: UserPlus2 },
+  { title: "Profile", url: "/pages/client/profile", icon: User },
+  { title: "Posts", url: "/pages/client/posts", icon: Image },
+  { title: "Map", url: "/pages/client/map", icon: MapPin },
+  { title: "Booking", url: "/pages/client/bookings", icon: CalendarCheck },
+  { title: "Chat", url: "/pages/client/convos", icon: MessageCircle },
 ]
 
 

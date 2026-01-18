@@ -1,6 +1,5 @@
 "use client"
 import Link from "next/link"
-import { Calendar, Home, Building, Search, UserPlus2, User, FileText, BarChart3, Building2, LogOut, Menu, X, MenuIcon, Receipt, Recycle, Activity } from "lucide-react"
 import { useState } from "react"
 import {
   Sidebar,
@@ -18,13 +17,28 @@ import {
 import { useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 
+import { } from "lucide-react"
+import {
+  User,
+  Image,
+  FileText,
+  Calendar,
+  MessageCircle,
+  Package,
+  MapPin,
+  LogOut, 
+  Menu,
+  X 
+} from "lucide-react"
+
 const navigationItems = [
   { title: "Profile", url: "/pages/artist/profile", icon: User },
-  { title: "Tattoo Works", url: "/pages/artist/works", icon: UserPlus2 },
-  { title: "My Posts", url: "/pages/artist/myPost", icon: UserPlus2 },
-  { title: "Bookings", url: "/pages/artist/booking", icon: UserPlus2 },
-  { title: "chat", url: "/pages/artist/convos", icon: UserPlus2 },
-  { title: "inventory", url: "/pages/artist/inventory", icon: UserPlus2 },
+  { title: "Tattoo Works", url: "/pages/artist/works", icon: Image },
+  { title: "My Posts", url: "/pages/artist/myPost", icon: FileText },
+  { title: "Bookings", url: "/pages/artist/booking", icon: Calendar },
+  { title: "Chat", url: "/pages/artist/convos", icon: MessageCircle },
+  { title: "Inventory", url: "/pages/artist/inventory", icon: Package },
+  { title: "Map", url: "/pages/artist/map", icon: MapPin },
 ]
 
 

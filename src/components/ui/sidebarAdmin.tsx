@@ -1,6 +1,5 @@
 "use client"
 import Link from "next/link"
-import { Calendar, Home, Building, Search, UserPlus2, User, FileText, BarChart3, Building2, LogOut, Menu, X, MenuIcon, Receipt, Recycle, Activity } from "lucide-react"
 import { useState } from "react"
 import {
   Sidebar,
@@ -18,9 +17,15 @@ import {
 import { useRouter } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
 
+import {
+  LayoutDashboard,
+  UserCheck,
+  LogOut, Menu, X
+} from "lucide-react"
+
 const navigationItems = [
-  { title: "Dashboard", url: "/pages/admin/dashboard", icon: Home },
-  { title: "Verify Artist", url: "/pages/admin/verifyArtist", icon: UserPlus2 },
+  { title: "Dashboard", url: "/pages/admin/dashboard", icon: LayoutDashboard },
+  { title: "Verify Artist", url: "/pages/admin/verifyArtist", icon: UserCheck },
 ]
 
 
