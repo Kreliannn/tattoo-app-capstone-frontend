@@ -37,32 +37,61 @@ export default function Page() {
             key={booking._id}
             className="rounded-lg border p-3 shadow-sm space-y-2"
         >
-            {/* Header */}
-            <div className="flex items-center gap-2">
-            <img
-                src={booking.artist.profile}
-                className="h-9 w-9 rounded-full object-cover"
-            />
+          
 
-            <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold truncate">
-                {booking.artist.name}
-                </p>
-                <p className="text-xs text-muted-foreground">
-                Tattoo Artist
-                </p>
-            </div>
 
-            <span
-                className={`text-xs font-semibold  px-2 py-0.5 rounded-full capitalize
-                ${booking.status === "pending" && "bg-yellow-100 text-yellow-700 border-2 border-yellow-500"}
-                ${booking.status === "completed" && "bg-green-100 text-green-700 border-2 border-green-500"}
-                ${booking.status === "rejected" && "bg-red-100 text-red-700 border-2 border-red-500" }
-                ${booking.status === "active" && "bg-blue-100 text-blue-700 border-2 border-blue-500" }
-                `}
-            >
-                {booking.status}
-            </span>
+            <div className="flex items-center gap-2 justify-between">
+
+                
+                <div className="flex gap-2">
+                    <img
+                        src={booking.artist.profile}
+                        className="h-9 w-9 rounded-full object-cover"
+                    />
+
+                    <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold truncate">
+                        {booking.artist.name}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                            Artist
+                        </p>
+                    </div>
+
+                </div>
+
+
+                {booking.bussiness && (
+                        <div className="flex items-center gap-2">
+                        <img
+                            src={booking.bussiness.profile}
+                            className="h-9 w-9 rounded-full object-cover"
+                        />
+
+                        <div className="flex-1 min-w-0">
+                            <p className="text-sm font-semibold truncate">
+                            {booking.bussiness.name}
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                                Bussiness
+                            </p>
+                        </div>
+
+                        
+                    </div>
+                )}
+
+
+                <span
+                    className={`text-xs font-semibold  px-2 py-0.5 rounded-full capitalize
+                    ${booking.status === "pending" && "bg-yellow-100 text-yellow-700 border-2 border-yellow-500"}
+                    ${booking.status === "completed" && "bg-green-100 text-green-700 border-2 border-green-500"}
+                    ${booking.status === "rejected" && "bg-red-100 text-red-700 border-2 border-red-500" }
+                    ${booking.status === "active" && "bg-blue-100 text-blue-700 border-2 border-blue-500" }
+                    `}
+                >
+                    {booking.status}
+                </span>
             </div>
 
             <div className="flex gap-2 mt-5">

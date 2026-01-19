@@ -26,6 +26,7 @@ import {
   LogOut, 
   Menu, 
   X,
+  Calendar
 } from "lucide-react"
 
 const navigationItems = [
@@ -33,6 +34,7 @@ const navigationItems = [
   { title: "Bussiness Profile", url: "/pages/bussiness/profile", icon: Building2 },
   { title: "Artists", url: "/pages/bussiness/artists", icon: Users },
   { title: "Post", url: "/pages/bussiness/myPost", icon: FileText },
+  { title: "Bookings", url: "/pages/bussiness/bookings", icon: Calendar },
   { title: "Chat", url: "/pages/bussiness/convos", icon: MessageCircle },
   { title: "Inventory", url: "/pages/bussiness/inventory", icon: Package },
 ]

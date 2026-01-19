@@ -108,7 +108,7 @@ export default function Page() {
             <h1 className="text-2xl font-bold"> {bussinessInfo.artists.length != 0 && "Artists"} </h1>
             <div className="w-full flex gap-5 mt-3">
               {bussinessInfo.artists.map((artist) => (
-                <div className="flex gap-3 border shadow p-3 items-center rounded hover:scale-105" onClick={() => setSelectedArtist(artist.artist)}>
+                <div key={artist.artist._id} className="flex gap-3 border shadow p-3 items-center rounded hover:scale-105" onClick={() => setSelectedArtist(artist.artist)}>
                     <img src={artist.artist.profile} alt=""  className="w-10 h-10 rounded-full"/>
                     <h1 className="font-bold text-stone-700"> {artist.artist.name} </h1>
                 </div>
@@ -178,7 +178,7 @@ export default function Page() {
                 </div>
               </div>
 
-              <Link href={`/pages/artist/post/${post._id}`} >
+              <Link href={`/pages/bussiness/post/${post._id}`} >
                 <button className="w-full mt-3 bg-black text-white py-2 rounded-lg text-sm hover:bg-gray-800 transition" >
                   View Post
                 </button>
