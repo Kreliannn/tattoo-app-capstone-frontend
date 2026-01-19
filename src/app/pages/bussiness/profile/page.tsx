@@ -9,7 +9,8 @@ import Link from "next/link";
 import { ChangeProfile } from "./components/changeProfile";
 import MapLocation from "./components/location";
 import { Button } from "@/components/ui/button";
-import { bussinessInfoInterface } from "@/app/types/accounts.type";
+import { accountInterface, bussinessInfoInterface } from "@/app/types/accounts.type";
+import { ArtistCalendar } from "./components/artistCalendar";
 
 export default function Page() {
   
@@ -17,6 +18,8 @@ export default function Page() {
 
   const [bussinessInfo, setBussinessInfo] = useState<bussinessInfoInterface | null>(null)
   const [posts, setPosts] = useState<postInterface[]>([])
+
+  const [selectedArtist, setSelectedArtist] = useState<accountInterface | null>(null) 
 
   const [imgType, setImgType] = useState("studio")
 
@@ -100,6 +103,29 @@ export default function Page() {
             {imgType == "client" && <ImgCard type="client" addImg={true} files={bussinessInfo.profileImages.filter(item => item.type === "client")} />}
 
         </div>
+
+        <div className="mt-8 w-full">
+            <h1 className="text-2xl font-bold"> {bussinessInfo.artists.length != 0 && "Artists"} </h1>
+            <div className="w-full flex gap-5 mt-3">
+              {bussinessInfo.artists.map((artist) => (
+                <div className="flex gap-3 border shadow p-3 items-center rounded hover:scale-105" onClick={() => setSelectedArtist(artist.artist)}>
+                    <img src={artist.artist.profile} alt=""  className="w-10 h-10 rounded-full"/>
+                    <h1 className="font-bold text-stone-700"> {artist.artist.name} </h1>
+                </div>
+              ))}
+            </div>
+        </div>
+
+
+        {selectedArtist && (
+          <>
+            <div className="w-full mt-8 flex gap-3 items-center">
+              <img src={selectedArtist.profile} alt=""  className="w-15 h-15 rounded-full"/> 
+              <h1 className="text-4xl font-bold text-stone-800"> {selectedArtist.name} Schedule </h1>
+            </div>
+            <ArtistCalendar artistId={selectedArtist._id} key={selectedArtist._id}/>
+          </>
+        )}
 
        
 
