@@ -75,6 +75,7 @@ export function BookModal({ callBack, sessionTime, artistId, artistName } : {art
   }
 
   const bookHandler = () => {
+      setOpen(false)
       callBack({
         date : date!.toLocaleDateString("en-US").toString(),
         time : selectedtime,

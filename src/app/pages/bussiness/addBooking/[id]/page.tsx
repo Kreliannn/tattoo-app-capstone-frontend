@@ -223,9 +223,12 @@ export default function Page() {
                       <SelectValue placeholder="Select Client" />
                     </SelectTrigger>
                     <SelectContent>
-                      {convos.map((convo) => (
-                        <SelectItem  key={convo._id} value={convo.accounts[getChatIndex(user?._id!, convo)]._id}> <img src={convo.accounts[getChatIndex(user?._id!, convo)].profile} className="w-5 h-5 object-cover rounded-full" />  {convo.accounts[getChatIndex(user?._id!, convo)].name} </SelectItem>
-                      ))}
+                      {convos.map((convo) => {
+                        if(convo.accounts[getChatIndex(user?._id!, convo)].type != "client") return
+                        return(
+                          <SelectItem  key={convo._id} value={convo.accounts[getChatIndex(user?._id!, convo)]._id}> <img src={convo.accounts[getChatIndex(user?._id!, convo)].profile} className="w-5 h-5 object-cover rounded-full" />  {convo.accounts[getChatIndex(user?._id!, convo)].name} </SelectItem>
+                        )
+                      })}
                     </SelectContent>
                   </Select>
                 </div>
