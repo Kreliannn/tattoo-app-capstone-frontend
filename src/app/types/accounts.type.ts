@@ -45,7 +45,7 @@ export interface artistInfoInterface {
         fileType : string,
     }[], 
     reviews : {
-        client : string,
+        client : accountInterface,
         comment : string,
         img : string,
         rating :number,
@@ -86,7 +86,7 @@ export interface bussinessInfoInterface {
         fileType : string
     }[],
     reviews : {
-        client : string,
+        client : accountInterface,
         comment : string,
         img : string,
         rating :number,

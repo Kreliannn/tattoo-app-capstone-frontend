@@ -30,10 +30,10 @@ export function ReviewModal({ booking, setBookings } : { booking : bookingInterf
   const [preview, setPreview] = useState<string | null>(null)
 
   const submitMutation = useMutation({
-    mutationFn : (data : FormData) => axiosInstance.post("/account/artistInfo/review", data),
+    mutationFn : (data : FormData) => axiosInstance.post("/account/review", data),
     onSuccess : (response) => {
         successAlert("Review Submited")
-        setBookings(response.data)
+        setBookings(response.data.reverse())
         setOpen(false)
         setImg(null)
     },

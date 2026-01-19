@@ -22,8 +22,9 @@ import { bookingInterface } from "@/app/types/booking.type"
 import { LockIcon } from "lucide-react"
 import { showHealthChecklist } from "@/app/utils/alert"
 import { ClientAgreementModal } from "./clientAgreement"
+import { useRouter } from "next/navigation"
 
-export function ArtistBookModal({ post } : {post : postInterface}) {
+export function ArtistBookModal({ post, artistId, bussinessId } : {post : postInterface, artistId : string, bussinessId : string | null}) {
 
    const times = [
     "07:00",
@@ -48,6 +49,8 @@ export function ArtistBookModal({ post } : {post : postInterface}) {
 
   const {user} = useUserStore()
 
+  const router = useRouter()
+
   const sessionTime = (post.sessions[0])
 
   const [open, setOpen] = useState(false);
@@ -64,7 +67,7 @@ export function ArtistBookModal({ post } : {post : postInterface}) {
  
   const { data } = useQuery({
     queryKey: ["artist_booking"],
-    queryFn: () => axiosInstance.get(`/booking/artist/${post.account._id}`),
+    queryFn: () => axiosInstance.get(`/booking/artist/${artistId}`),
   });
 
   useEffect(() => {
@@ -77,6 +80,7 @@ export function ArtistBookModal({ post } : {post : postInterface}) {
       setOpen(false)
       setSelectedTime([])
       successAlert("booking submited")
+      router.push("/pages/client/bookings")
     }, 
     onError : () => errorAlert("error accour")
   })
@@ -92,8 +96,8 @@ export function ArtistBookModal({ post } : {post : postInterface}) {
   const bookHandler = () => {
       setOpen(false)
       bookMutation.mutate({
-        bussiness : null,
-        artist : post.account._id,
+        bussiness : bussinessId,
+        artist : artistId,
         client : user!._id,
         tattooImg : post.postImg,
         sessions : post.sessions,

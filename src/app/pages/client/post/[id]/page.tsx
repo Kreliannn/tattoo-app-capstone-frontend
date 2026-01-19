@@ -11,11 +11,11 @@ import axiosInstance from "@/app/utils/axios"
 import { useParams } from "next/navigation"
 import { postInterface } from "@/app/types/post.type"
 import Link from "next/link"
-import { Box } from "lucide-react"
+import { Box , MessageCircle, Building, User} from "lucide-react"
 import { ArtistBookModal } from "./components/bookModalArtist"
 import useUserStore from "@/app/store/useUserStore"
 import { useRouter } from "next/navigation"
-
+import { ArtistSelectionModal } from "./components/artistSelectionModal"
 
 
 
@@ -70,8 +70,9 @@ export default function Page() {
 
       <div className="border relative rounded-2xl p-6 shadow-sm bg-white flex gap-5">
 
-        {user?._id != post.account._id && <ArtistBookModal key={post._id} post={post} />}
-       
+        {(user?._id != post.account._id  && post.account.type == "artist") && <ArtistBookModal artistId={post.account._id} key={post._id} post={post} bussinessId={null} />}
+        {(user?._id != post.account._id  && post.account.type == "bussiness") && <ArtistSelectionModal  key={post._id} post={post}  />}
+
         <Link   href={{
             pathname: "/3d",
             query: { img: post.postImg },
@@ -124,13 +125,13 @@ export default function Page() {
               post.account.type == "artist" ? (
                 <Link href={`/pages/client/artistProfile/${post.account._id}`}>
                   <Button className=" text-lg py-6 mt-2">
-                      view artist
+                     <User /> view artist
                   </Button>
                 </Link>
               ) : (
               <Link href={`/pages/client/bussinessProfile/${post.account._id}`}>
                   <Button className=" text-lg py-6 mt-2">
-                      view Bussiness
+                     <Building />  view Bussiness
                   </Button>
                 </Link>
               )
@@ -139,7 +140,7 @@ export default function Page() {
 
             {user?._id != post.account._id &&(
                <Button className=" text-lg py-6 mt-2" onClick={() => messageMutation.mutate()}>
-                  message
+                  <MessageCircle />  message
               </Button> 
             )}
             
