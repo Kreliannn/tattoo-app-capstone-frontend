@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { useMutation } from "@tanstack/react-query"
 import axiosInstance from "@/app/utils/axios"
 import { successAlert, errorAlert } from "@/app/utils/alert"
@@ -18,17 +18,29 @@ import { Textarea } from "@/components/ui/textarea"
 import { bookingInterface } from "@/app/types/booking.type"
 import { payMongoBooking } from "@/app/utils/payMongo"
 import { LoaderCircle, ArrowDown, Wallet, DollarSign } from "lucide-react"
+import { BookingContext } from "../page"
 
-
-export function OnlinePayment({ booking } : { booking : bookingInterface}) {
+export function CashPayment({ booking } : { booking : bookingInterface}) {
 
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const refetch = useContext(BookingContext)
 
   const [amount, setAmount] = useState(booking.balance.toString())
 
   const isInvalidAmount = () => !amount || Number(amount) > Number(booking.balance)
+
+  const paymentMutation = useMutation({
+    mutationFn : (data : { amount : number ,sender : string, receiver : string, bookingId : string } ) => axiosInstance.post(`/booking/cashPayment`, data),
+    onSuccess : (response) => {
+       setIsLoading(false)
+       setOpen(false)
+       refetch()
+    },
+    onError : () => errorAlert("error accour")
+  })
+
  
 
   const handleSubmit = () => {
@@ -37,7 +49,7 @@ export function OnlinePayment({ booking } : { booking : bookingInterface}) {
     const sender = booking.client._id
     const receiver = booking.bussiness?._id ?? booking.artist._id
     const bookingId = booking._id
-    payMongoBooking(amount,sender, receiver, bookingId)
+    paymentMutation.mutate({amount : Number(amount) ,sender, receiver, bookingId})
   }
 
 
@@ -45,15 +57,15 @@ export function OnlinePayment({ booking } : { booking : bookingInterface}) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-            <Button className="text-blue-500  bg-white border border-blue-500 hover:bg-blue-50 w-full"  onClick={() => setOpen(true)}>
-               <DollarSign />  online payment
+            <Button className="text-blue-500  bg-white border border-blue-500 hover:bg-blue-50  "  onClick={() => setOpen(true)}>
+               <DollarSign />  Cash Payment
             </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[700px]">
         <DialogHeader>
-            <DialogTitle>Send Payment</DialogTitle>
+            <DialogTitle>Record Payment</DialogTitle>
             <DialogDescription>
-            Review the details before proceeding with payment.
+            Review the details before proceeding to record.
             </DialogDescription>
         </DialogHeader>
 
@@ -62,15 +74,15 @@ export function OnlinePayment({ booking } : { booking : bookingInterface}) {
             {/* Receiver */}
             <div className="flex items-center gap-4 p-4 border rounded-lg">
                 <img
-                    src={booking.bussiness?.profile ?? booking.artist.profile}
+                    src={booking.client?.profile}
                     alt="receiver"
                     className="w-14 h-14 rounded-full object-cover"
                 />
 
                 <div className="flex-1">
-                    <p className="text-sm text-muted-foreground">Sending payment to</p>
+                    <p className="text-sm text-muted-foreground">cash payment</p>
                     <p className="font-semibold text-base">
-                    {booking.bussiness?.name ?? booking.artist.name}
+                    {booking.client?.name }
                     </p>
                 </div>
             </div>
@@ -102,7 +114,7 @@ export function OnlinePayment({ booking } : { booking : bookingInterface}) {
             {isLoading && (
               <LoaderCircle className="h-4 w-4 animate-spin mr-2" />
             )}
-            Proceed To Payment
+            Record Cash Payment
           </Button>
         </DialogFooter>
       </DialogContent>

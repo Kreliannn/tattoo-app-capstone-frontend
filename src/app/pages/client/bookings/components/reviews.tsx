@@ -65,7 +65,7 @@ export function ReviewModal({ booking, setBookings } : { booking : bookingInterf
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-            <Button className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 w-full "  onClick={() => setOpen(true)}>
+            <Button className="text-yellow-500  bg-white border border-yellow-500 hover:bg-yellow-50 w-full "  onClick={() => setOpen(true)}>
               <Star /> Place Reviews
             </Button>
       </DialogTrigger>

@@ -28,7 +28,8 @@ import {
   MapPin,
   LogOut, 
   Menu,
-  X 
+  X ,
+  History, Bell
 } from "lucide-react"
 
 const navigationItems = [
@@ -39,6 +40,8 @@ const navigationItems = [
   { title: "Chat", url: "/pages/artist/convos", icon: MessageCircle },
   { title: "Inventory", url: "/pages/artist/inventory", icon: Package },
   { title: "Map", url: "/pages/artist/map", icon: MapPin },
+  { title: "Transactions", url: "/pages/artist/transactions", icon: History },
+  { title: "Notifications", url: "/pages/artist/notifications", icon: Bell },
 ]
 
 

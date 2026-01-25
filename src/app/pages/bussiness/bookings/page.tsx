@@ -100,16 +100,16 @@ export default function Page() {
                     {booking.bussiness && (
                             <div className="flex items-center gap-2">
                             <img
-                                src={booking.bussiness.profile}
+                                src={booking.client.profile}
                                 className="h-9 w-9 rounded-full object-cover"
                             />
 
                             <div className="flex-1 min-w-0">
                                 <p className="text-sm font-semibold truncate">
-                                {booking.bussiness.name}
+                                {booking.client.name}
                                 </p>
                                 <p className="text-xs text-muted-foreground">
-                                    Bussiness
+                                    client
                                 </p>
                             </div>
 

@@ -22,7 +22,9 @@ import {
   MapPin,
   CalendarCheck,
   MessageCircle,
-  LogOut, Menu, X
+  LogOut, Menu, X,
+  History,
+  Bell
 } from "lucide-react"
 
 const navigationItems = [
@@ -31,6 +33,8 @@ const navigationItems = [
   { title: "Map", url: "/pages/client/map", icon: MapPin },
   { title: "Booking", url: "/pages/client/bookings", icon: CalendarCheck },
   { title: "Chat", url: "/pages/client/convos", icon: MessageCircle },
+  { title: "Transactions", url: "/pages/client/transactions", icon: History },
+  { title: "Notifications", url: "/pages/client/notifications", icon: Bell },
 ]
 
 

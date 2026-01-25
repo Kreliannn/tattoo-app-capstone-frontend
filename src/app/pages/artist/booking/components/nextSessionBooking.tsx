@@ -19,7 +19,7 @@ import { errorAlert, successAlert } from "@/app/utils/alert"
 import { bookingInterfaceInput } from "@/app/types/booking.type"
 import useUserStore from "@/app/store/useUserStore"
 import { bookingInterface } from "@/app/types/booking.type"
-import { LockIcon } from "lucide-react"
+import { LockIcon , Calendar1Icon} from "lucide-react"
 
 export function BookNextSession({ booking, setBookings } : {booking : bookingInterface,  setBookings : (data : bookingInterface[]) => void}) {
 
@@ -138,8 +138,8 @@ export function BookNextSession({ booking, setBookings } : {booking : bookingInt
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-            <Button className="flex items-center gap-2  bg-yellow-500 text-white hover:bg-yellow-600"  onClick={() => setOpen(true)}>
-                Book next Session
+            <Button className="text-yellow-500  bg-white border border-yellow-500 hover:bg-yellow-50 "  onClick={() => setOpen(true)}>
+               <Calendar1Icon /> Book next Session
             </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[725px]">

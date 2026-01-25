@@ -20,7 +20,8 @@ import {
   Layers,
   Tag,
   LoaderCircle,
-  DollarSign
+  DollarSign,
+  Replace
 } from "lucide-react"
 import { errorAlert , successAlert} from "@/app/utils/alert"
 import { useMutation, useQuery } from "@tanstack/react-query"
@@ -83,6 +84,8 @@ export default function Page() {
   const [category, setCategory] = useState("")
 
   const [client, setClient] = useState("")
+  const [clientName, setClientName] = useState("")
+  const [isNoClientAccount, setIsNoClientAccount] = useState(false)
 
   const [sessions, setSessions] = useState<number[]>([1])
 
@@ -152,6 +155,11 @@ export default function Page() {
     formData.append("type", type)
     formData.append("link", preview || "none")
 
+    formData.append("isNoAccount", isNoClientAccount ? "no account" : "has account")
+    formData.append("clientName", clientName || "none")
+
+    
+
     postMutation.mutate(formData)
   }
 
@@ -203,23 +211,44 @@ export default function Page() {
 
             <div className="w-4/6 h-full ">
 
-
+              
               <div className="space-y-2">
-                <Label>Client</Label>
-                <Select onValueChange={setClient}>
-                  <SelectTrigger className=" w-full">
-                    <SelectValue placeholder="Select Client" />
-                  </SelectTrigger>
-                  <SelectContent>
-                      {convos.map((convo) => {
-                        if(convo.accounts[getChatIndex(user?._id!, convo)].type != "client") return
-                        return(
-                          <SelectItem  key={convo._id} value={convo.accounts[getChatIndex(user?._id!, convo)]._id}> <img src={convo.accounts[getChatIndex(user?._id!, convo)].profile} className="w-5 h-5 object-cover rounded-full" />  {convo.accounts[getChatIndex(user?._id!, convo)].name} </SelectItem>
-                        )
-                      })}
-                  </SelectContent>
-                </Select>
+                  <Label>Client</Label>
+                  <div className="w-full flex gap-2">
+
+                    {isNoClientAccount 
+                    ? 
+                    <Input
+                      placeholder="Enter client name"
+                      value={clientName}
+                      type="text"
+                      onChange={(e) => setClientName(e.target.value)}
+                    />
+                    :
+                    <Select onValueChange={setClient}>
+                      <SelectTrigger className=" w-full">
+                        <SelectValue placeholder="Select Client" />
+                      </SelectTrigger>
+                      <SelectContent>
+                          {convos.map((convo) => {
+                            if(convo.accounts[getChatIndex(user?._id!, convo)].type != "client") return
+                            return(
+                              <SelectItem  key={convo._id} value={convo.accounts[getChatIndex(user?._id!, convo)]._id}> <img src={convo.accounts[getChatIndex(user?._id!, convo)].profile} className="w-5 h-5 object-cover rounded-full" />  {convo.accounts[getChatIndex(user?._id!, convo)].name} </SelectItem>
+                            )
+                          })}
+                      </SelectContent>
+                    </Select>
+                    }
+                   
+
+                    <Button onClick={() => setIsNoClientAccount((prev) => !prev)}> {isNoClientAccount ? "has account" :  "no account"} </Button>
+                  </div>
               </div>
+
+                
+              
+
+             
 
                     
               <div className="space-y-2 mt-3">

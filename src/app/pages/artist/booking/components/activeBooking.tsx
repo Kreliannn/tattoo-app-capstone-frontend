@@ -1,6 +1,6 @@
 "use client";
 import { useMutation } from "@tanstack/react-query";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axiosInstance from "@/app/utils/axios";
 import useUserStore from "@/app/store/useUserStore";
 import { bookingInterface } from "@/app/types/booking.type";
@@ -12,11 +12,13 @@ import {
   Image as ImageIcon,
   Layers,
   DollarSign,
+  Check
 } from "lucide-react";
 import { BookNextSession } from "./nextSessionBooking";
 import { Session } from "inspector/promises";
 import { Button } from "@/components/ui/button";
 import { successAlert, confirmAlert, errorAlert } from "@/app/utils/alert";
+import { CashPayment } from "./cashPayment";
 
 
 export default function ActiveBookings({ bookings, setBookings } : {bookings : bookingInterface[], setBookings : (data : bookingInterface[]) => void}) {
@@ -170,11 +172,13 @@ export default function ActiveBookings({ bookings, setBookings } : {bookings : b
 
             </div>
 
-            <div className="w-full grid grid-cols-1 gap-1 mt-5">
+            <div className="w-full flex gap-2 mt-5">
                {booking.session != booking.sessions.length 
                 ?  <BookNextSession booking={booking} setBookings={setBookings} />
-                :   <Button className="text-white  bg-green-500 hover:bg-green-600" onClick={() => handleComplete(booking._id)}> Mark as Complete </Button>
+                :   <Button  className="text-green-500  bg-white border border-green-500 hover:bg-green-50  " onClick={() => handleComplete(booking._id)}> <Check /> Mark as Complete </Button>
                }
+
+               {booking.balance != 0 && <CashPayment booking={booking}  />}
                     
             </div>
 

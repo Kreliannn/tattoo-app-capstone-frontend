@@ -28,7 +28,7 @@ export default function Home() {
       setUser(account);
       switch(account.type){
         case "client":
-          router.push(`/pages/client/profile`);
+          router.push(`/pages/client/posts`);
         break
 
         case "artist":

@@ -14,13 +14,14 @@ import { useState } from "react"
  import { useMutation } from "@tanstack/react-query"
  import axiosInstance from "@/app/utils/axios"
  import { successAlert, confirmAlert, errorAlert } from "@/app/utils/alert"
+ import Swal from "sweetalert2";
 
 export function ArtistVerificationModal({ artistVerification , setArtistVerification} : { artistVerification : artistVerificationInterface, setArtistVerification : (data : artistVerificationInterface[]) => void}) {
 
   const [open, setOpen] = useState(false);
 
   const mutation = useMutation({
-    mutationFn : (data : { verificationId  :string, accountId : string, status : string }) => axiosInstance.post("/account/artistVerification/admin", data),
+    mutationFn : (data : { verificationId  :string, accountId : string, status : string, reason : string }) => axiosInstance.post("/account/artistVerification/admin", data),
     onSuccess : (response) => {
         successAlert(response.data.alert)
         setArtistVerification(response.data.artistVerifications)
@@ -29,6 +30,41 @@ export function ArtistVerificationModal({ artistVerification , setArtistVerifica
     onError : () => errorAlert("error accour")
   })
 
+
+
+  const rejectionReason = async (callBack : (reason : string)  => void) => {
+    const { value: reason } = await Swal.fire({
+      title: "Reject Transaction",
+      html: `
+        <label class="swal2-label" style="display:block;text-align:center;margin-bottom:6px;font-weight:600;">
+          REASON FOR REJECTION
+        </label>
+        <textarea
+          id="reason"
+          class="swal2-textarea"
+          placeholder="Enter reason..."
+          style="margin-top:0;"
+        ></textarea>
+      `,
+      focusConfirm: false,
+      showCancelButton: true,
+      confirmButtonText: "Reject",
+      confirmButtonColor: "#000",
+      preConfirm: () => {
+        const reason = (document.getElementById("reason") as HTMLTextAreaElement)?.value;
+        if (!reason.trim()) {
+          Swal.showValidationMessage("Reason is required");
+        }
+        return reason;
+      },
+    });
+
+    if (reason) {
+      callBack(reason)
+    }
+  };
+
+
   const handleActions = ( status : string) => {
     setOpen(false)
     if(status == "approve"){
@@ -36,16 +72,21 @@ export function ArtistVerificationModal({ artistVerification , setArtistVerifica
         mutation.mutate({
           verificationId : artistVerification._id,
           accountId : artistVerification.client._id,
-          status : "approve"
+          status : "approve",
+          reason : "none"
         })
       })
     } else {
       confirmAlert("you want to Reject this user?", "reject", () => {
-        mutation.mutate({
-          verificationId : artistVerification._id,
-          accountId : artistVerification.client._id,
-          status : "reject"
+        rejectionReason((reason) => {
+          mutation.mutate({
+            verificationId : artistVerification._id,
+            accountId : artistVerification.client._id,
+            status : "reject",
+            reason : reason
+          })
         })
+       
       })
     }
   }

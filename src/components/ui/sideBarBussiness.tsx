@@ -26,7 +26,9 @@ import {
   LogOut, 
   Menu, 
   X,
-  Calendar
+  Calendar,
+  History,
+  Bell
 } from "lucide-react"
 
 const navigationItems = [
@@ -37,6 +39,8 @@ const navigationItems = [
   { title: "Bookings", url: "/pages/bussiness/bookings", icon: Calendar },
   { title: "Chat", url: "/pages/bussiness/convos", icon: MessageCircle },
   { title: "Inventory", url: "/pages/bussiness/inventory", icon: Package },
+  { title: "Transactions", url: "/pages/bussiness/transactions", icon: History },
+  { title: "Notifications", url: "/pages/bussiness/notifications", icon: Bell },
 ]
 
 interface AppSidebarProps {
