@@ -2,10 +2,12 @@
 
 
 export   async function payMongoBooking(amountInput : string, sender : string, receiver : string, bookingId : string) {
-    const secret_key = process.env.PAYMONGO_SECRET_KEY;
+    const secret_key = process.env.NEXT_PUBLIC_PAYMONGO;
     // Convert to centavos
     const amount = parseInt(amountInput, 10) * 100;
-  
+
+    console.log(secret_key)
+   
     if (amount < 2000) {
       alert("Invalid Amount - The minimum is ₱20");
       return;
