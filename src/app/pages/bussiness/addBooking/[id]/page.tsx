@@ -53,7 +53,7 @@ export default function Page() {
 
 
   const { data: bussinessInfoData } = useQuery({
-    queryKey: ['bussiness_profile'],
+    queryKey: ['bussiness_profile_data'],
     queryFn: async (): Promise<bussinessInfoInterface> => {
       const response = await axiosInstance.get(`/account/bussinessInfo/${user?._id}`);
       return response.data;
@@ -167,6 +167,9 @@ export default function Page() {
 
     postMutation.mutate(formData)
   }
+
+
+  if(!bussinessInfoData) return <div> loading </div>
 
   return (
     <div className="w-4/6 mx-auto py-10 space-y-6">

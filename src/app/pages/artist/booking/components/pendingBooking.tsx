@@ -29,18 +29,7 @@ export default function PendingBookings({ bookings, setBookings } : {bookings : 
         onError : () => errorAlert("ERROR ACCOUR")
       })
 
-      const handleReject = (id : string) => {
-        confirmAlert("you want to decline this booking?", "decline", () => {
-            updateStatusMutation.mutate({id, status : "rejected"})
-        })
-      }
-
-      const handleApprove = (id : string) => {
-        confirmAlert("you want to Approve this booking?", "approve", () => {
-            updateStatusMutation.mutate({id, status : "active"})
-        })
-      }
-
+     
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-5">
 
@@ -117,7 +106,11 @@ export default function PendingBookings({ bookings, setBookings } : {bookings : 
                                 <DollarSign size={16} />
                                 Balance
                             </p>
-                            <p className=" text-xs text-green-500 font-bold">₱ {booking.balance.toLocaleString()}</p>
+                            {booking.balance <= 0 ?
+                                    <span className={`bg-green-100 text-green-700 border-2 border-green-500 text-xs font-semibold  px-2 py-0.5 rounded capitalize`}> Fully Paid </span>
+                                :
+                                    <p className=" text-xs text-green-500 font-bold">₱ {booking.balance.toLocaleString()}</p>
+                                }
                         </div>
                         
                         <div className="space-y-1 mt-4">
@@ -166,10 +159,7 @@ export default function PendingBookings({ bookings, setBookings } : {bookings : 
             </div>
 
                 
-            <div className="w-full grid grid-cols-2 gap-1 mt-5">
-                    <Button className="text-white  bg-green-500 hover:bg-green-600" onClick={() => handleApprove(booking._id)}> Approve </Button>
-                    <Button className="text-white  bg-red-500 hover:bg-red-600" onClick={() => handleReject(booking._id)}> Reject </Button>
-            </div>
+         
 
         </div>
         ))}

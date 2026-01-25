@@ -24,16 +24,16 @@ export function ClientAgreementModal({
 
 
   const [health, setHealth] = useState({
-    pregnant: false,
-    medicalCondition: false,
-    bloodThinner: false,
-    skinCondition: false,
+    pregnant: true,
+    medicalCondition: true,
+    bloodThinner: true,
+    skinCondition: true,
   })
 
   const [consent, setConsent] = useState({
-    infoTrue: false,
-    understandRisk: false,
-    agreeProceed: false,
+    infoTrue: true,
+    understandRisk: true,
+    agreeProceed: true,
   })
 
   const validate = () => {
@@ -77,6 +77,11 @@ export function ClientAgreementModal({
           </DialogDescription>
         </DialogHeader>
 
+        <div className="space-y-3 text-sm mx-h-[600px] overflow-auto">
+          <h3 className="font-semibold">Down Payment</h3>
+          <p>A 50% down payment is required to confirm this booking.</p>
+        </div>
+
         {/* Health Section */}
         <div className="space-y-3 text-sm mx-h-[600px] overflow-auto">
           <h3 className="font-semibold">Health Declaration</h3>
@@ -101,7 +106,7 @@ export function ClientAgreementModal({
         </div>
 
         {/* Consent Section */}
-        <div className="space-y-3 text-sm mt-6">
+        <div className="space-y-3 text-sm mt-2">
           <h3 className="font-semibold">Consent</h3>
 
           {[

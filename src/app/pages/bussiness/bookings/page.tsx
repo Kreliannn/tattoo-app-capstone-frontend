@@ -51,9 +51,7 @@ export default function Page() {
                   Pending (<span className="font-bold text-green-500"> {bookings.filter((item) => item.status == "pending").length}  </span>)
               </div>
 
-              <div className={`p-3 border shadow ${type == "rejected" && "text-white bg-stone-900"}`} onClick={() => setType("rejected")}>
-                  Rejected
-              </div>
+         
 
               <div className={`p-3 border shadow ${type == "completed" && "text-white bg-stone-900"}`} onClick={() => setType("completed")}>
                   Completed
@@ -62,7 +60,7 @@ export default function Page() {
 
           <div className="flex justify-end ">
             <Link href={"/pages/bussiness/addBooking/new"}>
-              <div className={`p-3 border shadow text-white bg-stone-900 hover:bg-stone-700 flex gap-2`} onClick={() => setType("active")}>
+              <div className={`p-3 border shadow text-white bg-stone-900 hover:bg-stone-700 flex gap-2`}>
                  <Plus />  Add Booking
               </div>
             </Link>
@@ -145,7 +143,11 @@ export default function Page() {
                                     <DollarSign size={16} />
                                     Balance
                                 </p>
-                                <p className=" text-xs text-green-500 font-bold">₱ {booking.balance.toLocaleString()}</p>
+                                {booking.balance <= 0 ?
+                                    <span className={`bg-green-100 text-green-700 border-2 border-green-500 text-xs font-semibold  px-2 py-0.5 rounded capitalize`}> Fully Paid </span>
+                                :
+                                    <p className=" text-xs text-green-500 font-bold">₱ {booking.balance.toLocaleString()}</p>
+                                }
                             </div>
 
                             <div className="space-y-1 mt-4">

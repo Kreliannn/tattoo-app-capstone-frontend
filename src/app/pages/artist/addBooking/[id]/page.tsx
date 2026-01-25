@@ -155,6 +155,8 @@ export default function Page() {
     postMutation.mutate(formData)
   }
 
+  
+
   return (
     <div className="w-4/6 mx-auto py-10 space-y-6">
       <h1 className="text-xl font-semibold">Add Booking</h1>

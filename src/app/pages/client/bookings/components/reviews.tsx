@@ -16,7 +16,7 @@ import { successAlert, errorAlert } from "@/app/utils/alert"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { bookingInterface } from "@/app/types/booking.type"
-import { LoaderCircle } from "lucide-react"
+import { LoaderCircle , Star} from "lucide-react"
  
 
 export function ReviewModal({ booking, setBookings } : { booking : bookingInterface, setBookings : (data : bookingInterface[]) => void}) {
@@ -65,8 +65,8 @@ export function ReviewModal({ booking, setBookings } : { booking : bookingInterf
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-            <Button className="flex items-center gap-2 bg-green-500 hover:bg-green-600 w-full "  onClick={() => setOpen(true)}>
-                Reviews
+            <Button className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 w-full "  onClick={() => setOpen(true)}>
+              <Star /> Place Reviews
             </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[700px]">

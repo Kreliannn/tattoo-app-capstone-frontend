@@ -117,7 +117,11 @@ export default function ActiveBookings({ bookings, setBookings } : {bookings : b
                                 <DollarSign size={16} />
                                 Balance
                             </p>
-                            <p className=" text-xs text-green-500 font-bold">₱ {booking.balance.toLocaleString()}</p>
+                            {booking.balance <= 0 ?
+                                    <span className={`bg-green-100 text-green-700 border-2 border-green-500 text-xs font-semibold  px-2 py-0.5 rounded capitalize`}> Fully Paid </span>
+                                :
+                                    <p className=" text-xs text-green-500 font-bold">₱ {booking.balance.toLocaleString()}</p>
+                            }
                         </div>
                         
                         <div className="space-y-1 mt-4">
@@ -169,7 +173,7 @@ export default function ActiveBookings({ bookings, setBookings } : {bookings : b
             <div className="w-full grid grid-cols-1 gap-1 mt-5">
                {booking.session != booking.sessions.length 
                 ?  <BookNextSession booking={booking} setBookings={setBookings} />
-                :   <Button className="text-white  bg-green-500 hover:bg-green-600" onClick={() => handleComplete(booking._id)}> Complete </Button>
+                :   <Button className="text-white  bg-green-500 hover:bg-green-600" onClick={() => handleComplete(booking._id)}> Mark as Complete </Button>
                }
                     
             </div>

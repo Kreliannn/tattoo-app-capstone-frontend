@@ -33,7 +33,7 @@ export interface bookingInterface{
     duration : number,
     status : string,
     isReviewed : boolean,
-    balance : Number,
+    balance : number,
     itemUsed : {
         item : string,
         qty : number,

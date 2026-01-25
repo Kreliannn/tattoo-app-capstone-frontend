@@ -15,7 +15,7 @@ import { convertToAmPm } from "@/app/utils/customFunction"
 import { postInterface } from "@/app/types/post.type"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import axiosInstance from "@/app/utils/axios"
-import { errorAlert, successAlert } from "@/app/utils/alert"
+import { errorAlert, successAlert, confirmAlert } from "@/app/utils/alert"
 import { bookingInterfaceInput } from "@/app/types/booking.type"
 import useUserStore from "@/app/store/useUserStore"
 import { bookingInterface } from "@/app/types/booking.type"
@@ -23,6 +23,7 @@ import { LockIcon } from "lucide-react"
 import { showHealthChecklist } from "@/app/utils/alert"
 import { ClientAgreementModal } from "./clientAgreement"
 import { useRouter } from "next/navigation"
+import { payMongoBooking } from "@/app/utils/payMongo"
 
 export function ArtistBookModal({ post, artistId, bussinessId } : {post : postInterface, artistId : string, bussinessId : string | null}) {
 
@@ -76,11 +77,12 @@ export function ArtistBookModal({ post, artistId, bussinessId } : {post : postIn
 
   const bookMutation = useMutation({
     mutationFn : (booking : bookingInterfaceInput) => axiosInstance.post("/booking", {booking}),
-    onSuccess : () => {
+    onSuccess : (response) => {
+      const bookingId : string = response.data.bookingId
       setOpen(false)
       setSelectedTime([])
-      successAlert("booking submited")
-      router.push("/pages/client/bookings")
+      const downPayment = post.price * 0.50
+      payMongoBooking(downPayment.toString(), user?._id!, post.account._id, bookingId )
     }, 
     onError : () => errorAlert("error accour")
   })
@@ -105,7 +107,7 @@ export function ArtistBookModal({ post, artistId, bussinessId } : {post : postIn
         date : date!.toLocaleDateString("en-US").toString(),
         time : selectedtime,
         duration : selectedtime.length - 1,
-        status : "pending",
+        status : "to pay",
         isReviewed : false,
         balance : post.price,
         itemUsed : post.itemUsed
