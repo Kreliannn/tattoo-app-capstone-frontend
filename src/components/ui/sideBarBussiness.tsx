@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import {
   Sidebar,
   SidebarContent,
@@ -28,20 +28,28 @@ import {
   X,
   Calendar,
   History,
-  Bell
+  Bell,
+  Users2,
+  User
 } from "lucide-react"
+import useUserStore from "@/app/store/useUserStore"
+import { useQuery } from "@tanstack/react-query"
+import axiosInstance from "@/app/utils/axios"
+import { employeeInterface } from "@/app/types/accounts.type"
 
-const navigationItems = [
-  { title: "Dashboard", url: "/pages/bussiness/dashboard", icon: LayoutDashboard },
-  { title: "Bussiness Profile", url: "/pages/bussiness/profile", icon: Building2 },
-  { title: "Artists", url: "/pages/bussiness/artists", icon: Users },
-  { title: "Post", url: "/pages/bussiness/myPost", icon: FileText },
-  { title: "Bookings", url: "/pages/bussiness/bookings", icon: Calendar },
-  { title: "Chat", url: "/pages/bussiness/convos", icon: MessageCircle },
-  { title: "Inventory", url: "/pages/bussiness/inventory", icon: Package },
-  { title: "Transactions", url: "/pages/bussiness/transactions", icon: History },
-  { title: "Notifications", url: "/pages/bussiness/notifications", icon: Bell },
-]
+const NAV_ITEMS = [
+  { feature: "View Dashboard", title: "Dashboard", url: "/pages/bussiness/dashboard", icon: LayoutDashboard },
+  { feature: "Manage Bussiness Profile", title: "Bussiness Profile", url: "/pages/bussiness/profile", icon: Building2 },
+  { feature: "Manage Artists", title: "Artists", url: "/pages/bussiness/artists", icon: Users },
+  { feature: "Manage Employee", title: "Employee", url: "/pages/bussiness/employee", icon: Users2 },
+  { feature: "Manage Post", title: "Post", url: "/pages/bussiness/myPost", icon: FileText },
+  { feature: "Manage Bookings", title: "Bookings", url: "/pages/bussiness/bookings", icon: Calendar },
+  { feature: "Manage Chat", title: "Chat", url: "/pages/bussiness/convos", icon: MessageCircle },
+  { feature: "Manage Inventory", title: "Inventory", url: "/pages/bussiness/inventory", icon: Package },
+  { feature: "View Transactions", title: "Transactions", url: "/pages/bussiness/transactions", icon: History },
+  { feature: "View Notifications", title: "Notifications", url: "/pages/bussiness/notifications", icon: Bell },
+];
+
 
 interface AppSidebarProps {
   className?: string
@@ -49,6 +57,40 @@ interface AppSidebarProps {
 
 export function SidebarBussiness({ className }: AppSidebarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+  const {user} = useUserStore()
+
+
+  const { data: employeeData } = useQuery({
+    queryKey: ['employee_data'],
+    queryFn: async (): Promise<employeeInterface> => {
+      const response = await axiosInstance.get(`/account/employee/${user?.email}`);
+      return response.data;
+    },
+    enabled: user?.type === "employee",
+  });
+
+  const filteredNavigationItems = useMemo(() => {
+    // ✅ NOT employee → show all
+    if (user?.type !== "employee") {
+      return NAV_ITEMS;
+    }
+  
+    // ⏳ employee but data not loaded yet
+    if (!employeeData?.restrictions) {
+      return [];
+    }
+  
+    // 👮 employee → restricted view
+    return NAV_ITEMS.filter(item =>
+      employeeData.restrictions.includes(item.feature)
+    );
+  }, [user?.type, employeeData]);
+  
+
+
+ 
+  
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen)
   const closeMobileMenu = () => setIsMobileMenuOpen(false)
@@ -93,7 +135,17 @@ export function SidebarBussiness({ className }: AppSidebarProps) {
               <div className="mb-6">
                 <h3 className="text-gray-700 text-sm font-medium mb-3">Section</h3>
                 <nav className="space-y-2">
-                  {navigationItems.map((item) => (
+                  {user?.type == "employee" && (
+                   <Link
+                     href={"/pages/bussiness/home"}
+                     onClick={closeMobileMenu}
+                     className="flex items-center gap-3 px-3 py-2 text-black hover:bg-gray-100 rounded-lg transition-colors"
+                   >
+                     <User size={20} />
+                     <span> Home </span>
+                   </Link>
+                  )}
+                  {filteredNavigationItems.map((item) => (
                     <Link
                       key={item.title}
                       href={item.url}
@@ -151,7 +203,17 @@ export function SidebarBussiness({ className }: AppSidebarProps) {
             <SidebarGroupLabel className="text-gray-700">Section</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {navigationItems.map((item) => (
+                {user?.type == "employee" && (
+                  <SidebarMenuItem >
+                   <SidebarMenuButton asChild className="text-black hover:bg-gray-100">
+                     <Link href={"/pages/bussiness/home"}>
+                       <User />
+                       <span>Home</span>
+                     </Link>
+                   </SidebarMenuButton>
+                 </SidebarMenuItem>
+                )}
+                {filteredNavigationItems.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild className="text-black hover:bg-gray-100">
                       <Link href={item.url}>

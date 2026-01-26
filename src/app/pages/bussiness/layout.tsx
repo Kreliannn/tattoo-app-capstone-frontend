@@ -9,7 +9,8 @@ export default function BussinessLayout({ children }: { children: React.ReactNod
 
     const {user} = useUserStore()
 
-    if(!user || user.type != "bussiness") return <UnauthorizedPage />
+    if(!user) return <UnauthorizedPage />
+    if(user.type != "bussiness" && user.type != "employee") return <UnauthorizedPage />
 
     return (
       <div className="flex min-h-screen ">

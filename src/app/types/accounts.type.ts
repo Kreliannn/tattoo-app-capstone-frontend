@@ -59,6 +59,9 @@ export interface bussinessInfoInterfaceInput {
         artist : accountInterface,
         commision : number
     }[],
+    employees : {
+        employee : accountInterface,
+    }[],
     profileImages : {
         type : string,
         fileUrl : string,
@@ -76,9 +79,12 @@ export interface bussinessInfoInterface {
     _id : string,
     bio : string,
     bussiness : accountInterface,
-       artists : {
+    artists : {
         artist : accountInterface,
         commision : number
+    }[],
+    employees : {
+        employee : accountInterface,
     }[],
     profileImages : {
         type : string,
@@ -124,4 +130,21 @@ export interface artistApplicationInterface {
     bussiness : accountInterface,
     date :  string,
     time : string
+}
+
+
+export interface employeeInterfaceInput {
+    account : string,
+    bussiness : string,
+    email : string,
+    restrictions : string[]
+}
+
+
+export interface employeeInterface {
+    _id : string,
+    account : accountInterface,
+    bussiness : accountInterface,
+    email : string,
+    restrictions : string[]
 }

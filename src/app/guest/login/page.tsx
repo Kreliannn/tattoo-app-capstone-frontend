@@ -39,6 +39,10 @@ export default function Home() {
           router.push(`/pages/bussiness/dashboard`);
         break
 
+        case "employee":
+          router.push(`/pages/bussiness/home`);
+        break
+
         case "admin":
           router.push(`/pages/admin/dashboard`);
         break
